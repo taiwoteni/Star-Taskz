@@ -1,22 +1,18 @@
 package com.theteam.taskz;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.AttributeSet;
-import android.view.View;
+import android.widget.Toast;
 
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.TextInputFormField;
 import com.theteam.taskz.view_models.UnderlineTextView;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -46,17 +42,36 @@ public class LoginActivity extends AppCompatActivity {
             button.startLoading();
             passwordFormField.setEnabled(false);
             emailFormField.setEnabled(false);
-            
+
             Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    runOnUiThread(() -> {
-                        button.stopLoading();
-                    });
+            handler.postDelayed(() -> {
+                button.stopLoading();
+                if(!validateEmail()){
+                    showErrorMessage("Wrongly Formatted Email!");
+                    passwordFormField.setEnabled(true);
+                    emailFormField.setEnabled(true);
+                    return;
+                }
+                if(!validatePassword()){
+                    showErrorMessage("Password should be up to 8 digits");
+                    passwordFormField.setEnabled(true);
+                    emailFormField.setEnabled(true);
+                    return;
                 }
             }, 2500);
 
         });
+    }
+
+    boolean validateEmail(){
+        final String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return Pattern.matches(regex, emailFormField.getText());
+    }
+    boolean validatePassword(){
+
+        return passwordFormField.getText().length()>= 8;
+    }
+    void showErrorMessage(final String message){
+        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
+                        cancel();
                         finish();
                     }
                 }, 5000);
