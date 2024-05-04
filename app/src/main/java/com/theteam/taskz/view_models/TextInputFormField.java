@@ -119,4 +119,7 @@ public class TextInputFormField extends LinearLayout {
     public String getText(){
         return editText.getText().toString().trim();
     }
+    public void setText(String text){
+        editText.setText(text);
+    }
 }
