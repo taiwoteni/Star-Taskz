@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Preset font sizes-->
+    <dimen name="small_font_size">12.0sp</dimen>
+    <dimen name="regular_font_size">14.0sp</dimen>
+    <dimen name="medium_font_size">16.0sp</dimen>
+    <dimen name="large_font_size">22.0sp</dimen>
+    <dimen name="extra_large_font_size">26.0sp</dimen>
+
+    <!--Preset icon sizes-->
+    <dimen name="small_icon_size">16.0dp</dimen>
+    <dimen name="regular_icon_size">20.0dp</dimen>
+    <dimen name="medium_icon_size">30.0dp</dimen>
+    <dimen name="large_icon_size">50.0dp</dimen>
+    <dimen name="extra_large_icon_size">65.0dp</dimen>
+    <dimen name="app_icon_size">80.0dp</dimen>
+
+    <!--Preset gap sizes-->
+    <dimen name="small_value_size">4.0sp</dimen>
+    <dimen name="regular_value_size">8.0sp</dimen>
+    <dimen name="medium_value_size">16.0sp</dimen>
+    <dimen name="large_value_size">20.0sp</dimen>
+    <dimen name="extra_large_value_size">32.0sp</dimen>
+
+
+
+
+
+</resources>

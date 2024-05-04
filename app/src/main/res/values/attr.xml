@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextInputFormField">
+        <attr name="hint" format="string"/>
+        <attr name="hintColor" format="color"/>
+        <attr name="fontFamily" format="string|reference"/>
+        <attr name="prefixIcon" format="reference"/>
+        <attr name="android:inputType"/>
+        <attr name="isPassword" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="LoadableButton">
+        <attr name="loading" format="boolean"/>
+        <attr name="text" format="string"/>
+        <attr name="textColor" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+    </declare-styleable>
+</resources>
