@@ -34,6 +34,12 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="BottomBarTheme" parent="Theme.AppCompat.Light">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/small_font_size</item>
+        <item name="menuGravity">center</item>
+    </style>
+
     <style name="Theme.Taskz.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Taskz.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
