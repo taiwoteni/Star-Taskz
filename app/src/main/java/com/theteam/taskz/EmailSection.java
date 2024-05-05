@@ -99,6 +99,6 @@ public class EmailSection extends Fragment {
         return passwordForm.getText().length()>= 8;
     }
     void showErrorMessage(final String message){
-        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

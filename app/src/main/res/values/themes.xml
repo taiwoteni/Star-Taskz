@@ -36,7 +36,7 @@
 
     <style name="BottomBarTheme" parent="Theme.AppCompat.Light">
         <item name="android:fontFamily">@font/poppins_medium</item>
-        <item name="android:textSize">@dimen/small_font_size</item>
+        <item name="android:textSize">10sp</item>
         <item name="menuGravity">center</item>
     </style>
 
