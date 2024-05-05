@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_tasks"
+        android:icon="@drawable/task"
+        android:title="Tasks" />
+    <item
+        android:id="@+id/navigation_calender"
+        android:icon="@drawable/calendar"
+        android:title="Calender" />
+    <item
+        android:id="@+id/navigation_more"
+        android:icon="@drawable/more"
+        android:title="More" />
+</menu>
