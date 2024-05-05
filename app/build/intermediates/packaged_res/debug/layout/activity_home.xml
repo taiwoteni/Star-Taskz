@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="match_parent"/>
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_nav_bar"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
+                android:foregroundGravity="bottom"
+                app:itemPaddingTop="12dp"
+                app:itemPaddingBottom="14dp"
+                app:menu="@menu/bottom_nav_menu"
+                android:theme="@style/BottomBarTheme"
+                app:itemIconSize="27dp"
+                app:itemRippleColor="@color/themeColor"
+                app:itemIconTint="@drawable/bottom_navigation_item_selector"
+                app:itemTextColor="@drawable/bottom_navigation_item_selector"
+                android:background="@drawable/bottom_bar_rounded_top_background_light"
+                android:elevation="5dp" />
+        </RelativeLayout>
+    </FrameLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

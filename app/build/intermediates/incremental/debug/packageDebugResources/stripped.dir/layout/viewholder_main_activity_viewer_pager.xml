@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="visible"
+        android:id="@+id/taskRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="30dp"
+        android:paddingTop="10dp"/>
+    <LinearLayout
+        android:id="@+id/noTaskLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            app:lottie_rawRes="@raw/empty_tasks"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="@dimen/medium_value_size"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"/>
+        <TextView
+            android:id="@+id/no_tasks_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:text="No Tasks 🤔"
+            android:padding="0dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="@dimen/medium_font_size"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,302 @@
+[
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_eyes_opened.png.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\eyes_opened.png"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_poppins_medium.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\poppins_medium.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_divider_drawable.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\divider_drawable.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\navigation_nav_graph.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\navigation\\nav_graph.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_text_form_background.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\text_form_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_viewholder_calendar_page_recycler.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\viewholder_calendar_page_recycler.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_activity_home.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\activity_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_quicksand_light.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\quicksand_light.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_email.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\email.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_user.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\user.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_poppins_bold.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\poppins_bold.ttf"
+    },
+    {
+        "merged": "com.theteam.taskz.app-merged_res-47:/layout_task_recycler_item.xml.flat",
+        "source": "com.theteam.taskz.app-main-49:/layout/task_recycler_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_calendar_fragment.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\calendar_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_google.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\google.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_add.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\add.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\menu_bottom_nav_menu.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\menu\\bottom_nav_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-mdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_bottom_navigation_item_selector.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\bottom_navigation_item_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_quicksand_bold.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\quicksand_bold.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_taskz.png.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\taskz.png"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_bottom_bar_rounded_top_background_light.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\bottom_bar_rounded_top_background_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_text_form_field.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\text_form_field.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_loadable_button.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\loadable_button.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_calendar.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\calendar.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_activity_register.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_poppins_light.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\poppins_light.ttf"
+    },
+    {
+        "merged": "com.theteam.taskz.app-merged_res-47:/layout_viewholder_main_activity_viewer_pager.xml.flat",
+        "source": "com.theteam.taskz.app-main-49:/layout/viewholder_main_activity_viewer_pager.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_poppins_regular.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\poppins_regular.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_task.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\task.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_focus_fragment.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\focus_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_poppins_semibold.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\poppins_semibold.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_drawer.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\drawer.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_google_signup_button.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\google_signup_button.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_poppins_black.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\poppins_black.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\raw_login_illustration.json.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\raw\\login_illustration.json"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_google_signup_button_background.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\google_signup_button_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\raw_empty_tasks.json.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\raw\\empty_tasks.json"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-anydpi-v33_ic_launcher.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-anydpi-v33\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_quicksand_regular.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\quicksand_regular.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_quicksand_semibold.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\quicksand_semibold.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_eyes_closed.png.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\eyes_closed.png"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_more_fragment.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\more_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_viewholder_main_activity_viewer_pager.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\viewholder_main_activity_viewer_pager.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_work.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\work.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_button_background.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\button_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_name_section.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\name_section.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_quicksand_medium.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\quicksand_medium.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_more.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\more.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\font_quicksand.ttf.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\font\\quicksand.ttf"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_padlock.png.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\padlock.png"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_viewholder_task_page_recycler.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\viewholder_task_page_recycler.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_pomodoro.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\pomodoro.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\raw_loading.json.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\raw\\loading.json"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_taskz_round.png.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\taskz_round.png"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_email_section.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\email_section.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\layout_tasks_fragment.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\tasks_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_cursor_drawable.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\cursor_drawable.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-merged_res-47:\\drawable_check_circular_background.xml.flat",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\drawable\\check_circular_background.xml"
+    }
+]

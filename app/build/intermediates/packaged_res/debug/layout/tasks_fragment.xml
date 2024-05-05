@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="start"
+        android:paddingTop="@dimen/medium_value_size"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:paddingHorizontal="@dimen/large_value_size"
+            android:paddingVertical="@dimen/regular_value_size"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="start"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginEnd="@dimen/medium_value_size"
+                android:id="@+id/category"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                app:tint="@color/secondary"
+                android:src="@drawable/drawer"
+                android:scaleType="fitCenter"
+                tools:ignore="ContentDescription" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|start"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/day_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primary"
+                        android:padding="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="Sunday"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textSize="21sp"/>
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/today_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/themeColor"
+                        android:padding="0dp"
+                        android:paddingStart="5dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="(today)"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textSize="@dimen/regular_font_size"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/date_text"
+                    android:paddingStart="2dp"
+                    android:translationY="-8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondary"
+                    android:text="May 5"
+                    android:padding="0dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="@dimen/small_font_size"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/medium_value_size"
+            android:background="@drawable/divider_drawable"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPagerTasks"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <!-- To occupy the space of the bottom bar tab-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"/>
+
+    </LinearLayout>
+
+    <!--Margin bottom 91dp done intentionally-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/themeColor"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="91dp"
+        android:src="@drawable/add"
+        android:tint="@color/white"
+        tools:ignore="ContentDescription" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

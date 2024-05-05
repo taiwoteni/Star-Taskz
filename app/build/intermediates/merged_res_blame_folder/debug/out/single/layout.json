@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\email_section.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\email_section.xml"
+    },
+    {
+        "merged": "com.theteam.taskz.app-mergeDebugResources-46:/layout/viewholder_main_activity_viewer_pager.xml",
+        "source": "com.theteam.taskz.app-main-49:/layout/viewholder_main_activity_viewer_pager.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\viewholder_main_activity_viewer_pager.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\viewholder_main_activity_viewer_pager.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\activity_register.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\more_fragment.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\more_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\tasks_fragment.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\tasks_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\viewholder_calendar_page_recycler.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\viewholder_calendar_page_recycler.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\loadable_button.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\loadable_button.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\text_form_field.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\text_form_field.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\focus_fragment.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\focus_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\calendar_fragment.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\calendar_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\activity_login.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\activity_home.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\activity_home.xml"
+    },
+    {
+        "merged": "com.theteam.taskz.app-mergeDebugResources-46:/layout/task_recycler_item.xml",
+        "source": "com.theteam.taskz.app-main-49:/layout/task_recycler_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\google_signup_button.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\google_signup_button.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\viewholder_task_page_recycler.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\viewholder_task_page_recycler.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-mergeDebugResources-46:\\layout\\name_section.xml",
+        "source": "C:\\Users\\HP\\.gradle\\daemon\\7.5\\com.theteam.taskz.app-main-49:\\layout\\name_section.xml"
+    }
+]

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@drawable/google_signup_button_background"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:paddingHorizontal="@dimen/medium_value_size"
+    android:paddingVertical="@dimen/regular_value_size"
+    android:layout_height="wrap_content"
+    android:minHeight="55dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/name_section"
+    >
+    <ImageView
+        android:layout_width="@dimen/regular_icon_size"
+        android:layout_height="@dimen/regular_icon_size"
+        android:layout_marginEnd="@dimen/regular_value_size"
+        android:scaleType="fitCenter"
+        android:src="@drawable/google"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Google"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/black"
+
+        tools:ignore="HardcodedText" />
+
+
+</LinearLayout>
