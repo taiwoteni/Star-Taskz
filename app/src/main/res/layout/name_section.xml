@@ -75,7 +75,7 @@
             android:layout_marginBottom="@dimen/extra_large_value_size"
             app:fontFamily="@font/poppins_regular"
             app:hintColor="@color/secondary"
-            android:inputType="date"
+            android:inputType="none"
             app:hint="Date Of Birth"
 
             app:prefixIcon="@drawable/calendar"/>
@@ -126,6 +126,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/google_sign_in_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/large_value_size">
