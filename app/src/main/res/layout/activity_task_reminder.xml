@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".TaskReminder">
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Task Reminder"
+            android:layout_marginStart="@dimen/large_value_size"
+            android:textSize="@dimen/large_font_size"
+            android:textColor="@color/primary"
+            android:layout_marginBottom="@dimen/small_value_size"
+            android:fontFamily="@font/poppins_semibold"
+            tools:ignore="HardcodedText" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginBottom="@dimen/extra_large_value_size"
+            android:layout_marginStart="@dimen/large_value_size"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your task, "
+                android:textSize="@dimen/regular_font_size"
+                android:textColor="@color/secondary"
+                android:fontFamily="@font/poppins_regular"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/task_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Boil Eggs"
+                android:textSize="@dimen/regular_font_size"
+                android:textColor="@color/primary"
+                android:fontFamily="@font/poppins_semibold"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Is to start now."
+                android:textSize="@dimen/regular_font_size"
+                android:textColor="@color/secondary"
+                android:fontFamily="@font/poppins_regular"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginVertical="@dimen/extra_large_value_size"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/task_starting"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/extra_large_value_size"
+        android:layout_marginHorizontal="@dimen/medium_value_size"
+        android:orientation="horizontal">
+        <com.theteam.taskz.view_models.LoadableButton
+            android:id="@+id/ignore_button"
+            android:layout_marginEnd="@dimen/regular_value_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:text="SEEN"
+            app:textColor="@color/secondary"
+            app:backgroundColor="@color/tertiary"/>
+        <com.theteam.taskz.view_models.LoadableButton
+            android:id="@+id/complete_button"
+            android:layout_marginStart="@dimen/regular_value_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:text="COMPLETED"
+            app:textColor="@color/white"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
