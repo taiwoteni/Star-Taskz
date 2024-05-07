@@ -1,0 +1,91 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TaskManagerFeatures" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+
+    <!--Night Mode Theme-->
+    <style name="nightModeSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/dark_grey</item>
+        <item name="colorSwitchThumbNormal">@color/light_grey</item>
+        <item name="android:colorForeground">#99FFFFFF</item>
+    </style>
+
+    <!--Text Dark Mode-->
+    <style name="textMode" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/transWhite</item>
+    </style>
+
+    <!--Text Light Mode 2-->
+    <style name="textMode2" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!--tint Light Mode-->
+    <style name="tintMode" parent="Theme.AppCompat.Light">
+        <item name="android:tint">@color/transWhite</item>
+    </style>
+
+    <!--tint Light Mode 2-->
+    <style name="tintMode2" parent="Theme.AppCompat.Light">
+        <item name="android:tint">@color/black</item>
+    </style>
+
+    <!--tint Mode 3-->
+    <style name="tintMode3" parent="Theme.AppCompat.Light">
+        <item name="android:tint">@color/transWhite</item>
+    </style>
+
+    <!--tint Mode 4-->
+    <style name="tintMode4" parent="Theme.AppCompat.Light">
+        <item name="android:tint">#99000000</item>
+    </style>
+
+    <!--tint Mode 5-->
+    <style name="tintMode5" parent="Theme.AppCompat.Light">
+        <item name="android:backgroundTint">#80000000</item>
+    </style>
+
+    <!--Hint Text-->
+    <style name="hintText" parent="Theme.AppCompat.Light">
+        <item name="android:textColorHint">@color/transWhite</item>
+        <item name="android:backgroundTint">@color/transWhite</item>
+        <item name="android:textColor">@color/transWhite</item>
+    </style>
+
+    <!--Calender Textview Light Mode-->
+    <style name="calenderTextView" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/light_grey</item>
+    </style>
+
+    <!--Timer-->
+    <style name="timerView" parent="Theme.AppCompat.Light">
+        <item name="android:timePickerStyle">@color/red</item>
+    </style>
+
+    <!--Edittext Background-->
+    <style name="editTextBackground" parent="Theme.AppCompat.Light">
+        <item name="android:backgroundTint">@color/green5</item>
+    </style>
+
+    <!--View Background-->
+    <style name="viewBackground" parent="Theme.AppCompat.Light">
+        <item name="android:background">@color/transWhite</item>
+    </style>
+
+    <!--Radio Button Colour-->
+    <style name="checkedRadioButton" parent="Theme.AppCompat">
+        <item name="colorControlActivated">@color/green3</item>
+    </style>
+
+    <!--Card Background Colour-->
+    <style name="cardBackground" parent="Theme.AppCompat">
+        <item name="android:backgroundTint">@color/dark_grey2</item>
+        <item name="android:tint">@color/light_grey</item>
+    </style>
+
+<!--    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+<!--        <item name="android:windowBackground">@drawable/splash_background</item>-->
+<!--    </style>-->
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TaskManagerFeatures</string>
+    <string name="screen_on_txt">If enabled, the display wont be auto-locked during the Focus session</string>
+</resources>

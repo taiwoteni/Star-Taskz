@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Pomodoro">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/timerHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Focus"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/hamburger_menu"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/settings_menu_icon"
+                    android:layout_centerVertical="true"
+                    android:theme="@style/tintMode"
+                    android:layout_marginEnd="20dp"/>
+            </RelativeLayout>
+
+            <com.example.taskmanagerfeatures.CircularProgressBar
+                android:id="@+id/circularProgressBar"
+                android:background="@drawable/circular_progressbar_background"
+                android:layout_marginTop="50dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="50dp"/>
+
+            <Button
+                android:id="@+id/timerButtonFocusStart"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:text="Start"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/green"/>
+
+            <Button
+                android:id="@+id/timerButtonFocusPause"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:text="Pause"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"/>
+
+            <Button
+                android:id="@+id/timerButtonFocusResume"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:text="Resume"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/grey"/>
+
+            <Button
+                android:id="@+id/timerButtonBreakStart"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:text="Start Break"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/blue"/>
+
+            <Button
+                android:id="@+id/timerButtonBreakPause"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:text="Pause"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"/>
+
+            <Button
+                android:id="@+id/timerButtonBreakResume"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:text="Resume"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/grey"/>
+
+            <Button
+                android:id="@+id/timerButtonEnd"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:text="End"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red"/>
+
+            <Button
+                android:id="@+id/timerButtonSkip"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:text="Skip Break"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"/>
+
+            <Button
+                android:id="@+id/timerButtonReminder"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
+                android:text="Remind in 3 minutes"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
