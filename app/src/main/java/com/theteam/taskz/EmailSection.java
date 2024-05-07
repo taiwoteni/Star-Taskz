@@ -1,5 +1,6 @@
 package com.theteam.taskz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -74,6 +75,9 @@ public class EmailSection extends Fragment {
                 enableAllInput();
                 AuthenticationDataHolder.email = emailForm.getText().trim();
                 AuthenticationDataHolder.password = passwordForm.getText().trim();
+
+                Intent i = new Intent(getActivity().getApplicationContext(), HomeActivity.class);
+                startActivity(i);
             }, 2500);
         });
     }
