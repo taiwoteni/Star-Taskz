@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/task_item_background_layout"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical"
+    android:gravity="start"
+    android:paddingHorizontal="@dimen/regular_value_size"
+    android:paddingTop="@dimen/regular_value_size"
+    android:background="@drawable/calendar_list_task_item_background">
+    <TextView
+        android:id="@+id/task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginBottom="@dimen/small_value_size"
+        android:textColor="@color/white"
+        android:gravity="left|center_vertical"
+        android:text="Boil Eggs"
+        android:fontFamily="@font/quicksand_semibold"/>
+    <TextView
+        android:id="@+id/task_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="8.75sp"
+        android:textColor="@color/white"
+        android:text="#personal"
+        android:fontFamily="@font/poppins_medium"/>
+
+</LinearLayout>
