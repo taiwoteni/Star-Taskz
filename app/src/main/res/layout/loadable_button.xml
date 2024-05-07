@@ -7,6 +7,7 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/container"
     android:elevation="0dp"
     android:background="@drawable/text_form_background"
     android:backgroundTint="@color/themeColor">
