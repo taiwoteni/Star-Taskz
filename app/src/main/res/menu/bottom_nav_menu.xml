@@ -9,6 +9,10 @@
         android:icon="@drawable/calendar"
         android:title="Calender" />
     <item
+        android:id="@+id/navigation_focus"
+        android:icon="@drawable/pomodoro"
+        android:title="Pomodoro" />
+    <item
         android:id="@+id/navigation_more"
         android:icon="@drawable/more"
         android:title="More" />
