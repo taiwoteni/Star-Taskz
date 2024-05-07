@@ -5,8 +5,12 @@
         <attr name="hintColor" format="color"/>
         <attr name="fontFamily" format="string|reference"/>
         <attr name="prefixIcon" format="reference"/>
+        <attr name="suffixIcon" format="reference"/>
+
         <attr name="android:inputType"/>
         <attr name="isPassword" format="boolean"/>
+        <attr name="readOnly" format="boolean"/>
+
     </declare-styleable>
 
     <declare-styleable name="LoadableButton">
