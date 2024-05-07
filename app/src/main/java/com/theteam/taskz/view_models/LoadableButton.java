@@ -33,7 +33,7 @@ public class LoadableButton extends LinearLayout {
 
         button_text = (TextView) findViewById(R.id.button_text);
         lottie = (LottieAnimationView) findViewById(R.id.loading_lottie);
-//        root_layout = (LinearLayout) findViewById(R.id.container);
+        root_layout = (LinearLayout) findViewById(R.id.container);
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attr, R.styleable.LoadableButton);
 
@@ -44,7 +44,7 @@ public class LoadableButton extends LinearLayout {
 
         button_text.setText(text);
         button_text.setTextColor(textColor);
-//        root_layout.setBackgroundTintList(ColorStateList.valueOf(buttonColor));
+        root_layout.setBackgroundTintList(ColorStateList.valueOf(buttonColor));
 
         // Although by default the button is not loading
         if(loading){
