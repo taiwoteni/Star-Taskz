@@ -23,6 +23,8 @@ public class TextInputFormField extends LinearLayout {
     private boolean passwordVisible = false;
     private EditText editText;
 
+    private Drawable suffixDrawable, prefixDrawable;
+
     public TextInputFormField(Context context) {
         super(context);
         init(null);
@@ -49,7 +51,9 @@ public class TextInputFormField extends LinearLayout {
         if(attr != null){
             TypedArray typedArray = getContext().obtainStyledAttributes(attr, R.styleable.TextInputFormField);
 
-            final Drawable prefixDrawable = typedArray.getDrawable(R.styleable.TextInputFormField_prefixIcon);
+            prefixDrawable = typedArray.getDrawable(R.styleable.TextInputFormField_prefixIcon);
+            suffixDrawable = typedArray.getDrawable(R.styleable.TextInputFormField_suffixIcon);
+            final boolean readOnly = typedArray.getBoolean(R.styleable.TextInputFormField_readOnly, false);
             final String hint = typedArray.getString(R.styleable.TextInputFormField_hint);
             final int hintColor = typedArray.getColor(R.styleable.TextInputFormField_hintColor, Color.parseColor("#FF000000"));
 
@@ -70,8 +74,12 @@ public class TextInputFormField extends LinearLayout {
             // If it is not a password edit text, we do not want to show the suffix
             // icon.
             if(!isPasswordType){
-                if(suffixIcon != null){
+                if(suffixDrawable != null){
+                    suffixIcon.setImageDrawable(suffixDrawable);
+                }
+                else{
                     suffixIcon.setVisibility(View.GONE);
+
                 }
             }
             else{
@@ -101,12 +109,31 @@ public class TextInputFormField extends LinearLayout {
 
             }
 
+            if(readOnly){
+                editText.setInputType(InputType.TYPE_NULL);
+            }
 
 
             typedArray.recycle();
 
         }
     }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        // Can only work when
+        if(suffixDrawable != null && suffixIcon != null){
+            suffixIcon.setOnClickListener(l);
+        }
+        else {
+            if(prefixIcon != null && prefixDrawable != null){
+                prefixIcon.setOnClickListener(l);
+            }
+        }
+
+    }
+
+
 
     @Override
     public void setEnabled(boolean enabled) {
