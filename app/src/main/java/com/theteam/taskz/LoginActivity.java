@@ -84,6 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                     emailFormField.setEnabled(true);
                     return;
                 }
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
             }, 2500);
 
         });
