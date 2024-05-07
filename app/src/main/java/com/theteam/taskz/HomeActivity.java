@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.theteam.taskz.home_pages.CalendarFragment;
+import com.theteam.taskz.home_pages.FocusFragment;
 import com.theteam.taskz.home_pages.MoreFragment;
 import com.theteam.taskz.home_pages.TaskFragment;
 
@@ -30,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
 
         views.add(new TaskFragment());
         views.add(new CalendarFragment());
+        views.add(new FocusFragment());
         views.add(new MoreFragment());
 
 
@@ -39,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
 
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setPageTransformer(new CustomPageTransformer());
-        viewPager.setUserInputEnabled(true);
+        viewPager.setUserInputEnabled(false);
         viewPager.setAdapter(viewPagerAdapter);
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -76,8 +78,10 @@ public class HomeActivity extends AppCompatActivity {
                 return 0;
             case R.id.navigation_calender:
                 return 1;
-            default:
+            case R.id.navigation_focus:
                 return 2;
+            default:
+                return 3;
         }
     }
     int getNavBarItemIndex(int position) {
@@ -86,11 +90,10 @@ public class HomeActivity extends AppCompatActivity {
                 return R.id.navigation_tasks;
             case 1:
                 return R.id.navigation_calender;
-            case 2:
+            case 3:
                 return R.id.navigation_more;
-            // Add more cases for other ViewPager2 page indices if needed
             default:
-                return 0; // Return default item ID
+                return R.id.navigation_focus;
         }
     }
 
