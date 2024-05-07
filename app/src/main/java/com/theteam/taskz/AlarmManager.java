@@ -38,17 +38,16 @@ public class AlarmManager {
     public void setAlarm(TaskModel model){
         Bundle b = new Bundle();
         b.putString("TASK", new Gson().toJson(model.toJson()));
-        Intent intent = new Intent(application_context, AlarmsReceiver.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(activity_context, AlarmsReceiver.class);
         intent.putExtras(b);
         final Calendar calendar = (Calendar) model.date.clone();
 
         //Because there's always a 2 minute lag.
         calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE)-1);
         time = calendar.getTimeInMillis();
-        pi = PendingIntent.getBroadcast(application_context, ALARM_REQ_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        pi = PendingIntent.getBroadcast(application_context, 0, intent, PendingIntent.FLAG_MUTABLE);
 
-        star_taskz = (android.app.AlarmManager) application_context.getSystemService(Context.ALARM_SERVICE);
+        star_taskz = (android.app.AlarmManager) activity_context.getSystemService(Context.ALARM_SERVICE);
         star_taskz.set(android.app.AlarmManager.RTC_WAKEUP, time, pi);
 
         final SimpleDateFormat format = new SimpleDateFormat("HH:mm a", Locale.getDefault());

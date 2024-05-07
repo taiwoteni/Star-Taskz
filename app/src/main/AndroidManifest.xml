@@ -57,13 +57,7 @@
         </activity>
 
         <receiver
-            android:name=".AlarmsReceiver"
-            android:exported="true"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.theteam.taskz.TASK_REMINDER" />
-            </intent-filter>
-        </receiver>
+            android:name=".AlarmsReceiver"/>
     </application>
 
 </manifest>
