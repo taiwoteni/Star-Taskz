@@ -73,10 +73,27 @@ public class AlarmsReceiver extends BroadcastReceiver {
            AlarmManager.NOTIF_ID++;
         }
 
-        AlarmManager.speech.speak("This is a Reminder From Star Tasks", TextToSpeech.QUEUE_ADD, null, null);
-        AlarmManager.speech.speak("Your Task '" + model.name + "' should start now.", TextToSpeech.QUEUE_ADD, null, null);
-        AlarmManager.speech.speak("It is " + timeString, TextToSpeech.QUEUE_ADD, null, null);
-        AlarmManager.speech.speak("Please, Do not forget your Task", TextToSpeech.QUEUE_ADD, null, null);
+        if(AlarmManager.speech == null){
+            AlarmManager.speech = new TextToSpeech(context.getApplicationContext(), new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int i) {
+                    if(i == TextToSpeech.SUCCESS){
+                        AlarmManager.speech.speak("This is a Reminder From Star Tasks", TextToSpeech.QUEUE_ADD, null, null);
+                        AlarmManager.speech.speak("Your Task '" + model.name + "' should start now.", TextToSpeech.QUEUE_ADD, null, null);
+                        AlarmManager.speech.speak("It is " + timeString, TextToSpeech.QUEUE_ADD, null, null);
+                        AlarmManager.speech.speak("Please, Do not forget your Task", TextToSpeech.QUEUE_ADD, null, null);
+                    }
+                }
+            });
+        }
+        else{
+            AlarmManager.speech.speak("This is a Reminder From Star Tasks", TextToSpeech.QUEUE_ADD, null, null);
+            AlarmManager.speech.speak("Your Task '" + model.name + "' should start now.", TextToSpeech.QUEUE_ADD, null, null);
+            AlarmManager.speech.speak("It is " + timeString, TextToSpeech.QUEUE_ADD, null, null);
+            AlarmManager.speech.speak("Please, Do not forget your Task", TextToSpeech.QUEUE_ADD, null, null);
+        }
+
+
 
         Intent i = new Intent(context.getApplicationContext(), TaskReminder.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
