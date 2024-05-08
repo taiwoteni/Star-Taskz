@@ -14,6 +14,7 @@ import com.theteam.taskz.home_pages.CalendarFragment;
 import com.theteam.taskz.home_pages.FocusFragment;
 import com.theteam.taskz.home_pages.MoreFragment;
 import com.theteam.taskz.home_pages.TaskFragment;
+import com.theteam.taskz.home_pages.WeatherFragment;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,8 @@ public class HomeActivity extends AppCompatActivity {
         views.add(new TaskFragment());
         views.add(new CalendarFragment());
         views.add(new FocusFragment());
-        views.add(new MoreFragment());
+//        views.add(new WeatherFragment());
+//        views.add(new MoreFragment());
 
 
         bottomNavigationView = findViewById(R.id.bottom_nav_bar);
@@ -80,8 +82,10 @@ public class HomeActivity extends AppCompatActivity {
                 return 1;
             case R.id.navigation_focus:
                 return 2;
+//            case R.id.navigation_weather:
+//                return 3;
             default:
-                return 3;
+                return 2;
         }
     }
     int getNavBarItemIndex(int position) {
@@ -90,8 +94,10 @@ public class HomeActivity extends AppCompatActivity {
                 return R.id.navigation_tasks;
             case 1:
                 return R.id.navigation_calender;
-            case 3:
-                return R.id.navigation_more;
+//            case 3:
+//                return R.id.navigation_weather;
+//            case 3:
+//                return R.id.navigation_settings;
             default:
                 return R.id.navigation_focus;
         }
