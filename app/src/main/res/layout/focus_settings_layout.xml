@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/medium_value_size"
+    android:paddingVertical="@dimen/large_value_size"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Focus Time"
+        android:layout_marginBottom="@dimen/large_value_size"
+        android:textSize="@dimen/large_value_size"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/black"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/extra_large_value_size"
+        android:weightSum="2"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <NumberPicker
+                android:id="@+id/minutes_picker"
+                android:layout_width="80dp"
+                android:background="@color/backgroundLight"
+                android:divider="@color/secondaryLight"
+                android:layout_height="100dp"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Min"
+                android:paddingLeft="@dimen/medium_value_size"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <NumberPicker
+                android:id="@+id/seconds_picker"
+                android:layout_width="80dp"
+                android:divider="@color/secondaryLight"
+                android:layout_height="100dp"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sec"
+                android:paddingLeft="@dimen/medium_value_size"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    <com.theteam.taskz.view_models.LoadableButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="SET"
+        android:id="@+id/loadable_button"/>
+
+
+
+</LinearLayout>
