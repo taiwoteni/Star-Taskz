@@ -36,7 +36,7 @@
             android:fontFamily="@font/poppins_medium"
             android:text="@string/app_name"
             android:layout_marginBottom="@dimen/small_value_size"
-            android:textColor="@color/secondary"
+            android:textColor="@color/secondaryLight"
             android:textSize="@dimen/medium_font_size"
             />
 
