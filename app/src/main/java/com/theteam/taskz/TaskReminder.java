@@ -39,7 +39,8 @@ public class TaskReminder extends AppCompatActivity {
             return insets;
         });
 
-        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), Settings.System.DEFAULT_RINGTONE_URI);
+        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), Settings.System.DEFAULT_ALARM_ALERT_URI);
+        mp.setVolume(0.6f, 0.6f);
         mp.start();
 
         Bundle b = getIntent().getExtras();
