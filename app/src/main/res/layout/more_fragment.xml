@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="More Fragment"
-        android:textColor="@color/primary"
+        android:textColor="@color/primaryLight"
         android:textSize="@dimen/medium_value_size"
         android:fontFamily="@font/poppins_medium"/>
 </LinearLayout>
