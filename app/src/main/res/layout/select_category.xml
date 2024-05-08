@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primary"
+        android:textColor="@color/primaryLight"
         android:layout_marginVertical="@dimen/large_value_size"
         android:text="Select Category"
         android:textSize="@dimen/large_font_size"
@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary"
+            android:textColor="@color/secondaryLight"
             android:text="Work"
             android:textSize="@dimen/medium_font_size"
             android:fontFamily="@font/poppins_medium"/>
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary"
+            android:textColor="@color/secondaryLight"
             android:text="Personal"
             android:textSize="@dimen/medium_font_size"
             android:fontFamily="@font/poppins_medium"/>
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary"
+            android:textColor="@color/secondaryLight"
             android:text="Study"
             android:textSize="@dimen/medium_font_size"
             android:fontFamily="@font/poppins_medium"/>
@@ -115,7 +115,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary"
+            android:textColor="@color/secondaryLight"
             android:text="Uncategorized"
             android:textSize="@dimen/medium_font_size"
             android:fontFamily="@font/poppins_medium"/>
