@@ -136,12 +136,12 @@ public class TasksPageFragment extends Fragment {
     }
 
     void refreshButtonColors(){
-        allLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiary)));
-        allText.setTextColor(getResources().getColor(R.color.secondary));
-        pendingLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiary)));
-        pendingText.setTextColor(getResources().getColor(R.color.secondary));
-        completedLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiary)));
-        completedText.setTextColor(getResources().getColor(R.color.secondary));
+        allLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiaryPrimary)));
+        allText.setTextColor(getResources().getColor(R.color.secondaryLight));
+        pendingLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiaryPrimary)));
+        pendingText.setTextColor(getResources().getColor(R.color.secondaryLight));
+        completedLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiaryPrimary)));
+        completedText.setTextColor(getResources().getColor(R.color.secondaryLight));
     }
 
     void showMessage(final String message){
