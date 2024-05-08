@@ -51,7 +51,7 @@
                         android:paddingVertical="@dimen/regular_value_size"
                         android:paddingHorizontal="@dimen/medium_value_size"
                         android:layout_width="wrap_content"
-                        android:backgroundTint="@color/tertiary"
+                        android:backgroundTint="@color/tertiaryPrimary"
                         android:background="@drawable/button_background"
                         android:layout_height="wrap_content">
                         <TextView
@@ -61,7 +61,7 @@
                             android:fontFamily="@font/poppins_regular"
                             android:textSize="@dimen/small_font_size"
                             android:text="Pending"
-                            android:textColor="@color/secondary"/>
+                            android:textColor="@color/secondaryLight"/>
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/completed_layout"
@@ -69,7 +69,7 @@
                         android:paddingVertical="@dimen/regular_value_size"
                         android:paddingHorizontal="@dimen/medium_value_size"
                         android:layout_width="wrap_content"
-                        android:backgroundTint="@color/tertiary"
+                        android:backgroundTint="@color/tertiaryPrimary"
                         android:background="@drawable/button_background"
                         android:layout_height="wrap_content">
                         <TextView
@@ -79,7 +79,7 @@
                             android:fontFamily="@font/poppins_regular"
                             android:textSize="@dimen/small_font_size"
                             android:text="Completed"
-                            android:textColor="@color/secondary"/>
+                            android:textColor="@color/secondaryLight"/>
                     </LinearLayout>
                 </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView
@@ -117,7 +117,7 @@
                 android:layout_marginTop="@dimen/medium_value_size"
                 android:text="No Taskz Today"
                 android:textSize="@dimen/medium_font_size"
-                android:textColor="@color/primary"
+                android:textColor="@color/primaryLight"
                 android:fontFamily="@font/poppins_medium"
                 android:layout_gravity="center"/>
         </LinearLayout>
