@@ -20,10 +20,12 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Tasks_Page_ViewHolder> {
-    ArrayList<TaskModel> current_tasks;
+    private ArrayList<TaskModel> current_tasks;
+    private Context context;
 
-    public TasksListAdapter(ArrayList<TaskModel> current_tasks){
+    public TasksListAdapter(Context context,ArrayList<TaskModel> current_tasks){
         this.current_tasks = current_tasks;
+        this.context = context;
     }
 
     @NonNull
@@ -56,6 +58,8 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
             holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.themeColor)));
             holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
+
+        final AlarmManager manager = new AlarmManager(context.getApplicationContext(), context);
         final View.OnClickListener toggleStatus = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +72,10 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
                     holder.timeText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.white));
                     holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.themeColor)));
                     holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                    if(Calendar.getInstance().toInstant().isBefore(task.date.toInstant())){
+                        manager.cancelAlarm(task);
+                    }
                 }
                 else{
                     task.updateStatus(TaskStatus.Pending);
@@ -77,6 +85,11 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
                     holder.timeText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.secondary));
                     holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.tertiary)));
                     holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+
+                    if(Calendar.getInstance().toInstant().isBefore(task.date.toInstant())){
+                        manager.setAlarm(task);
+
+                    }
 
                 }
 
@@ -119,7 +132,7 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
             checkButton = itemView.findViewById(R.id.checkBtn);
         }
     }
-    void showMessage(final String message, Context context){
+    void showMessage(final String message){
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
