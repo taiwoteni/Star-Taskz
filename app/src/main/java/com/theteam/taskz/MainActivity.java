@@ -9,14 +9,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
 import java.sql.Time;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,6 +62,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         requestNotificationPermission();
 
+        AlarmManager.speech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i == TextToSpeech.SUCCESS){
+                    for(final Voice v: AlarmManager.speech.getVoices()){
+                        Log.v("VOICES", v.getName());
+                    }
+
+                    final int res = AlarmManager.speech.setLanguage(new Locale("en", "US"));
+
+
+
+                    if(res == TextToSpeech.LANG_MISSING_DATA || res==TextToSpeech.LANG_NOT_SUPPORTED){
+                        AlarmManager.speech.setLanguage(Locale.ENGLISH);
+                        AlarmManager.speech.setVoice(new Voice("eng-USA",Locale.ENGLISH, Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_LOW,true, null));
+                        showMessage("Did initialize");
+                    }
+                    else{
+                        final Voice voice = new Voice("en-us-x-tpf-localmale",new Locale("en", "US"), Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_LOW,true, null);
+                        AlarmManager.speech.setVoice(voice);
+                    }
+                    AlarmManager.speech.speak("Welcome",TextToSpeech.QUEUE_ADD, null,null);
+
+                }
+                else{
+                    AlarmManager.speech=null;
+
+                }
+            }
+        });
+
         app_name = (TextView) findViewById(R.id.app_name);
         lottie = (LottieAnimationView) findViewById(R.id.loading_lottie);
 
@@ -64,6 +100,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    void showMessage(final String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void startAnimation(){
