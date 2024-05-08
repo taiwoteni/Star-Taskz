@@ -49,7 +49,7 @@ public class AlarmManager {
     public void setAlarm(TaskModel model){
         Bundle b = new Bundle();
         b.putString("TASK", new Gson().toJson(model.toJson()));
-        Intent intent = new Intent(activity_context, AlarmsReceiver.class);
+        Intent intent = new Intent(application_context, AlarmsReceiver.class);
         intent.putExtras(b);
         final Calendar calendar = (Calendar) model.date.clone();
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -62,7 +62,7 @@ public class AlarmManager {
         pi = PendingIntent.getBroadcast(application_context, model.notifIdExists?model.notifId:NOTIF_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_MUTABLE);
 
         if(star_taskz == null){
-            star_taskz = (android.app.AlarmManager) activity_context.getSystemService(Context.ALARM_SERVICE);
+            star_taskz = (android.app.AlarmManager) application_context.getSystemService(Context.ALARM_SERVICE);
         }
 
         star_taskz.set(android.app.AlarmManager.RTC_WAKEUP, time, pi);
