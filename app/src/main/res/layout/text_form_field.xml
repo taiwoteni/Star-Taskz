@@ -32,8 +32,8 @@
             android:textCursorDrawable="@drawable/cursor_drawable"
             android:fontFamily="@font/poppins_regular"
             android:paddingLeft="@dimen/medium_value_size"
-            android:textColorHint="@color/secondary"
-            android:textColor="@color/primary"
+            android:textColorHint="@color/secondaryLight"
+            android:textColor="@color/primaryLight"
             android:textSize="@dimen/regular_font_size"/>
     </LinearLayout>
     <ImageView
