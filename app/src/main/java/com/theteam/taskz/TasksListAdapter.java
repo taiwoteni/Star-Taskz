@@ -45,9 +45,9 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
 
         if(task.status == TaskStatus.Pending){
             holder.checkButton.setImageResource(R.drawable.check_outline);
-            holder.checkButton.setColorFilter(holder.itemView.getContext().getResources().getColor(R.color.secondary));
-            holder.timeText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.secondary));
-            holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.tertiary)));
+            holder.checkButton.setColorFilter(holder.itemView.getContext().getResources().getColor(R.color.secondaryLight));
+            holder.timeText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.secondaryLight));
+            holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.tertiaryPrimary)));
             holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
         }
@@ -81,9 +81,9 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
                     task.updateStatus(TaskStatus.Pending);
                     taskManager.updateTask(task);
                     holder.checkButton.setImageResource(R.drawable.check_outline);
-                    holder.checkButton.setColorFilter(holder.itemView.getContext().getResources().getColor(R.color.secondary));
-                    holder.timeText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.secondary));
-                    holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.tertiary)));
+                    holder.checkButton.setColorFilter(holder.itemView.getContext().getResources().getColor(R.color.secondaryLight));
+                    holder.timeText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.secondaryLight));
+                    holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.tertiaryPrimary)));
                     holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
                     if(Calendar.getInstance().toInstant().isBefore(task.date.toInstant())){
