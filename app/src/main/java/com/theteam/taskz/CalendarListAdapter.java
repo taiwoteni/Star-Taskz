@@ -53,8 +53,8 @@ public class CalendarListAdapter extends BaseAdapter {
         final LinearLayout taskListLayoutRoot = calendarView.findViewById(R.id.tasks_list_layout_root);
         final LinearLayout taskListLayout = taskListLayoutRoot.findViewById(R.id.tasks_list_layout);
 
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:00", Locale.getDefault());
-        time_text.setText(dateFormat.format(model.date.getTime()));
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("HH a", Locale.getDefault());
+        time_text.setText(dateFormat.format(model.date.getTime()).toUpperCase());
         taskListLayout.removeAllViews();
 
         if(model.tasks.isEmpty()){
