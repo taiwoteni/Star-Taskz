@@ -29,7 +29,9 @@ public class CalendarPageFragment extends Fragment {
     private TaskStatus status = null;
 
 
-    public CalendarPageFragment(){}
+    public CalendarPageFragment(){
+        date = Calendar.getInstance();
+    }
 
     public CalendarPageFragment(Calendar date){
         this.date = date;
