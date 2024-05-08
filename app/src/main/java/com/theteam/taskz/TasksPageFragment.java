@@ -37,8 +37,9 @@ public class TasksPageFragment extends Fragment {
     RecyclerView taskRecyclerView;
     LinearLayout noTaskLayout, taskLayout, allLayout,pendingLayout,completedLayout;
 
-
-    public TasksPageFragment(){}
+    public TasksPageFragment(){
+        date = Calendar.getInstance();
+    }
 
     public TasksPageFragment(Calendar date){
         this.date = date;
@@ -176,7 +177,7 @@ public class TasksPageFragment extends Fragment {
             }
         }
 
-        tasksListAdapter = new TasksListAdapter(tasks);
+        tasksListAdapter = new TasksListAdapter(getActivity(),tasks);
         taskRecyclerView.setAdapter(tasksListAdapter);
         tasksListAdapter.notifyDataSetChanged();
 
