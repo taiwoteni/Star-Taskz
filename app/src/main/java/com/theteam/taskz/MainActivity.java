@@ -69,21 +69,19 @@ public class MainActivity extends AppCompatActivity {
                     for(final Voice v: AlarmManager.speech.getVoices()){
                         Log.v("VOICES", v.getName());
                     }
-
                     final int res = AlarmManager.speech.setLanguage(new Locale("en", "US"));
-
-
+                    AlarmManager.speech.setPitch(0.25f);
+                    AlarmManager.speech.setSpeechRate(1.5f);
 
                     if(res == TextToSpeech.LANG_MISSING_DATA || res==TextToSpeech.LANG_NOT_SUPPORTED){
                         AlarmManager.speech.setLanguage(Locale.ENGLISH);
                         AlarmManager.speech.setVoice(new Voice("eng-USA",Locale.ENGLISH, Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_LOW,true, null));
-                        showMessage("Did initialize");
                     }
                     else{
-                        final Voice voice = new Voice("en-us-x-tpf-localmale",new Locale("en", "US"), Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_LOW,true, null);
+                        final Voice voice = new Voice("eng-USA",new Locale("en", "US"), Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_HIGH,true, null);
                         AlarmManager.speech.setVoice(voice);
                     }
-                    AlarmManager.speech.speak("Welcome",TextToSpeech.QUEUE_ADD, null,null);
+//                    AlarmManager.speech.speak("Welcome",TextToSpeech.QUEUE_ADD, null,null);
 
                 }
                 else{
@@ -125,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+                        Intent i = new Intent(getApplicationContext(),HomeActivity.class);
                         startActivity(i);
                         cancel();
                         finish();

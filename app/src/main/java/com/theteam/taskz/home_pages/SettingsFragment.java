@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.theteam.taskz.R;
 
-public class MoreFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
 
 

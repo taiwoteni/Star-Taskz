@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.theteam.taskz.home_pages.AIFragment;
 import com.theteam.taskz.home_pages.CalendarFragment;
 import com.theteam.taskz.home_pages.FocusFragment;
-import com.theteam.taskz.home_pages.MoreFragment;
+import com.theteam.taskz.home_pages.SettingsFragment;
 import com.theteam.taskz.home_pages.TaskFragment;
-import com.theteam.taskz.home_pages.WeatherFragment;
 
 import java.util.ArrayList;
 
@@ -32,9 +32,9 @@ public class HomeActivity extends AppCompatActivity {
 
         views.add(new TaskFragment());
         views.add(new CalendarFragment());
+        views.add(new AIFragment());
         views.add(new FocusFragment());
-//        views.add(new WeatherFragment());
-//        views.add(new MoreFragment());
+        views.add(new SettingsFragment());
 
 
         bottomNavigationView = findViewById(R.id.bottom_nav_bar);
@@ -80,12 +80,12 @@ public class HomeActivity extends AppCompatActivity {
                 return 0;
             case R.id.navigation_calender:
                 return 1;
+            case R.id.navigation_ai:
+                return 2;
             case R.id.navigation_focus:
-                return 2;
-//            case R.id.navigation_weather:
-//                return 3;
+                return 3;
             default:
-                return 2;
+                return 4;
         }
     }
     int getNavBarItemIndex(int position) {
@@ -94,12 +94,12 @@ public class HomeActivity extends AppCompatActivity {
                 return R.id.navigation_tasks;
             case 1:
                 return R.id.navigation_calender;
-//            case 3:
-//                return R.id.navigation_weather;
-//            case 3:
-//                return R.id.navigation_settings;
-            default:
+            case 2:
+                return R.id.navigation_ai;
+            case 3:
                 return R.id.navigation_focus;
+            default:
+                return R.id.navigation_settings;
         }
     }
 
