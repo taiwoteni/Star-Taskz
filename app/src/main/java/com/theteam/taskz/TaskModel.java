@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TaskModel {
-    Calendar date;
-    String name;
+    public Calendar date;
+    public String name;
     String id;
 
     int notifId = 0;
     boolean notifIdExists = false;
-    String category;
+    public String category;
 
     TaskStatus status;
 
