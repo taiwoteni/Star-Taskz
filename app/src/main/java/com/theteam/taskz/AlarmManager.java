@@ -46,7 +46,7 @@ public class AlarmManager {
 
 
 
-    public void setAlarm(TaskModel model){
+    public void setAlarm(TaskModel model, boolean speak){
         Bundle b = new Bundle();
         b.putString("TASK", new Gson().toJson(model.toJson()));
         Intent intent = new Intent(application_context, AlarmsReceiver.class);
@@ -57,9 +57,14 @@ public class AlarmManager {
 
 
         //Because there's always a 2 minute lag.
-        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE)-1);
-        time = calendar.getTimeInMillis();
-        pi = PendingIntent.getBroadcast(application_context, model.notifIdExists?model.notifId:NOTIF_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_MUTABLE);
+//        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+        long currentTime = System.currentTimeMillis();
+        //To calculate the time difference between the calendar's time and the current time.
+        long diff = calendar.getTimeInMillis() - currentTime;
+
+
+        time = System.currentTimeMillis() + diff;
+        pi = PendingIntent.getBroadcast(application_context, model.notifIdExists?model.notifId:NOTIF_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
 
         if(star_taskz == null){
             star_taskz = (android.app.AlarmManager) application_context.getSystemService(Context.ALARM_SERVICE);
@@ -114,8 +119,10 @@ public class AlarmManager {
             timeDistance = getDaysDistance(model);
         }
 
-        AlarmManager.speech.speak("Star Tasks speaking,", TextToSpeech.QUEUE_ADD, null, null);
-        AlarmManager.speech.speak("Your new task would start " + timeDistance, TextToSpeech.QUEUE_ADD, null, null);
+        if(speak){
+            AlarmManager.speech.speak("Star speaking,", TextToSpeech.QUEUE_ADD, null, null);
+            AlarmManager.speech.speak("Your new task would start " + timeDistance, TextToSpeech.QUEUE_ADD, null, null);
+        }
 
 
 
