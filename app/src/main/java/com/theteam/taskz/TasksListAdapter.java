@@ -87,7 +87,7 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
                     holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
                     if(Calendar.getInstance().toInstant().isBefore(task.date.toInstant())){
-                        manager.setAlarm(task);
+                        manager.setAlarm(task, false);
 
                     }
 
