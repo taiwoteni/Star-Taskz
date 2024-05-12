@@ -107,7 +107,7 @@ public class CreateTask extends AppCompatActivity{
                         holder.addTask(model);
 
                         final AlarmManager taskReminder = new AlarmManager(getApplicationContext(), CreateTask.this);
-                        taskReminder.setAlarm(model);
+                        taskReminder.setAlarm(model, true);
                         finish();
 
 
