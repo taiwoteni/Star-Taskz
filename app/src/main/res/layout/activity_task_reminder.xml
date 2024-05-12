@@ -30,28 +30,33 @@
             android:gravity="start"
             android:layout_marginBottom="@dimen/extra_large_value_size"
             android:layout_marginStart="@dimen/large_value_size"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your task, "
+                    android:textSize="@dimen/regular_font_size"
+                    android:textColor="@color/secondaryLight"
+                    android:fontFamily="@font/poppins_regular"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/task_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Boil Eggs"
+                    android:textSize="@dimen/regular_font_size"
+                    android:textColor="@color/primaryLight"
+                    android:fontFamily="@font/poppins_semibold"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your task, "
-                android:textSize="@dimen/regular_font_size"
-                android:textColor="@color/secondaryLight"
-                android:fontFamily="@font/poppins_regular"
-                tools:ignore="HardcodedText" />
-            <TextView
-                android:id="@+id/task_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Boil Eggs"
-                android:textSize="@dimen/regular_font_size"
-                android:textColor="@color/primaryLight"
-                android:fontFamily="@font/poppins_semibold"
-                tools:ignore="HardcodedText" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" Is to start now."
+                android:text="Is to start now :)"
                 android:textSize="@dimen/regular_font_size"
                 android:textColor="@color/secondaryLight"
                 android:fontFamily="@font/poppins_regular"
