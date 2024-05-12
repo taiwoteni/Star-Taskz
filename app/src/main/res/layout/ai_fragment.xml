@@ -52,16 +52,20 @@
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/large_value_size"
                 android:gravity="center_horizontal|bottom">
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/speak_lottie"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:scaleType="centerCrop"
-                    android:scaleX="1.2"
-                    android:scaleY="1.2"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/speak" />
+                <LinearLayout
+                    android:id="@+id/record_button"
+                    android:layout_width="@dimen/extra_large_icon_size"
+                    android:layout_height="@dimen/extra_large_icon_size"
+                    android:background="@drawable/circle_background"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/record_icon"
+                        android:layout_height="@dimen/medium_icon_size"
+                        android:layout_width="@dimen/medium_icon_size"
+                        android:src="@drawable/record"
+                        app:tint="@color/white"
+                        android:scaleType="centerCrop"/>
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
 
