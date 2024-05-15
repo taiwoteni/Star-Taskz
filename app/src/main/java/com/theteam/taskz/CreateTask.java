@@ -80,10 +80,6 @@ public class CreateTask extends AppCompatActivity{
                             showMessage("Task Name is Empty");
                             return;
                         }
-                        if(taskDate.getText().trim().isEmpty()){
-                            showMessage("Date of task is Empty");
-                            return;
-                        }
                         if(taskTime.getText().trim().isEmpty()){
                             showMessage("Time of task is Empty");
                             return;
@@ -171,8 +167,6 @@ public class CreateTask extends AppCompatActivity{
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
-
-                showMessage("time picked");
                 taskTime.setText(new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(calendar.getTime()));
             }
         },hour,minute, false);
