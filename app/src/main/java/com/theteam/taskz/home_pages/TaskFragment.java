@@ -1,5 +1,6 @@
 package com.theteam.taskz.home_pages;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.theteam.taskz.CreateTask;
 import com.theteam.taskz.R;
@@ -28,6 +31,7 @@ public class TaskFragment extends Fragment {
 
     private TextView dayText,dateText,todayText;
     private ImageView categoryIcon;
+    private static LottieAnimationView confetti_lottie;
 
     private FloatingActionButton fab;
 
@@ -55,6 +59,35 @@ public class TaskFragment extends Fragment {
         todayText = view.findViewById(R.id.today_text);
         categoryIcon = view.findViewById(R.id.category_icon);
         fab = view.findViewById(R.id.fab);
+        confetti_lottie = (LottieAnimationView) view.findViewById(R.id.confetti_lottie);
+
+        confetti_lottie.setAnimation(R.raw.confetti);
+        confetti_lottie.setRepeatCount(0);
+        confetti_lottie.setSpeed(0.95f);
+        confetti_lottie.setRepeatMode(LottieDrawable.RESTART);
+        confetti_lottie.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(@NonNull Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(@NonNull Animator animator) {
+                stopConfetti();
+            }
+
+            @Override
+            public void onAnimationCancel(@NonNull Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(@NonNull Animator animator) {
+
+            }
+        });
+
+
 
         fab.setOnClickListener(view1 -> {
 //            createTaskView = new CreateTaskView(TaskFragment.this);
@@ -148,6 +181,15 @@ public class TaskFragment extends Fragment {
 
     void showMessage(final String message){
         Toast.makeText(requireActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void stopConfetti(){
+        confetti_lottie.setVisibility(View.GONE);
+    }
+
+    public static void startConfetti(){
+        confetti_lottie.setVisibility(View.VISIBLE);
+        confetti_lottie.playAnimation();
     }
 
     private ArrayList<Calendar> generateDates() {
