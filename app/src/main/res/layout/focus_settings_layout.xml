@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/medium_value_size"
     android:paddingVertical="@dimen/large_value_size"
+    android:background="?attr/colorOnBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -13,7 +14,7 @@
         android:layout_marginBottom="@dimen/large_value_size"
         android:textSize="@dimen/large_value_size"
         android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/black"/>
+        android:textColor="?attr/colorPrimary"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,8 +31,8 @@
             <NumberPicker
                 android:id="@+id/minutes_picker"
                 android:layout_width="80dp"
-                android:background="@color/backgroundLight"
                 android:divider="@color/secondaryLight"
+                android:showDividers="end|beginning"
                 android:layout_height="100dp"
                 android:layout_gravity="center"/>
             <TextView
@@ -39,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="Min"
                 android:paddingLeft="@dimen/medium_value_size"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimary"
                 android:fontFamily="@font/poppins_medium"/>
 
         </LinearLayout>
@@ -53,6 +54,7 @@
                 android:id="@+id/seconds_picker"
                 android:layout_width="80dp"
                 android:divider="@color/secondaryLight"
+                android:showDividers="end|beginning"
                 android:layout_height="100dp"
                 android:layout_gravity="center"/>
             <TextView
@@ -60,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sec"
                 android:paddingLeft="@dimen/medium_value_size"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorPrimary"
                 android:fontFamily="@font/poppins_medium"/>
 
         </LinearLayout>
