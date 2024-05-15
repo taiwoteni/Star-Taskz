@@ -7,6 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="?attr/background"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/time_text"
@@ -15,7 +16,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="@dimen/regular_value_size"
             android:textSize="@dimen/regular_font_size"
-            android:textColor="@color/primaryLight"
+            android:textColor="?attr/colorPrimary"
             android:fontFamily="@font/poppins_semibold"
             android:text="10:00"/>
         <LinearLayout
@@ -28,12 +29,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal"
-                android:background="@color/tertiaryPrimary"
+                android:background="?attr/colorTertiary"
                 android:padding="@dimen/regular_value_size">
 
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>
