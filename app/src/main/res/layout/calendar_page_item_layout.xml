@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:swipeRefreshLayoutProgressSpinnerBackgroundColor="@color/themeColor"
-    android:foregroundTint="@color/white"
+    android:foregroundTint="?attr/background"
     android:layout_height="match_parent">
     <ListView
         android:id="@+id/calendar_page_item_list"
