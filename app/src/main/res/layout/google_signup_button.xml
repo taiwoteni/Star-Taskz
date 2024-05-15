@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Google"
         android:fontFamily="@font/poppins_medium"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorPrimary"
 
         tools:ignore="HardcodedText" />
 
