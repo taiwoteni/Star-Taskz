@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/primaryLight"
+                android:textColor="?attr/colorPrimary"
                 android:ellipsize="end"
                 android:lines="1"
                 android:text="Name"
@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/secondaryLight"
+                    android:textColor="?attr/colorSecondary"
                     android:text="Age"
                     android:textSize="10sp"/>
 
@@ -74,10 +74,10 @@
             android:paddingHorizontal="@dimen/regular_value_size"
             android:paddingVertical="@dimen/small_value_size"
             android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/secondaryLight"
+            android:textColor="?attr/colorSecondary"
             android:text="00:30"
             android:textSize="12sp"
-            android:backgroundTint="@color/tertiaryPrimary"
+            android:backgroundTint="?attr/colorTertiary"
             android:background="@drawable/button_background"/>
     </RelativeLayout>
     <LinearLayout
