@@ -1,18 +1,23 @@
 package com.theteam.taskz;
 
+import android.app.UiModeManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.theteam.taskz.home_pages.TaskFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +42,8 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
 
     @Override
     public void onBindViewHolder(@NonNull Tasks_Page_ViewHolder holder, int position) {
+        final ThemeManager theme = new ThemeManager(context);
+
         final TaskModel task = current_tasks.get(position);
         final SimpleDateFormat dateFormat = new SimpleDateFormat(":mm a", Locale.getDefault());
         holder.nameTxt.setText(task.name);
@@ -45,9 +52,9 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
 
         if(task.status == TaskStatus.Pending){
             holder.checkButton.setImageResource(R.drawable.check_outline);
-            holder.checkButton.setColorFilter(holder.itemView.getContext().getResources().getColor(R.color.secondaryLight));
-            holder.timeText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.secondaryLight));
-            holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.tertiaryPrimary)));
+            holder.checkButton.setColorFilter(theme.secondary);
+            holder.timeText.setTextColor(theme.secondary);
+            holder.timeText.setBackgroundTintList(ColorStateList.valueOf(theme.tertiary));
             holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
         }
@@ -66,6 +73,7 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
                 final TaskManager taskManager = new TaskManager(holder.itemView.getContext());
                 if(task.status == TaskStatus.Pending){
                     task.updateStatus(TaskStatus.Completed);
+                    TaskFragment.startConfetti();
                     taskManager.updateTask(task);
                     holder.checkButton.setImageResource(R.drawable.check);
                     holder.checkButton.setColorFilter(holder.itemView.getContext().getResources().getColor(R.color.themeColor));
@@ -81,9 +89,9 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
                     task.updateStatus(TaskStatus.Pending);
                     taskManager.updateTask(task);
                     holder.checkButton.setImageResource(R.drawable.check_outline);
-                    holder.checkButton.setColorFilter(holder.itemView.getContext().getResources().getColor(R.color.secondaryLight));
-                    holder.timeText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.secondaryLight));
-                    holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.tertiaryPrimary)));
+                    holder.checkButton.setColorFilter(theme.secondary);
+                    holder.timeText.setTextColor(theme.secondary);
+                    holder.timeText.setBackgroundTintList(ColorStateList.valueOf(theme.tertiary));
                     holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
                     if(Calendar.getInstance().toInstant().isBefore(task.date.toInstant())){
@@ -95,9 +103,17 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
 
             }
         };
+        final View.OnLongClickListener viewPopup = new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showPopupMenu(holder.timeText, position, holder);
+                return true;
+            }
+        };
 
         holder.checkButton.setOnClickListener(toggleStatus);
         holder.itemView.setOnClickListener(toggleStatus);
+        holder.itemView.setOnLongClickListener(viewPopup);
 
 
         if(position == 0){
@@ -134,6 +150,26 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
     }
     void showMessage(final String message){
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    void showPopupMenu(View v, int index, Tasks_Page_ViewHolder holder){
+        PopupMenu popupMenu = new PopupMenu(context, v);
+        popupMenu.getMenuInflater().inflate(R.menu.task_item_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.delete){
+                    new TaskManager(context).deleteTask(current_tasks.get(index));
+                    showMessage("Task has been deleted. Refresh🌟");
+
+                }
+
+
+                return true;
+            }
+        });
+        popupMenu.show();
+
     }
 
 }
