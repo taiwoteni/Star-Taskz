@@ -8,7 +8,6 @@
     <LinearLayout
         android:orientation="vertical"
         android:gravity="start"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -25,7 +24,7 @@
                 android:layout_marginTop="@dimen/regular_value_size"
                 android:layout_marginEnd="@dimen/medium_value_size"
                 android:src="@drawable/calendar"
-                app:tint="@color/secondaryLight"
+                app:tint="?attr/colorSecondary"
                 android:scaleType="centerCrop"/>
             <LinearLayout
                 android:layout_width="0dp"
@@ -43,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
                         android:text="Sunday"
-                        android:textColor="@color/primaryLight"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="@dimen/large_font_size"/>
                     <TextView
                         android:id="@+id/today_text"
@@ -63,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
                     android:text="May 5"
-                    android:textColor="@color/secondaryLight"
+                    android:textColor="?attr/colorSecondary"
                     android:textSize="12sp"/>
 
             </LinearLayout>
