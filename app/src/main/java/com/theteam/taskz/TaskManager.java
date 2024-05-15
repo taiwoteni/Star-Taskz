@@ -44,6 +44,27 @@ public class TaskManager {
         preferences.edit().putString("tasks", gson.toJson(list, new TypeToken<ArrayList<HashMap<String,Object>>>(){}.getType())).apply();
     }
 
+    public void deleteTask(TaskModel model){
+        Gson gson = new Gson();
+        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
+        final String jsonString = preferences.getString("tasks", "[]");
+        Type listType = new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType();
+        ArrayList<HashMap<String, Object>> list = gson.fromJson(jsonString, listType);
+
+        int index = -1;
+        for(int i = 0; i<getTasks().size(); i++){
+            if(getTasks().get(i).id.equals(model.id)){
+                index = i;
+                break;
+            }
+        }
+
+        if(index != -1){
+            list.remove(index);
+        }
+        preferences.edit().putString("tasks", gson.toJson(list, new TypeToken<ArrayList<HashMap<String,Object>>>(){}.getType())).apply();
+    }
+
     public void updateTask(TaskModel model){
         Gson gson = new Gson();
         SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
@@ -77,4 +98,6 @@ public class TaskManager {
     }
 
     public static TasksListAdapter tasksListAdapter;
+
+    public static CalendarListAdapter calendarListAdapter;
 }
