@@ -34,8 +34,6 @@ public class HomeActivity extends AppCompatActivity {
         views.add(new CalendarFragment());
         views.add(new AIFragment());
         views.add(new FocusFragment());
-        views.add(new SettingsFragment());
-
 
         bottomNavigationView = findViewById(R.id.bottom_nav_bar);
         viewPager = findViewById(R.id.view_pager);
@@ -82,10 +80,8 @@ public class HomeActivity extends AppCompatActivity {
                 return 1;
             case R.id.navigation_ai:
                 return 2;
-            case R.id.navigation_focus:
-                return 3;
             default:
-                return 4;
+                return 3;
         }
     }
     int getNavBarItemIndex(int position) {
@@ -96,10 +92,8 @@ public class HomeActivity extends AppCompatActivity {
                 return R.id.navigation_calender;
             case 2:
                 return R.id.navigation_ai;
-            case 3:
-                return R.id.navigation_focus;
             default:
-                return R.id.navigation_settings;
+                return R.id.navigation_focus;
         }
     }
 
