@@ -38,7 +38,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.theteam.taskz.NumberPickerUtils;
 import com.theteam.taskz.R;
+import com.theteam.taskz.ThemeManager;
 import com.theteam.taskz.view_models.LoadableButton;
 
 import java.text.DecimalFormat;
@@ -55,7 +57,7 @@ public class FocusFragment extends Fragment {
 
     private TextView start_text,stop_text,pomodorro_progress_text,not_started;
     private LinearLayout start_layout,stop_layout;
-    private CircularProgressIndicator pomodorro_progress;
+    private CircularProgressIndicator pomodorro_progress, inward_progress;
     private ImageView start_icon,stop_icon;
 
     private SharedPreferences wakePreferences, vibratePreferences, timePreference, pausePreference, soundPreference;
@@ -100,6 +102,7 @@ public class FocusFragment extends Fragment {
         start_text = view.findViewById(R.id.start_text);
         stop_text = view.findViewById(R.id.stop_text);
         not_started = view.findViewById(R.id.not_started_text);
+        inward_progress = view.findViewById(R.id.inward_progress_bar);
         settings_icon = view.findViewById(R.id.settings_icon);
 
         wakePreferences = view.getContext().getApplicationContext().getSharedPreferences("Wake_State", MODE_PRIVATE);
@@ -177,7 +180,7 @@ public class FocusFragment extends Fragment {
         minutesPicker.setMinValue(0);
         minutesPicker.setMaxValue(60);
         secondsPicker.setMinValue(0);
-        secondsPicker.setMaxValue(60);
+        secondsPicker.setMaxValue(59);
 
         minutesPicker.setValue(timePreference.getInt("setMinute", 10));
         secondsPicker.setValue(timePreference.getInt("setSecond", 00));
@@ -189,6 +192,7 @@ public class FocusFragment extends Fragment {
             secondsPicker.setTextColor(getResources().getColor(R.color.themeColor));
 
         }
+
 
 
         loadableButton.setOnClickListener(new View.OnClickListener() {
@@ -261,9 +265,25 @@ public class FocusFragment extends Fragment {
                     pomodorro_progress.setProgress((int)(time-millisUntilFinished), true);
                 }
                 saveMillisecondsFocus =  millisUntilFinished;
+                timePreference.edit().putInt("fdTimeNum", focusMin).apply();
                 pomodorro_progress_text.setText(focusMin + ":" + numberFormat.format(sec));
                 not_started.setTextColor(getResources().getColor(R.color.themeColor));
                 not_started.setText("Ends In " + focusMin + " minutes");
+                if(millisUntilFinished> time/2){
+                    pomodorro_progress.setIndicatorColor(getResources().getColor(R.color.themeColor));
+                    inward_progress.setIndicatorColor(getResources().getColor(R.color.themeColor));
+                }
+
+                if(millisUntilFinished<= time/2 && millisUntilFinished>time/4){
+                    pomodorro_progress.setIndicatorColor(getResources().getColor(R.color.yellow));
+                    inward_progress.setIndicatorColor(getResources().getColor(R.color.yellow));
+                }
+                if(millisUntilFinished <= time/4){
+                    pomodorro_progress.setIndicatorColor(getResources().getColor(R.color.red));
+                    inward_progress.setIndicatorColor(getResources().getColor(R.color.red));
+
+                }
+
             }
 
 
@@ -272,10 +292,12 @@ public class FocusFragment extends Fragment {
                 playSound(soundDuration);
                 offWakeLock();
                 vibrateState();
+                pomodorro_progress.setProgress((int)time, true);
                 pomodorro_progress_text.setText(focusDuration + ":00");
                 state = TimeState.Stoppped;
                 timerButtonsDynamics();
                 showPomodoroNotification(true);
+                endTimer();
 
 //                if (pomo == 1){
 //                    showMessage("Time Up!!");
@@ -310,6 +332,7 @@ public class FocusFragment extends Fragment {
     void endTimer(){
         state = TimeState.Stoppped;
         pomodorro_progress_text.setText(focusDuration + ":00");
+        timePreference.edit().putInt("fdTimeNum", timePreference.getInt("setMinute", 10)).apply();
         pomodorro_progress.setProgress((int)intitialSetMilliseconds,true);
         timerButtonsDynamics();
         saveMillisecondsFocus = 0;
@@ -353,11 +376,12 @@ public class FocusFragment extends Fragment {
     //Inorder to configure the buttons to show the expected states
     //...When the TimeState changes
     void timerButtonsDynamics() {
+        final ThemeManager theme = new ThemeManager(requireActivity());
         if(state == TimeState.Stoppped){
             //To set the stop layout to disabled
-            stop_layout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiaryPrimary)));
-            stop_icon.setColorFilter(getResources().getColor(R.color.secondaryLight));
-            stop_text.setTextColor(getResources().getColor(R.color.secondaryLight));
+            stop_layout.setBackgroundTintList(ColorStateList.valueOf(theme.tertiary));
+            stop_icon.setColorFilter(theme.secondary);
+            stop_text.setTextColor(theme.secondary);
             stop_layout.setEnabled(false);
 
             //To set the start layout to enabled and start mode
@@ -367,7 +391,7 @@ public class FocusFragment extends Fragment {
             start_icon.setImageResource(R.drawable.play);
             start_text.setText("Start");
 
-            not_started.setTextColor(getResources().getColor(R.color.secondaryLight));
+            not_started.setTextColor(theme.secondary);
             not_started.setText("Not Started");
         }
         if(state == TimeState.Started || state == TimeState.Resumed){
