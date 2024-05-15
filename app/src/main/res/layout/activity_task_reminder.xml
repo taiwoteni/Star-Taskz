@@ -89,7 +89,7 @@
             android:layout_weight="1"
             app:text="SEEN"
             app:textColor="@color/secondaryLight"
-            app:backgroundColor="@color/tertiaryPrimary"/>
+            app:backgroundColor="@color/tertiaryLight"/>
         <com.theteam.taskz.view_models.LoadableButton
             android:id="@+id/complete_button"
             android:layout_marginStart="@dimen/regular_value_size"
