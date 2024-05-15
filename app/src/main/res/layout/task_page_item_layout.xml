@@ -4,28 +4,56 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_refresh_layout"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    app:swipeRefreshLayoutProgressSpinnerBackgroundColor="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
+        android:background="?attr/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/taskLayout"
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:paddingTop="@dimen/large_value_size"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:layout_marginHorizontal="@dimen/medium_value_size">
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/task_progress"
+                    app:trackColor="?attr/colorTertiary"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:indicatorColor="@color/themeColor"
+                    app:trackThickness="9dp"
+                    app:trackCornerRadius="@dimen/medium_value_size"
+                    android:progressTint="@color/themeColor"
+                    android:progress="50"
+                    android:progressBackgroundTint="@color/themeColor"
+                    android:max="100"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/progress_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|right"
+                android:text="50% Completed"
+                android:textSize="10sp"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="?attr/colorSecondary"
+                android:layout_marginHorizontal="@dimen/medium_value_size"/>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/medium_value_size"
                 android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/medium_value_size"
-                    android:paddingTop="@dimen/medium_value_size"
+                    android:paddingTop="@dimen/large_value_size"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:id="@+id/all_layout"
@@ -51,7 +79,7 @@
                         android:paddingVertical="@dimen/regular_value_size"
                         android:paddingHorizontal="@dimen/medium_value_size"
                         android:layout_width="wrap_content"
-                        android:backgroundTint="@color/tertiaryPrimary"
+                        android:backgroundTint="?attr/colorTertiary"
                         android:background="@drawable/button_background"
                         android:layout_height="wrap_content">
                         <TextView
@@ -61,7 +89,7 @@
                             android:fontFamily="@font/poppins_regular"
                             android:textSize="@dimen/small_font_size"
                             android:text="Pending"
-                            android:textColor="@color/secondaryLight"/>
+                            android:textColor="?attr/colorSecondary"/>
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/completed_layout"
@@ -69,7 +97,7 @@
                         android:paddingVertical="@dimen/regular_value_size"
                         android:paddingHorizontal="@dimen/medium_value_size"
                         android:layout_width="wrap_content"
-                        android:backgroundTint="@color/tertiaryPrimary"
+                        android:backgroundTint="?attr/colorTertiary"
                         android:background="@drawable/button_background"
                         android:layout_height="wrap_content">
                         <TextView
@@ -79,7 +107,7 @@
                             android:fontFamily="@font/poppins_regular"
                             android:textSize="@dimen/small_font_size"
                             android:text="Completed"
-                            android:textColor="@color/secondaryLight"/>
+                            android:textColor="?attr/colorSecondary"/>
                     </LinearLayout>
                 </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView
@@ -117,7 +145,7 @@
                 android:layout_marginTop="@dimen/medium_value_size"
                 android:text="No Taskz Today"
                 android:textSize="@dimen/medium_font_size"
-                android:textColor="@color/primaryLight"
+                android:textColor="?attr/colorPrimary"
                 android:fontFamily="@font/poppins_medium"
                 android:layout_gravity="center"/>
         </LinearLayout>
