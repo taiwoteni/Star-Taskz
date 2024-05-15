@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ public class TasksPageFragment extends Fragment {
     private ArrayList<TaskModel> tasks;
     private ArrayList<TaskModel> all_tasks;
     private TaskStatus status = null;
+
+    private LinearProgressIndicator tasks_progress;
+    private TextView progress_text;
 
     LinearLayoutManager linearLayoutManager;
 
@@ -65,6 +70,9 @@ public class TasksPageFragment extends Fragment {
         allText = view.findViewById(R.id.all_text);
         pendingText = view.findViewById(R.id.pending_text);
         completedText = view.findViewById(R.id.completed_text);
+        progress_text = view.findViewById(R.id.progress_text);
+        tasks_progress = view.findViewById(R.id.task_progress);
+        tasks_progress.setProgress(0);
 
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
 
@@ -136,12 +144,13 @@ public class TasksPageFragment extends Fragment {
     }
 
     void refreshButtonColors(){
-        allLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiaryPrimary)));
-        allText.setTextColor(getResources().getColor(R.color.secondaryLight));
-        pendingLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiaryPrimary)));
-        pendingText.setTextColor(getResources().getColor(R.color.secondaryLight));
-        completedLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.tertiaryPrimary)));
-        completedText.setTextColor(getResources().getColor(R.color.secondaryLight));
+        final ThemeManager theme = new ThemeManager(requireActivity());
+        allLayout.setBackgroundTintList(ColorStateList.valueOf(theme.tertiary));
+        allText.setTextColor(theme.secondary);
+        pendingLayout.setBackgroundTintList(ColorStateList.valueOf(theme.tertiary));
+        pendingText.setTextColor(theme.secondary);
+        completedLayout.setBackgroundTintList(ColorStateList.valueOf(theme.tertiary));
+        completedText.setTextColor(theme.secondary);
     }
 
     void showMessage(final String message){
@@ -176,6 +185,19 @@ public class TasksPageFragment extends Fragment {
                 all_tasks.add(task);
             }
         }
+
+        tasks_progress.setMax(all_tasks.size());
+
+        int completed = 0;
+        for(final TaskModel task : all_tasks){
+            if(task.status == TaskStatus.Completed){
+                completed+=1;
+            }
+        }
+
+        tasks_progress.setProgress(completed,true);
+        double percentage = ((double) completed /all_tasks.size()) * 100;
+        progress_text.setText(Math.round(percentage) + "% Completed" + (percentage == 100? " ✨":""));
 
         tasksListAdapter = new TasksListAdapter(getActivity(),tasks);
         taskRecyclerView.setAdapter(tasksListAdapter);
