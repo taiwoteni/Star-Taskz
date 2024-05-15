@@ -320,7 +320,10 @@ public class AIFragment extends Fragment {
                 if(message.contains("safety")){
                     speechStart("I've been instructed by my creators not to attest to explicit, dangerous or private content.");
                 }
-                else{
+                else if(throwable.getMessage().equalsIgnoreCase("Resource has been exhausted (e.g. check quota).")){
+                    speechStart("Oops, an unprecedented error occurred. Please be more clear");
+                }
+                else {
                     speechStart(throwable.getMessage());
                 }
                 Log.v("AI", throwable.getMessage());
@@ -497,7 +500,10 @@ public class AIFragment extends Fragment {
         }
         filteredTasks.sort(new DateComparator());
 
-        if(filteredTasks.isEmpty()){
+        if(tasks.isEmpty()){
+            speechStart("You have do not have any tasks");
+        }
+        else if(filteredTasks.isEmpty()){
             speechStart("No tasks concerning your descriptions were found");
         }
         else{
