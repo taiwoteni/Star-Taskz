@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="?attr/colorOnBackground"
     android:paddingHorizontal="@dimen/medium_value_size"
     android:paddingBottom="@dimen/medium_value_size"
     android:layout_width="match_parent"
@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryLight"
+        android:textColor="?attr/colorPrimary"
         android:layout_marginVertical="@dimen/large_value_size"
         android:text="Select Category"
         android:textSize="@dimen/large_font_size"
@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondaryLight"
+            android:textColor="?attr/colorSecondary"
             android:text="Work"
             android:textSize="@dimen/medium_font_size"
             android:fontFamily="@font/poppins_medium"/>
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondaryLight"
+            android:textColor="?attr/colorSecondary"
             android:text="Personal"
             android:textSize="@dimen/medium_font_size"
             android:fontFamily="@font/poppins_medium"/>
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondaryLight"
+            android:textColor="?attr/colorSecondary"
             android:text="Study"
             android:textSize="@dimen/medium_font_size"
             android:fontFamily="@font/poppins_medium"/>
@@ -115,7 +115,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondaryLight"
+            android:textColor="?attr/colorSecondary"
             android:text="Uncategorized"
             android:textSize="@dimen/medium_font_size"
             android:fontFamily="@font/poppins_medium"/>
