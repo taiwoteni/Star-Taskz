@@ -21,9 +21,4 @@
 <!--        android:id="@+id/navigation_weather"-->
 <!--        android:icon="@drawable/weather"-->
 <!--        android:title="Weather" />-->
-
-    <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/settings"
-        android:title="Settings" />
 </menu>
