@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    android:background="?attr/background"
     android:layout_height="match_parent"
     tools:context=".CreateTask">
     <LinearLayout
@@ -19,7 +19,7 @@
             android:text="Create a Task."
             android:layout_marginStart="@dimen/large_value_size"
             android:textSize="@dimen/large_font_size"
-            android:textColor="@color/primaryLight"
+            android:textColor="?attr/colorPrimary"
             android:layout_marginBottom="@dimen/small_value_size"
             android:fontFamily="@font/poppins_semibold"
             tools:ignore="HardcodedText" />
@@ -29,7 +29,7 @@
             android:text="Enter the following details."
             android:layout_marginStart="@dimen/large_value_size"
             android:textSize="@dimen/regular_font_size"
-            android:textColor="@color/secondaryLight"
+            android:textColor="?attr/colorSecondary"
             android:layout_marginBottom="@dimen/extra_large_value_size"
             android:fontFamily="@font/poppins_regular"
             tools:ignore="HardcodedText" />
@@ -44,8 +44,7 @@
             app:hint="Task Name or Description"
             app:isPassword="false"
             android:inputType="text"
-
-            app:hintColor="@color/secondaryLight"
+            app:hintColor="?attr/colorSecondary"
             app:prefixIcon="@drawable/info"/>
         <com.theteam.taskz.view_models.TextInputFormField
             android:id="@+id/task_date_form"
@@ -59,7 +58,7 @@
             app:isPassword="false"
             android:inputType="none"
             app:readOnly="true"
-            app:hintColor="@color/secondaryLight"
+            app:hintColor="?attr/colorSecondary"
             app:prefixIcon="@drawable/calendar"/>
         <com.theteam.taskz.view_models.TextInputFormField
             android:id="@+id/task_time_form"
@@ -73,7 +72,7 @@
             app:isPassword="false"
             android:inputType="none"
             app:readOnly="true"
-            app:hintColor="@color/secondaryLight"
+            app:hintColor="?attr/colorSecondary"
             app:prefixIcon="@drawable/pomodoro"/>
         <com.theteam.taskz.view_models.TextInputFormField
             android:id="@+id/task_category_form"
@@ -87,7 +86,7 @@
             app:isPassword="false"
             android:inputType="none"
             app:readOnly="true"
-            app:hintColor="@color/secondaryLight"
+            app:hintColor="?attr/colorSecondary"
             app:prefixIcon="@drawable/hashtag_icon"/>
 
         <com.theteam.taskz.view_models.LoadableButton
