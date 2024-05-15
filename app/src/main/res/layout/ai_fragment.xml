@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="?attr/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:gravity="center_horizontal|bottom"
+            android:background="@android:color/transparent"
             android:layout_height="match_parent">
             <LinearLayout
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <com.airbnb.lottie.LottieAnimationView
@@ -42,7 +42,7 @@
                     android:gravity="center"
                     android:text="Star Taskz at your service"
                     android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/primaryLight"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/medium_font_size"/>
 
             </LinearLayout>
@@ -50,6 +50,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@android:color/transparent"
                 android:paddingBottom="@dimen/large_value_size"
                 android:gravity="center_horizontal|bottom">
                 <LinearLayout
@@ -68,7 +69,6 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
