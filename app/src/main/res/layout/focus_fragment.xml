@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/white"
+    android:background="?attr/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -17,8 +17,7 @@
             <FrameLayout
                 android:layout_width="220dp"
                 android:layout_height="220dp"
-                android:layout_marginBottom="@dimen/large_value_size"
-                >
+                android:layout_marginBottom="@dimen/large_value_size">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -32,10 +31,11 @@
                         android:layout_centerInParent="true"
                         android:max="100"
                         app:trackCornerRadius="@dimen/medium_value_size"
-                        app:trackColor="@color/tertiaryPrimary"
+                        app:trackColor="?attr/colorTertiary"
                         app:trackThickness="10dp"
                         app:indicatorSize="210dp"/>
                     <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/inward_progress_bar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:indicatorColor="@color/themeColor"
@@ -43,7 +43,7 @@
                         android:layout_centerInParent="true"
                         android:max="100"
                         app:trackCornerRadius="@dimen/medium_value_size"
-                        app:trackColor="@color/tertiaryPrimary"
+                        app:trackColor="?attr/colorTertiary"
                         app:trackThickness="4dp"
                         app:indicatorSize="195dp"/>
                     <TextView
@@ -52,7 +52,7 @@
                         android:layout_height="match_parent"
                         android:text="10:00"
                         android:layout_centerInParent="true"
-                        android:textColor="@color/primaryLight"
+                        android:textColor="?attr/colorPrimary"
                         android:gravity="center"
                         android:textSize="@dimen/extra_large_value_size"
                         android:fontFamily="@font/poppins_semibold"/>
@@ -78,7 +78,7 @@
                     android:layout_marginTop="@dimen/regular_value_size"
                     android:layout_marginEnd="@dimen/medium_value_size"
                     android:src="@drawable/pomodoro"
-                    app:tint="@color/secondaryLight"
+                    app:tint="?attr/colorSecondary"
                     android:scaleType="centerCrop"/>
                 <LinearLayout
                     android:layout_width="0dp"
@@ -96,7 +96,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_bold"
                             android:text="Focus"
-                            android:textColor="@color/primaryLight"
+                            android:textColor="?attr/colorPrimary"
                             android:textSize="@dimen/large_font_size"/>
 <!--                        <TextView-->
 <!--                            android:id="@+id/today_text"-->
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_regular"
                         android:text="Not Started"
-                        android:textColor="@color/secondaryLight"
+                        android:textColor="?attr/colorSecondary"
                         android:textSize="12sp"/>
 
                 </LinearLayout>
@@ -127,7 +127,7 @@
                     android:layout_marginTop="@dimen/regular_value_size"
                     android:layout_marginEnd="@dimen/medium_value_size"
                     android:src="@drawable/pomodoro_settings"
-                    app:tint="@color/secondaryLight"
+                    app:tint="?attr/colorSecondary"
                     android:scaleType="centerCrop"/>
 
             </LinearLayout>
