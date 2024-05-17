@@ -14,6 +14,7 @@
         android:scrollbars="vertical"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create a Task."
@@ -24,6 +25,7 @@
             android:fontFamily="@font/poppins_semibold"
             tools:ignore="HardcodedText" />
         <TextView
+            android:id="@+id/subtitle_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Enter the following details."
