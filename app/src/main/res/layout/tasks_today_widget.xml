@@ -1,0 +1,24 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.Taskz.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="?attr/background"
+    android:theme="@style/Theme.Taskz.AppWidgetContainer">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Taskz.AppWidget.InnerView"
+        android:backgroundTint="?attr/background"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/appwidget_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/appwidget_text"
+            android:text="@string/appwidget_text"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="@dimen/medium_font_size"/>
+    </LinearLayout>
+</FrameLayout>
