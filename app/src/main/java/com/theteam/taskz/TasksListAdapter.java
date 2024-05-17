@@ -2,6 +2,7 @@ package com.theteam.taskz;
 
 import android.app.UiModeManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.theteam.taskz.home_pages.TaskFragment;
 
 import java.text.SimpleDateFormat;
@@ -161,9 +163,10 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
                 if(menuItem.getItemId() == R.id.delete){
                     new TaskManager(context).deleteTask(current_tasks.get(index));
                     showMessage("Task has been deleted. Refresh🌟");
-
                 }
-
+                if(menuItem.getItemId() == R.id.edit){
+                    context.startActivity(new Intent(context, CreateTask.class).putExtra("data", new Gson().toJson(current_tasks.get(index).toJson())));
+                }
 
                 return true;
             }
