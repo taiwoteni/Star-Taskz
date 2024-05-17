@@ -30,7 +30,7 @@
                 app:menu="@menu/bottom_nav_menu"
                 android:theme="@style/BottomBarTheme"
                 app:itemIconSize="27dp"
-                app:itemRippleColor="@color/themeColor"
+                app:itemRippleColor="@android:color/transparent"
                 app:itemIconTint="@drawable/bottom_navigation_item_selector"
                 app:itemTextColor="@drawable/bottom_navigation_item_selector"
                 android:background="@drawable/bottom_bar_rounded_top_background_light"
