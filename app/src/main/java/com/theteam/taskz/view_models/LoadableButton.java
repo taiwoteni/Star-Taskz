@@ -58,7 +58,9 @@ public class LoadableButton extends LinearLayout {
 
 
 
-
+    public void setText(String text){
+        button_text.setText(text);
+    }
     public void startLoading(){
         button_text.setVisibility(View.GONE);
         lottie.setVisibility(View.VISIBLE);
