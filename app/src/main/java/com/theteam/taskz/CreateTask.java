@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -17,9 +18,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.TextInputFormField;
 
+import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +35,7 @@ public class CreateTask extends AppCompatActivity{
 
     private TextInputFormField taskName,taskDate,taskTime,taskCategory;
     private LoadableButton button;
+    private TextView title_text,subtitle_text;
     private Calendar calendar = Calendar.getInstance();
 
 
@@ -40,6 +45,8 @@ public class CreateTask extends AppCompatActivity{
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_task);
 
+        title_text = findViewById(R.id.title_text);
+        subtitle_text = findViewById(R.id.subtitle_text);
         taskName = findViewById(R.id.task_name_form);
         taskDate = findViewById(R.id.task_date_form);
         taskTime = findViewById(R.id.task_time_form);
@@ -53,6 +60,28 @@ public class CreateTask extends AppCompatActivity{
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // To check if user wants to edit a task:
+        // This is done because 'data' is only passed when a user wants to edit a task.
+        if(getIntent().hasExtra("data")){
+            Type mapType = new TypeToken<HashMap<String,Object>>(){}.getType();
+            HashMap<String,Object> map = new Gson().fromJson(getIntent().getStringExtra("data"), mapType);
+
+            TaskModel model = new TaskModel(map);
+            final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM dd", Locale.getDefault());
+            final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+
+            calendar = model.date;
+            taskName.setText(model.name);
+            taskTime.setText(timeFormat.format(calendar.getTime()));
+            taskDate.setText(dateFormat.format(calendar.getTime()));
+            taskCategory.setText(model.category);
+
+            title_text.setText("Edit your Task.");
+            subtitle_text.setText("Edit the following details");
+            button.setText("EDIT TASK");
+
+        }
 
         taskDate.setOnClickListener(view -> {
             showDatePickerDialog();
@@ -90,21 +119,44 @@ public class CreateTask extends AppCompatActivity{
                         }
                         TaskManager holder = new TaskManager(CreateTask.this);
 
+                        // To check if user wants to edit a task:
+                        // This is done because 'data' is only passed when a user wants to edit a task.
+                        if(getIntent().hasExtra("data")){
+                            Type mapType = new TypeToken<HashMap<String,Object>>(){}.getType();
+                            HashMap<String,Object> taskJson = new Gson().fromJson(getIntent().getStringExtra("data"), mapType);
+                            taskJson.put("name", taskName.getText().trim());
+                            taskJson.put("time", calendar.getTimeInMillis());
+                            taskJson.put("category", taskCategory.getText().trim());
 
-                        HashMap<String,Object> taskJson = new HashMap<>();
-                        //To set the is to "#TASK-(The index the model would have when it inserted into the list)
-                        taskJson.put("id", "#TASK-" + holder.getTasks().size());
-                        taskJson.put("name", taskName.getText().trim());
-                        taskJson.put("time", calendar.getTimeInMillis());
-                        taskJson.put("category", taskCategory.getText().trim());
-                        taskJson.put("notifId", String.valueOf((int) AlarmManager.NOTIF_ID));
+                            TaskModel model = new TaskModel(taskJson);
 
-                        TaskModel model = new TaskModel(taskJson);
-                        holder.addTask(model);
+                            holder.updateTask(model);
+                            final AlarmManager taskReminder = new AlarmManager(getApplicationContext(), CreateTask.this);
+                            taskReminder.cancelAlarm(model);
+                            taskReminder.setAlarm(model, false);
 
-                        final AlarmManager taskReminder = new AlarmManager(getApplicationContext(), CreateTask.this);
-                        taskReminder.setAlarm(model, true);
-                        finish();
+                            finish();
+
+                        }
+                        else{
+                            HashMap<String,Object> taskJson = new HashMap<>();
+                            //To set the is to "#TASK-(The index the model would have when it inserted into the list)
+                            taskJson.put("id", "#TASK-" + holder.getTasks().size());
+                            taskJson.put("name", taskName.getText().trim());
+                            taskJson.put("time", calendar.getTimeInMillis());
+                            taskJson.put("category", taskCategory.getText().trim());
+                            taskJson.put("notifId", String.valueOf((int) AlarmManager.NOTIF_ID));
+
+                            TaskModel model = new TaskModel(taskJson);
+                            holder.addTask(model);
+
+                            final AlarmManager taskReminder = new AlarmManager(getApplicationContext(), CreateTask.this);
+                            taskReminder.setAlarm(model, true);
+                            finish();
+                        }
+
+
+
 
 
                     }
