@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.ai.client.generativeai.Chat;
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.ChatFutures;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
@@ -29,7 +28,6 @@ import com.google.ai.client.generativeai.type.GenerateContentResponse;
 import com.google.ai.client.generativeai.type.GenerationConfig;
 import com.google.ai.client.generativeai.type.HarmCategory;
 import com.google.ai.client.generativeai.type.RequestOptions;
-import com.google.ai.client.generativeai.type.SafetyRating;
 import com.google.ai.client.generativeai.type.SafetySetting;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -38,14 +36,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.theteam.taskz.AlarmManager;
-import com.theteam.taskz.BuildConfig;
-import com.theteam.taskz.CreateTask;
 import com.theteam.taskz.DateComparator;
 import com.theteam.taskz.R;
+import com.theteam.taskz.ReadAssetsFile;
 import com.theteam.taskz.TaskManager;
 import com.theteam.taskz.TaskModel;
+import com.theteam.taskz.ThemeManager;
+import com.theteam.taskz.UserModel;
 import com.theteam.taskz.view_models.TypeWriterTextView;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +53,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -62,9 +61,6 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.content.Intent;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class AIFragment extends Fragment {
 
@@ -78,6 +74,8 @@ public class AIFragment extends Fragment {
     private Intent speechRecognizerIntent;
     private GenerativeModel star_taskz;
     private GenerativeModelFutures aiModel;
+
+    private ListenableFuture<GenerateContentResponse> aiCurrentResponse;
     private ChatFutures chat;
 
     private boolean isListening = false;
@@ -121,11 +119,26 @@ public class AIFragment extends Fragment {
         safetySettings.add(new SafetySetting(HarmCategory.HARASSMENT, BlockThreshold.MEDIUM_AND_ABOVE));
         safetySettings.add(new SafetySetting(HarmCategory.HATE_SPEECH, BlockThreshold.MEDIUM_AND_ABOVE));
 
-        GenerationConfig generationConfig = new GenerationConfig.Builder().build();
+        GenerationConfig.Builder generationConfigBuilder = new GenerationConfig.Builder();
+        generationConfigBuilder.temperature = 1f;
+        generationConfigBuilder.topK = 64;
+        generationConfigBuilder.topP = 0.95f;
+
+        GenerationConfig generationConfig = generationConfigBuilder.build();
         RequestOptions requestOptions = new RequestOptions();
 
-
         final Calendar today = Calendar.getInstance();
+
+        String instructions;
+
+        try {
+            instructions = ReadAssetsFile.readAssetsFile(requireActivity().getAssets(), "Star_AI_Instructions.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+            instructions = requireActivity().getString(R.string.STAR_AI_INSTRUCTIONS);
+        }
+        final UserModel user = new UserModel(requireActivity());
+
         star_taskz = new GenerativeModel(
                 "gemini-1.5-pro-latest",
                 getResources().getString(R.string.Google_AI_KEY),
@@ -135,9 +148,11 @@ public class AIFragment extends Fragment {
                 null,
                 null,
                 new Content.Builder()
+                        .addText(instructions)
                         .addText("Today is " + new SimpleDateFormat("EEEE, MMM dd, yyyy.", Locale.getDefault()).format(today.getTime()) + " And the current time is " + new SimpleDateFormat("HH:mm a", Locale.getDefault()).format(today.getTime()))
                         .addText("You now know the time !")
-                        .addText(getResources().getString(R.string.STAR_AI_INSTRUCTIONS)).build()
+                        .addText("The first name of the client that you are attending to is " + user.firstName() + " and his/her last name is " + user.lastName())
+                        .build()
         );
         aiModel = GenerativeModelFutures.from(star_taskz);
 
@@ -219,7 +234,6 @@ public class AIFragment extends Fragment {
             public void onEvent(int i, Bundle bundle) {
             }
         });
-
         // Initialize speech
         speech = new TextToSpeech(requireActivity().getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -243,7 +257,9 @@ public class AIFragment extends Fragment {
                             requireActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ai_text.setText(speeches.get(Integer.parseInt(utteranceId)-1).get("speech").substring(0,end));
+                                    final String text = speeches.get(Integer.parseInt(utteranceId)-1).get("speech").substring(0,end+1);
+                                    ai_text.setText(text);
+
 
                                 }
                             });
@@ -286,6 +302,15 @@ public class AIFragment extends Fragment {
         });
 
 
+        //This is section is made to automatically talk about Star Taskz when a user is new.
+        if(requireActivity().getIntent().hasExtra("first")){
+            requireActivity().getIntent().removeExtra("first");
+            askAi("Hey There! I just heard about Star Tasks and " +
+                    "I will like you to explain a lot about Star Tasks, " +
+                    "It's creators, All It's features and how to go about it. " +
+                    "And also please tell me more about you");
+        }
+
     }
 
     @Override
@@ -306,11 +331,14 @@ public class AIFragment extends Fragment {
         Executor executor = Executors.newSingleThreadExecutor();
 
         ListenableFuture<GenerateContentResponse> aiResponse = chat.sendMessage(content);
+        aiCurrentResponse = aiResponse;
         Futures.addCallback(aiResponse, new FutureCallback<GenerateContentResponse>() {
             @Override
             public void onSuccess(GenerateContentResponse generateContentResponse) {
                 String response = generateContentResponse.getText();
-                decodeAIResponse(response);
+                requireActivity().runOnUiThread(() -> {
+                    decodeAIResponse(response);
+                });
 
             }
 
@@ -332,11 +360,16 @@ public class AIFragment extends Fragment {
     }
     private void decodeAIResponse(String aiString){
         String string = aiString.trim();
+        Log.v("AI", string);
+
         //That is if the ai didn't understand the question or fully utilize the given parameters.
 //        if(string.startsWith("```json") || string.startsWith("```")){
 //            speechStart("Please specify the task name and time properly");
 //            return;
 //        }
+        if(string.contains("{") && string.contains("}")){
+           string = string.replaceAll("\\\\\\\\", "");
+        }
         int startIndex = string.indexOf("{");
         int endIndex = string.lastIndexOf("}");
         if(string.contains("{") && string.contains("}") && startIndex != -1 && endIndex != -1 && startIndex < endIndex){
@@ -357,7 +390,6 @@ public class AIFragment extends Fragment {
                 listTasks(taskJson);
                 return;
             }
-            Log.v("AI", string);
 
         }
         else{
@@ -561,6 +593,13 @@ public class AIFragment extends Fragment {
 
     private void startListening(){
         speechStop();
+        //To stop the ai from generating a response in case ai was interrupted by the user
+        if(aiCurrentResponse != null){
+            if(!aiCurrentResponse.isCancelled()){
+                aiCurrentResponse.cancel(true);
+            }
+        }
+
         isListening = true;
         speechRecognizer.startListening(speechRecognizerIntent);
         isListening = true;
@@ -582,16 +621,21 @@ public class AIFragment extends Fragment {
         requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                ai_lottie.setAnimation(R.raw.call_audio_wave);
+                if(new ThemeManager(requireActivity()).isDarkMode()){
+                    ai_lottie.setAnimation(R.raw.ai_speaking_dark);
+                }else{
+                    ai_lottie.setAnimation(R.raw.ai_speaking_light);
+                }
                 ai_lottie.playAnimation();
+                ai_text.setVisibility(View.GONE);
             }
         });
 
     }
     private void speechStop(){
         speech.stop();
-        ai_text.animateText("Need more assistance?");
+        ai_text.setVisibility(View.VISIBLE);
+        ai_text.animateText("Need any assistance?");
         ai_lottie.setAnimation(R.raw.ai_not_speaking);
         ai_lottie.setColorFilter(null);
         ai_lottie.playAnimation();
@@ -603,31 +647,34 @@ public class AIFragment extends Fragment {
         }
         speeches.clear();
         final String text = textSpeech.replaceAll("\\*", "");
-        final String[] splitTexts =  text.split("\\.");
+        final String[] splitTexts =  text.split("(?<!\\bMr)(?<!\\bMrs)\\. ");
 
 
         for (int i = 0; i < splitTexts.length; i++) {
             StringBuilder resultBuilder = new StringBuilder();
             String part = splitTexts[i].trim();
-            resultBuilder.append(part.trim()); // Trim to remove any leading or trailing spaces
-            if (i < splitTexts.length - 1) {
-                if(!splitTexts[i + 1].isEmpty()){
-                    resultBuilder.append(splitTexts[i + 1].charAt(0)); // Append the first character of the next part
-                }
-            }
+            resultBuilder.append(part);
+//            if (i < splitTexts.length - 1) {
+//                if(!splitTexts[i + 1].isEmpty()){
+//                    resultBuilder.append(splitTexts[i + 1].charAt(0)); // Append the first character of the next part
+//                }
+//            }
             HashMap<String, String> map = new HashMap<>();
-            map.put("speech", splitTexts[i].toString().trim());
+            Log.e("AI", resultBuilder.toString());
+            //The extra space was added because the speeches gotten during the onUtteranceProgressListener
+            //always ends short 1. I.e it doesn't show the last text.
+            map.put("speech", resultBuilder + " ");
             map.put("utteranceId", String.valueOf(speeches.size()+1));
             speeches.add(map);
         }
 
         for(int i=0;i<speeches.size();i++) {
-            speech.speak(speeches.get(i).get("speech"), i == 0 ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD, null, speeches.get(i).get("utteranceId"));
+
+            speech.speak(speeches.get(i).get("speech") + " ", i == 0 ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD, null, speeches.get(i).get("utteranceId"));
         }
     }
 
     private boolean isJSON(String jsonString) {
-        Log.v("AI", jsonString);
         try {
             Type mapType = new TypeToken<HashMap<String, Object>>(){}.getType();
             new Gson().fromJson(jsonString, mapType);

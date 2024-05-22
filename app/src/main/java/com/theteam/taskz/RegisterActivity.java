@@ -42,9 +42,5 @@ public class RegisterActivity extends AppCompatActivity {
 
         ViewPagerDataHolder.viewPager = viewPager;
 
-
-
-
-
     }
 }
