@@ -43,7 +43,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
         HashMap<String,Object> taskJson = new Gson().fromJson(bundle.getString("TASK"), new TypeToken<HashMap<String,Object>>(){}.getType());
 
         final TaskModel model = new TaskModel(taskJson);
-        final SimpleDateFormat format = new SimpleDateFormat("HH:mm a", Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.getDefault());
         final String timeString = format.format(model.date.getTime()).toUpperCase();
 
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getApplicationContext().getResources(), R.drawable.taskz_round);
