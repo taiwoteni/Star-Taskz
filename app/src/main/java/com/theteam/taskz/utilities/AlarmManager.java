@@ -1,4 +1,4 @@
-package com.theteam.taskz;
+package com.theteam.taskz.utilities;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -12,16 +12,16 @@ import android.icu.text.SimpleDateFormat;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.Voice;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
 import com.google.gson.Gson;
+import com.theteam.taskz.receivers.AlarmsReceiver;
+import com.theteam.taskz.R;
+import com.theteam.taskz.models.TaskModel;
 
 import java.util.Calendar;
 import java.util.Locale;
