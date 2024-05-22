@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class TasksPageFragment extends Fragment {
-    private Calendar date;
+    public Calendar date;
     private TextView noTasksText, allText, pendingText, completedText;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<TaskModel> tasks;
@@ -35,12 +35,12 @@ public class TasksPageFragment extends Fragment {
     private LinearProgressIndicator tasks_progress;
     private TextView progress_text;
 
-    LinearLayoutManager linearLayoutManager;
+    private LinearLayoutManager linearLayoutManager;
 
-    TasksListAdapter tasksListAdapter;
+    private TasksListAdapter tasksListAdapter;
 
-    RecyclerView taskRecyclerView;
-    LinearLayout noTaskLayout, taskLayout, allLayout,pendingLayout,completedLayout;
+    private RecyclerView taskRecyclerView;
+    private LinearLayout noTaskLayout, taskLayout, allLayout,pendingLayout,completedLayout;
 
     public TasksPageFragment(){
         date = Calendar.getInstance();
@@ -157,9 +157,9 @@ public class TasksPageFragment extends Fragment {
         Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    void instantiateTasks(){
+    public void instantiateTasks(){
         // We get all the saved tasks on the device.
-        ArrayList<TaskModel> offlineTasks = new TaskManager(getContext()).getTasks();
+        ArrayList<TaskModel> offlineTasks = new TaskManager(requireActivity()).getTasks();
 
 //        showMessage(String.valueOf(offlineTasks.size()));
 
