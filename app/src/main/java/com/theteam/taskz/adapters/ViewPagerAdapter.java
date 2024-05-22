@@ -1,4 +1,4 @@
-package com.theteam.taskz;
+package com.theteam.taskz.adapters;
 
 import android.util.Log;
 import android.view.View;
