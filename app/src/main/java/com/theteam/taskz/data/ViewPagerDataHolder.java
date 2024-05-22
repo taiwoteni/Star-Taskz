@@ -5,5 +5,5 @@ import androidx.viewpager2.widget.ViewPager2;
 
 public class ViewPagerDataHolder {
 
-    static ViewPager2 viewPager;
+    public static ViewPager2 viewPager;
 }
