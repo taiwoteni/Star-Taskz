@@ -22,8 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <com.airbnb.lottie.LottieAnimationView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
                     app:lottie_rawRes="@raw/ai_not_speaking"
                     app:lottie_loop="true"
                     android:scaleX="1.2"
@@ -37,13 +37,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/medium_value_size"
-                    android:maxLines="4"
+                    android:maxLines="6"
                     android:minLines="1"
                     android:gravity="center"
                     android:text="Star Taskz at your service"
                     android:fontFamily="@font/poppins_semibold"
-                    android:textColor="?attr/colorPrimary"
-                    android:textSize="@dimen/medium_font_size"/>
+                    android:textColor="?attr/colorPrimary" />
 
             </LinearLayout>
 
