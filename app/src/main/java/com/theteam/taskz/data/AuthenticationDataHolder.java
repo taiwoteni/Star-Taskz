@@ -1,4 +1,4 @@
-package com.theteam.taskz;
+package com.theteam.taskz.data;
 
 public class AuthenticationDataHolder {
     public static String firstName,lastName,email,password, dob;
