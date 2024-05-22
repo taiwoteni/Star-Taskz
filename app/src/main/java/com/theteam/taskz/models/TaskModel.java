@@ -2,10 +2,15 @@ package com.theteam.taskz.models;
 
 import com.theteam.taskz.enums.TaskStatus;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class TaskModel {
@@ -81,5 +86,27 @@ public class TaskModel {
         json.put("status", status.name());
 
         return json;
+    }
+
+
+    //Used as a direct converter to the body format to be posted on the API
+    public JSONObject toJsonObject() throws JSONException {
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        final SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("taskName", name);
+        jsonObject.put("taskDescription", name);
+        jsonObject.put("startDate", dateFormat.format(date));
+        jsonObject.put("startTime", isoFormat.format(date));
+        jsonObject.put("endDate", dateFormat.format(date));
+        jsonObject.put("endTime", isoFormat.format(date));
+        jsonObject.put("taskStatus",status.name().toUpperCase());
+        jsonObject.put("taskCategory", category.toUpperCase());
+
+
+        return jsonObject;
+
     }
 }
