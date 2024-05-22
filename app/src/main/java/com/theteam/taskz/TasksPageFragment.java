@@ -17,6 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.theteam.taskz.adapters.TasksListAdapter;
+import com.theteam.taskz.enums.TaskStatus;
+import com.theteam.taskz.models.TaskManager;
+import com.theteam.taskz.models.TaskModel;
+import com.theteam.taskz.utilities.ThemeManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

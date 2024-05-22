@@ -1,6 +1,5 @@
-package com.theteam.taskz;
+package com.theteam.taskz.adapters;
 
-import android.app.UiModeManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -19,7 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.theteam.taskz.CreateTask;
+import com.theteam.taskz.R;
+import com.theteam.taskz.models.TaskManager;
+import com.theteam.taskz.enums.TaskStatus;
+import com.theteam.taskz.utilities.ThemeManager;
 import com.theteam.taskz.home_pages.TaskFragment;
+import com.theteam.taskz.models.TaskModel;
+import com.theteam.taskz.utilities.AlarmManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
