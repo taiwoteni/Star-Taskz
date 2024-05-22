@@ -78,7 +78,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmsReceiver" />
+        <receiver android:name=".receivers.AlarmsReceiver" />
     </application>
 
 </manifest>
