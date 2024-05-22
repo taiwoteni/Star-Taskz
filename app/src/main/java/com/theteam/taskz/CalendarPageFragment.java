@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CalendarPageFragment extends Fragment {
-    private Calendar date;
+    public Calendar date;
 
     private CalendarListAdapter calendarListAdapter;
     private ListView calendarListView;
@@ -85,9 +85,9 @@ public class CalendarPageFragment extends Fragment {
         Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    void instantiateTasks(){
+    public void instantiateTasks(){
         // We get all the saved tasks on the device.
-        ArrayList<TaskModel> offlineTasks = new TaskManager(getContext()).getTasks();
+        ArrayList<TaskModel> offlineTasks = new TaskManager(requireActivity()).getTasks();
 
 //        showMessage(String.valueOf(offlineTasks.size()));
 
