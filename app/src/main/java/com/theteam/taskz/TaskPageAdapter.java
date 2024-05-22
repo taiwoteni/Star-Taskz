@@ -16,8 +16,14 @@ public class TaskPageAdapter extends FragmentStateAdapter {
     public TaskPageAdapter(Fragment fragment, ArrayList<Calendar> dates) {
         super(fragment);
         ArrayList<Fragment> views = new ArrayList<>();
+        //We first initialize the List of TaskPageFragments
+        StateHolder.taskPageFragments = new ArrayList<>();
         for(final Calendar calendar: dates){
-            views.add(new TasksPageFragment(calendar));
+            //Then we declare an instantiated TaskPageFragment, inorder to add the same Object to both the views array and
+            // TaskPageFragments
+            final TasksPageFragment tasksPageFragment = new TasksPageFragment(calendar);
+            views.add(tasksPageFragment);
+            StateHolder.taskPageFragments.add(tasksPageFragment);
         }
         
         this.views = views;
