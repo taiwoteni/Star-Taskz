@@ -1,4 +1,6 @@
-package com.theteam.taskz;
+package com.theteam.taskz.models;
+
+import com.theteam.taskz.enums.TaskStatus;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -9,13 +11,13 @@ import java.util.Map;
 public class TaskModel {
     public Calendar date;
     public String name;
-    String id;
+    public String id;
 
-    int notifId = 0;
-    boolean notifIdExists = false;
+    public int notifId = 0;
+    public boolean notifIdExists = false;
     public String category;
 
-    TaskStatus status;
+    public TaskStatus status;
 
 
 

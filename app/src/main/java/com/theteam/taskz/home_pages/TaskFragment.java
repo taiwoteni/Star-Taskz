@@ -20,7 +20,7 @@ import com.airbnb.lottie.LottieDrawable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.theteam.taskz.CreateTask;
 import com.theteam.taskz.R;
-import com.theteam.taskz.TaskPageAdapter;
+import com.theteam.taskz.adapters.TaskPageAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

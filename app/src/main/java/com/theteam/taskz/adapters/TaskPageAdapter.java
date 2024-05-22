@@ -1,10 +1,13 @@
-package com.theteam.taskz;
+package com.theteam.taskz.adapters;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.theteam.taskz.data.StateHolder;
+import com.theteam.taskz.TasksPageFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
