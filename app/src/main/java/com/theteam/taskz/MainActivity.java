@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -19,8 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.theteam.taskz.models.UserModel;
+import com.theteam.taskz.utilities.AlarmManager;
 
-import java.sql.Time;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;

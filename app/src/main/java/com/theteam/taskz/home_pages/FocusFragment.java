@@ -38,9 +38,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.theteam.taskz.NumberPickerUtils;
 import com.theteam.taskz.R;
-import com.theteam.taskz.ThemeManager;
+import com.theteam.taskz.utilities.ThemeManager;
 import com.theteam.taskz.view_models.LoadableButton;
 
 import java.text.DecimalFormat;

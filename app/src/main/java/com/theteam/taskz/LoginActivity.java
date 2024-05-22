@@ -30,6 +30,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.theteam.taskz.data.AuthenticationDataHolder;
+import com.theteam.taskz.models.TaskManager;
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.TextInputFormField;
 import com.theteam.taskz.view_models.UnderlineTextView;

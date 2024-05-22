@@ -1,6 +1,5 @@
 package com.theteam.taskz;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,10 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.theteam.taskz.adapters.ViewPagerAdapter;
 import com.theteam.taskz.home_pages.AIFragment;
 import com.theteam.taskz.home_pages.CalendarFragment;
 import com.theteam.taskz.home_pages.FocusFragment;
-import com.theteam.taskz.home_pages.SettingsFragment;
 import com.theteam.taskz.home_pages.TaskFragment;
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.UnderlineTextView;

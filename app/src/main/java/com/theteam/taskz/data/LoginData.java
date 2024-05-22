@@ -1,4 +1,4 @@
-package com.theteam.taskz;
+package com.theteam.taskz.data;
 
 import java.util.Date;
 
