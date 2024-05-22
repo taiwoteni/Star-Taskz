@@ -1,27 +1,20 @@
-package com.theteam.taskz;
-
-import com.theteam.taskz.AlarmManager;
+package com.theteam.taskz.receivers;
 
 import android.app.Notification;
-import androidx.core.app.NotificationCompat.BubbleMetadata;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ShortcutInfo;
-import android.content.pm.ShortcutManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
 import android.icu.text.SimpleDateFormat;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
 
 import androidx.core.app.NotificationCompat;
@@ -32,8 +25,11 @@ import androidx.core.graphics.drawable.IconCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.theteam.taskz.HomeActivity;
+import com.theteam.taskz.R;
+import com.theteam.taskz.models.TaskModel;
+import com.theteam.taskz.utilities.AlarmManager;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -113,7 +109,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
                 .setChannelId(model.id)
                 .setColor(context.getApplicationContext().getResources().getColor(R.color.themeColor))
                 .build();
-        nm.notify(model.notifIdExists? model.notifId:AlarmManager.NOTIF_ID, notif);
+        nm.notify(model.notifIdExists? model.notifId: AlarmManager.NOTIF_ID, notif);
 
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
@@ -175,8 +171,5 @@ public class AlarmsReceiver extends BroadcastReceiver {
         }
 
     }
-
-
-
 
 }
