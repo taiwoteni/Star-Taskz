@@ -1,4 +1,6 @@
-package com.theteam.taskz;
+package com.theteam.taskz.utilities;
+
+import com.theteam.taskz.models.TaskModel;
 
 import java.util.Comparator;
 
