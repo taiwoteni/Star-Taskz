@@ -1,11 +1,13 @@
-package com.theteam.taskz;
+package com.theteam.taskz.utilities;
 
 import android.content.Context;
-import android.graphics.Color;
+
+import com.theteam.taskz.R;
+import com.theteam.taskz.models.TaskModel;
 
 public class ColorSwatch {
 
-    Context context;
+    private final Context context;
     public ColorSwatch(Context context){
         this.context = context;
     }
