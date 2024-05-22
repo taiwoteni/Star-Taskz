@@ -39,9 +39,19 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED ||
                     checkSelfPermission(Manifest.permission.SYSTEM_ALERT_WINDOW) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(Manifest.permission.SET_ALARM) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED ||
                     checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
             ) {
-                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.RECORD_AUDIO}, REQUEST_NOTIFICATION_PERMISSION);
+                requestPermissions(new String[]{
+                        Manifest.permission.POST_NOTIFICATIONS,
+                        Manifest.permission.SYSTEM_ALERT_WINDOW,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.SET_ALARM,
+                        Manifest.permission.WAKE_LOCK
+                }, REQUEST_NOTIFICATION_PERMISSION);
             }
         }
     }
@@ -52,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, you can post notifications
+                initialize();
             } else {
-                // Permission denied, handle accordingly
+                finish();
             }
         }
     }
@@ -65,6 +75,53 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         requestNotificationPermission();
 
+        app_name = (TextView) findViewById(R.id.app_name);
+        lottie = (LottieAnimationView) findViewById(R.id.loading_lottie);
+
+    }
+
+    void showMessage(final String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void startAnimation(){
+        final UserModel model = new UserModel(this);
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                Animation fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setDuration(2000);
+
+                Animation fadeOut = new AlphaAnimation(1, 0);
+                fadeOut.setDuration(2000);
+
+                app_name.setAnimation(fadeOut);
+                runOnUiThread(() -> {
+                    hideAppName();
+                    showLottie();
+                });
+                lottie.setAnimation(fadeIn);
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(getApplicationContext(),model.isExists()? HomeActivity.class: LoginActivity.class);
+                        i.putExtra("first", "");
+                        startActivity(i);
+                        cancel();
+                        finish();
+                    }
+                }, 5000);
+            }
+        };
+
+        new Timer().schedule(task, 5000);
+
+
+
+
+    }
+
+    private void initialize(){
         AlarmManager.speech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
@@ -93,53 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        app_name = (TextView) findViewById(R.id.app_name);
-        lottie = (LottieAnimationView) findViewById(R.id.loading_lottie);
-
         startAnimation();
-
-
-
-    }
-
-    void showMessage(final String message){
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void startAnimation(){
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                Animation fadeIn = new AlphaAnimation(0, 1);
-                fadeIn.setDuration(2000);
-
-                Animation fadeOut = new AlphaAnimation(1, 0);
-                fadeOut.setDuration(2000);
-
-                app_name.setAnimation(fadeOut);
-                runOnUiThread(() -> {
-                    hideAppName();
-                    showLottie();
-                });
-                lottie.setAnimation(fadeIn);
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        Intent i = new Intent(getApplicationContext(),LoginActivity.class);
-                        startActivity(i);
-                        cancel();
-                        finish();
-                    }
-                }, 5000);
-            }
-        };
-
-        new Timer().schedule(task, 5000);
-
-
-
-
     }
 
     void showLottie(){
