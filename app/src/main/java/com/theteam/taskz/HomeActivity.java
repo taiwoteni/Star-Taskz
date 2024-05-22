@@ -1,7 +1,10 @@
 package com.theteam.taskz;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,8 @@ import com.theteam.taskz.home_pages.CalendarFragment;
 import com.theteam.taskz.home_pages.FocusFragment;
 import com.theteam.taskz.home_pages.SettingsFragment;
 import com.theteam.taskz.home_pages.TaskFragment;
+import com.theteam.taskz.view_models.LoadableButton;
+import com.theteam.taskz.view_models.UnderlineTextView;
 
 import java.util.ArrayList;
 
@@ -29,7 +34,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         views.add(new TaskFragment());
         views.add(new CalendarFragment());
         views.add(new AIFragment());
@@ -70,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+        checkIntro();
     }
 
     int getFragmentIndex(final int menuItemId){
@@ -94,6 +99,32 @@ public class HomeActivity extends AppCompatActivity {
                 return R.id.navigation_ai;
             default:
                 return R.id.navigation_focus;
+        }
+    }
+
+    void checkIntro(){
+        if(getIntent().hasExtra("first")){
+            Dialog dialog = new Dialog(HomeActivity.this);
+
+            View contentView = getLayoutInflater().inflate(R.layout.star_intro_dialog, null);
+            final LoadableButton loadableButton = contentView.findViewById(R.id.go_button);
+            final UnderlineTextView skipButton = contentView.findViewById(R.id.skip_button);
+
+            loadableButton.setOnClickListener(view -> {
+                dialog.dismiss();
+                viewPager.setCurrentItem(2, true);
+            });
+
+            skipButton.setOnClickListener(view -> {
+                getIntent().removeExtra("first");
+                dialog.dismiss();
+            });
+
+            dialog.setContentView(contentView);
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+            dialog.setCancelable(false);
+            dialog.show();
+
         }
     }
 
