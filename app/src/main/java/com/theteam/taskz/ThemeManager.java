@@ -10,8 +10,11 @@ public class ThemeManager {
     public int tertiary;
     public int background;
     public int rootBackground;
+
+    private Context context;
     public ThemeManager(Context context){
         Resources res = context.getApplicationContext().getResources();
+        this.context = context;
         UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
 
         if(uiModeManager.getNightMode() == UiModeManager.MODE_NIGHT_YES){
@@ -30,5 +33,10 @@ public class ThemeManager {
             rootBackground = res.getColor(R.color.rootBackgroundLight);
         }
 
+    }
+
+    public boolean isDarkMode(){
+        UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+        return uiModeManager.getNightMode() == UiModeManager.MODE_NIGHT_YES;
     }
 }
