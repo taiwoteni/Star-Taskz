@@ -2,16 +2,12 @@ package com.theteam.taskz;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.view.View;
-import android.widget.TextView;
+import com.theteam.taskz.adapters.ViewPagerAdapter;
+import com.theteam.taskz.data.ViewPagerDataHolder;
 
 import java.util.ArrayList;
 

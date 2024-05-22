@@ -1,4 +1,7 @@
-package com.theteam.taskz;
+package com.theteam.taskz.data;
+
+import com.theteam.taskz.CalendarPageFragment;
+import com.theteam.taskz.TasksPageFragment;
 
 import java.util.List;
 

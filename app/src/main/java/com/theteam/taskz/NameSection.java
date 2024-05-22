@@ -33,6 +33,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.theteam.taskz.data.AuthenticationDataHolder;
+import com.theteam.taskz.data.ViewPagerDataHolder;
+import com.theteam.taskz.models.TaskManager;
+import com.theteam.taskz.models.UserModel;
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.TextInputFormField;
 
@@ -43,8 +47,6 @@ import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.Executor;
 
 public class NameSection extends Fragment {
     private LoadableButton button;

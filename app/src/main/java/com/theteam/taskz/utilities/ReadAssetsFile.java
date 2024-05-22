@@ -1,4 +1,4 @@
-package com.theteam.taskz;
+package com.theteam.taskz.utilities;
 
 import android.content.res.AssetManager;
 
