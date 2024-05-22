@@ -35,12 +35,12 @@ public class TaskFragment extends Fragment {
 
     private FloatingActionButton fab;
 
-    TaskPageAdapter adapter;
-    ArrayList<Calendar> dates;
-    Calendar currentDate;
-    ViewPager2 viewerPagerTasks;
-    SimpleDateFormat sdf, dayOfWeekFormat;
-    String dateString, dayOfWeekString;
+    private TaskPageAdapter adapter;
+    private ArrayList<Calendar> dates;
+    private Calendar currentDate;
+    private ViewPager2 viewerPagerTasks;
+    private SimpleDateFormat sdf, dayOfWeekFormat;
+    private String dateString, dayOfWeekString;
 
     @Nullable
     @Override
