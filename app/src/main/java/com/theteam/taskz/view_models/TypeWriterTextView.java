@@ -39,6 +39,7 @@ public class TypeWriterTextView extends AppCompatTextView {
         handler.removeCallbacks(character_adder);
         handler.postDelayed(character_adder, delay);
     }
+
     public void setStartDelay(long m){
         delay = m;
     }
