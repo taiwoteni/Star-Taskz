@@ -1,8 +1,10 @@
-package com.theteam.taskz;
+package com.theteam.taskz.utilities;
 
 import android.app.UiModeManager;
 import android.content.Context;
 import android.content.res.Resources;
+
+import com.theteam.taskz.R;
 
 public class ThemeManager {
     public int primary;
