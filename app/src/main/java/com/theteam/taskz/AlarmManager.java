@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.Voice;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
@@ -51,26 +52,25 @@ public class AlarmManager {
         b.putString("TASK", new Gson().toJson(model.toJson()));
         Intent intent = new Intent(application_context, AlarmsReceiver.class);
         intent.putExtras(b);
-        final Calendar calendar = (Calendar) model.date.clone();
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-
-
-        //Because there's always a 2 minute lag.
-//        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
-        long currentTime = System.currentTimeMillis();
-        //To calculate the time difference between the calendar's time and the current time.
-        long diff = calendar.getTimeInMillis() - currentTime;
-
-
-        time = System.currentTimeMillis() + diff;
+        final Calendar calendar = (Calendar) model.date.clone();
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        time = calendar.getTimeInMillis();
         pi = PendingIntent.getBroadcast(application_context, model.notifIdExists?model.notifId:NOTIF_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
 
         if(star_taskz == null){
             star_taskz = (android.app.AlarmManager) application_context.getSystemService(Context.ALARM_SERVICE);
         }
 
-        star_taskz.set(android.app.AlarmManager.RTC_WAKEUP, time, pi);
+        try{
+            star_taskz.setExact(android.app.AlarmManager.RTC_WAKEUP, time, pi);
+        }
+        catch(SecurityException e){
+            star_taskz.set(android.app.AlarmManager.RTC_WAKEUP, time, pi);
+            Log.v("ALARM", e.getMessage());
+        }
 
 
         final SimpleDateFormat format = new SimpleDateFormat("HH:mm a", Locale.getDefault());
