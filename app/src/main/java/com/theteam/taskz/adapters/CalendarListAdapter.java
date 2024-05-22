@@ -1,4 +1,4 @@
-package com.theteam.taskz;
+package com.theteam.taskz.adapters;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -10,6 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.theteam.taskz.models.CalendarItemModel;
+import com.theteam.taskz.utilities.ColorSwatch;
+import com.theteam.taskz.R;
+import com.theteam.taskz.enums.TaskStatus;
+import com.theteam.taskz.models.TaskModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
