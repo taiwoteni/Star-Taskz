@@ -1,4 +1,4 @@
-package com.theteam.taskz;
+package com.theteam.taskz.models;
 
 import android.content.Context;
 import android.content.SharedPreferences;
