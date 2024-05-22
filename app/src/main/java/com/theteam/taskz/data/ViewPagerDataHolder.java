@@ -1,4 +1,4 @@
-package com.theteam.taskz;
+package com.theteam.taskz.data;
 
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
