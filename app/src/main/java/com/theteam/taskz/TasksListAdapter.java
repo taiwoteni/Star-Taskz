@@ -29,10 +29,12 @@ import java.util.Locale;
 public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Tasks_Page_ViewHolder> {
     private ArrayList<TaskModel> current_tasks;
     private Context context;
+    private AlarmManager manager;
 
     public TasksListAdapter(Context context,ArrayList<TaskModel> current_tasks){
         this.current_tasks = current_tasks;
         this.context = context;
+        manager = new AlarmManager(this.context.getApplicationContext(), this.context);
     }
 
     @NonNull
@@ -47,9 +49,9 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
         final ThemeManager theme = new ThemeManager(context);
 
         final TaskModel task = current_tasks.get(position);
-        final SimpleDateFormat dateFormat = new SimpleDateFormat(":mm a", Locale.getDefault());
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
         holder.nameTxt.setText(task.name);
-        holder.timeText.setText(task.date.get(Calendar.HOUR)+dateFormat.format(task.date.getTime()).toUpperCase());
+        holder.timeText.setText(dateFormat.format(task.date.getTime()).toUpperCase());
         holder.categoryText.setText("# " + task.category);
 
         if(task.status == TaskStatus.Pending){
@@ -67,8 +69,6 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
             holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.themeColor)));
             holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
-
-        final AlarmManager manager = new AlarmManager(context.getApplicationContext(), context);
         final View.OnClickListener toggleStatus = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,12 +160,15 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                final TaskModel task = current_tasks.get(index);
                 if(menuItem.getItemId() == R.id.delete){
-                    new TaskManager(context).deleteTask(current_tasks.get(index));
-                    showMessage("Task has been deleted. Refresh🌟");
+                    if(Calendar.getInstance().toInstant().isBefore(task.date.toInstant())){
+                        manager.cancelAlarm(task);
+                    }
+                    new TaskManager(context).deleteTask(task);
                 }
                 if(menuItem.getItemId() == R.id.edit){
-                    context.startActivity(new Intent(context, CreateTask.class).putExtra("data", new Gson().toJson(current_tasks.get(index).toJson())));
+                    context.startActivity(new Intent(context, CreateTask.class).putExtra("data", new Gson().toJson(task.toJson())));
                 }
 
                 return true;
