@@ -1,12 +1,14 @@
-package com.theteam.taskz;
+package com.theteam.taskz.models;
+
+import com.theteam.taskz.models.TaskModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CalendarItemModel {
-    ArrayList<TaskModel> tasks;
+    public ArrayList<TaskModel> tasks;
 
-    Calendar date;
+   public  Calendar date;
 
     public CalendarItemModel(final ArrayList<TaskModel> tasks, Calendar date){
         this.tasks = tasks;
