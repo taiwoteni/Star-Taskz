@@ -17,8 +17,11 @@ import com.theteam.taskz.home_pages.AIFragment;
 import com.theteam.taskz.home_pages.CalendarFragment;
 import com.theteam.taskz.home_pages.FocusFragment;
 import com.theteam.taskz.home_pages.TaskFragment;
+import com.theteam.taskz.services.ApiService;
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.UnderlineTextView;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -57,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -72,7 +76,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
+        try {
+            loadTasks();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         checkIntro();
     }
 
@@ -101,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    void checkIntro(){
+    private void checkIntro(){
         if(getIntent().hasExtra("first")){
             Dialog dialog = new Dialog(HomeActivity.this);
 
@@ -127,7 +135,13 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    void showErrorMessage(final String message){
+    private void loadTasks() throws JSONException {
+        if(getIntent().hasExtra("logged in")){
+            new ApiService(this,getLayoutInflater()).saveTasks();
+        }
+    }
+
+    private void showErrorMessage(final String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
