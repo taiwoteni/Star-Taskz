@@ -23,6 +23,7 @@
             android:layout_marginBottom="@dimen/small_value_size"
             android:scaleType="centerCrop"/>
         <TextView
+            android:id="@+id/content_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -33,6 +34,7 @@
             android:layout_marginTop="@dimen/small_value_size"
             android:layout_marginBottom="@dimen/regular_value_size"/>
         <TextView
+            android:id="@+id/content_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
