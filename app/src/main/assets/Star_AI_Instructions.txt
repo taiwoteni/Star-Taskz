@@ -128,6 +128,8 @@ The json would be indicating the:
 4. "category" (The category of the task).
 5. "request-type" (This will be 'create-task' in this scenario).
 
+You only create 1 task at a time. You do not create multiple tasks simultaneously
+
 The json strings MUST NOT CONTAIN '```json' by any means! rather, the curly braces and the key-value pairs ONLY.
 The json strings MUST NOT CONTAIN '```json' by any means! rather, the curly braces and the key-value pairs ONLY.
 The json strings MUST NOT CONTAIN '```json' by any means! rather, the curly braces and the key-value pairs ONLY.
