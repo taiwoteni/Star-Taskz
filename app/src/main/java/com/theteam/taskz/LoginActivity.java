@@ -32,6 +32,8 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.theteam.taskz.data.AuthenticationDataHolder;
 import com.theteam.taskz.models.TaskManager;
+import com.theteam.taskz.models.UserModel;
+import com.theteam.taskz.services.ApiService;
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.TextInputFormField;
 import com.theteam.taskz.view_models.UnderlineTextView;
@@ -40,7 +42,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -211,69 +216,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     void login(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JSONObject params = new JSONObject();
-        try {
-            params.put("email", AuthenticationDataHolder.email);
-            params.put("password", AuthenticationDataHolder.password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        String endpoint = TaskManager.END_POINT + "auth/login";
-        int method = Request.Method.POST;
-        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                Log.v("API_RESPONSE", jsonObject.toString());
-                //We get convert the json body to a map.
-
-                //We try to remove the password from the request body if the user successfully registered cos of:
-                //1. Security.
-                //2. A wierd escape character in the encrypted password like : '\/' causing string format problems.
-
-                if(jsonObject.has("ourUsers")){
-                    try {
-                        jsonObject.getJSONObject("ourUsers").remove("password");
-                    } catch (JSONException e) {
-                        Log.v("API_RESPONSE", "Unable to remove password parameter");
-                    }
-                }
-
-                Gson gson = new Gson();
-                Type mapType = new TypeToken<HashMap<String,Object>>(){}.getType();
-                HashMap<String,Object> body = gson.fromJson(jsonObject.toString(),mapType);
-                int statusCode = (int) Double.parseDouble(body.getOrDefault("statusCode", 400).toString());
-
-                dialog.dismiss();
-                if(statusCode!=200){
-                    if(body.get("message").toString().toLowerCase().trim().contains("bad credential")){
-                        showError("Sorry Pal.\nYou used a wrong email or password");
-                    }
-                }
-
-            }
-
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-                dialog.dismiss();
-                showError("Sorry pal, An unknown error occurred.");
-                Log.v("API_RESPONSE", volleyError.toString());
-            }
-        };
-
-        final JsonObjectRequest request = new JsonObjectRequest(method, endpoint, params, responseListener,errorListener){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String,String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-        };
-        requestQueue.add(request);
+        ApiService apiService = new ApiService(this, getLayoutInflater());
+        apiService.loginAccount();
     }
 }
