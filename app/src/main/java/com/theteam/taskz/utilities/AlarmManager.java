@@ -65,7 +65,9 @@ public class AlarmManager {
         }
 
         try{
-            star_taskz.setExact(android.app.AlarmManager.RTC_WAKEUP, time, pi);
+            star_taskz.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, time, pi);
+            Log.v("ALARM", "SET EXACT ALARM");
+
         }
         catch(SecurityException e){
             star_taskz.set(android.app.AlarmManager.RTC_WAKEUP, time, pi);
