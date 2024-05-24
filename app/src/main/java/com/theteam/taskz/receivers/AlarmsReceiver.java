@@ -75,7 +75,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
                 .setImportant(true)
                 .build();
 
-        ShortcutInfoCompat shortcut =  new ShortcutInfoCompat.Builder(context.getApplicationContext(), model.id)
+        ShortcutInfoCompat shortcut =  new ShortcutInfoCompat.Builder(context.getApplicationContext(), "STAR_REMINDER")
                 .setCategories(Collections.singleton(desc))
                 .setIcon(IconCompat.createWithResource(context.getApplicationContext(), R.drawable.taskz_round))
                 .setIntent(new Intent(Intent.ACTION_DEFAULT))
@@ -100,7 +100,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
         Notification notif = new NotificationCompat.Builder(context.getApplicationContext(), model.id)
                 .setSmallIcon(R.drawable.task)
                 .setContentIntent(bubbleIntent)
-                .setShortcutId(model.id)
+                .setShortcutId("STAR_REMINDER")
                 .addPerson(chatPerson)
                 .setBubbleMetadata(bubbleData)
                 .setStyle(messagingStyle)
