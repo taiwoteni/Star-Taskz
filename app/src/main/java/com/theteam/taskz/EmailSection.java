@@ -34,6 +34,7 @@ import com.theteam.taskz.data.AuthenticationDataHolder;
 import com.theteam.taskz.data.ViewPagerDataHolder;
 import com.theteam.taskz.models.TaskManager;
 import com.theteam.taskz.models.UserModel;
+import com.theteam.taskz.services.ApiService;
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.TextInputFormField;
 import com.theteam.taskz.view_models.UnderlineTextView;
@@ -185,82 +186,9 @@ public class EmailSection extends Fragment {
                     }
                 });
     }
-
-
     void createAccount(){
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
-        JSONObject params = new JSONObject();
-        try {
-            params.put("firstName", AuthenticationDataHolder.firstName);
-            params.put("lastName", AuthenticationDataHolder.lastName);
-            params.put("dateOfBirth", AuthenticationDataHolder.dob);
-            params.put("email", AuthenticationDataHolder.email);
-            params.put("password", AuthenticationDataHolder.password);
-            params.put("role", "USER");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-
-        String endpoint = TaskManager.END_POINT + "auth/register";
-        int method = Request.Method.POST;
-        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                Log.v("API_RESPONSE", jsonObject.toString());
-
-                //We try to remove the password from the request body if the user successfully registered cos of:
-                //1. Security.
-                //2. A wierd escape character in the encrypted password like : '\/' causing string format problems.
-
-                if(jsonObject.has("ourUsers")){
-                    try {
-                        jsonObject.getJSONObject("ourUsers").remove("password");
-                    } catch (JSONException e) {
-                        Log.v("API_RESPONSE", "Unable to remove password parameter");
-                    }
-                }
-
-                //We get convert the json body to a map.
-                Gson gson = new Gson();
-                Type mapType = new TypeToken<HashMap<String,Object>>(){}.getType();
-                HashMap<String,Object> body = gson.fromJson(jsonObject.toString(),mapType);
-                int statusCode = (int) Double.parseDouble(body.getOrDefault("statusCode", 400).toString());
-
-                if(statusCode == 200){
-                    String userDataString = body.get("ourUsers").toString();
-                    HashMap<String,Object> userData = gson.fromJson(userDataString, mapType);
-                    UserModel.saveUserData(userData, requireActivity());
-                    AuthenticationDataHolder.clear();
-                    showErrorMessage("Registered In Successfully");
-                    startActivity(new Intent(requireActivity().getApplicationContext(),HomeActivity.class).putExtra("first",""));
-                }
-                if(statusCode == 500){
-                    if(body.get("error").toString().contains("Duplicate entry")){
-                        showErrorMessage("User already exists");
-                    }
-                }
-            }
-
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
-            }
-        };
-
-        final JsonObjectRequest request = new JsonObjectRequest(method, endpoint, params, responseListener,errorListener){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String,String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-        };
-        requestQueue.add(request);
+        ApiService apiService = new ApiService(requireActivity(), requireActivity().getLayoutInflater());
+        apiService.createAccount();
 
     }
 }
