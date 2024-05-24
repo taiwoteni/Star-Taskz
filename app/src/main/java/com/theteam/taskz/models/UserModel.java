@@ -40,7 +40,26 @@ public class UserModel {
     }
 
     public String uid(){
-        return String.valueOf(json.get("id"));
+        return String.valueOf((int) Double.parseDouble(json.get("id").toString()));
+    }
+    public String authToken(){
+        return json.get("authToken").toString();
+    }
+
+    public Calendar tokenExpiration(){
+        final String expirationDate = json.get("tokenExpiration").toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+
+        try {
+            Calendar c = Calendar.getInstance();
+            c.setTime(Objects.requireNonNull(sdf.parse(expirationDate)));
+        }
+        catch (Exception e){
+            Log.e("API", Objects.requireNonNull(e.getMessage()));
+        }
+        return calendar;
+
     }
     public String firstName(){
         return json.get("firstName").toString();
