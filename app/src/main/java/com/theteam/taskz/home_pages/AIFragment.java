@@ -132,10 +132,11 @@ public class AIFragment extends Fragment {
         String instructions;
 
         try {
-            instructions = ReadAssetsFile.readAssetsFile(requireActivity().getAssets(), "Star_AI_Instructions.txt");
+            instructions = ReadAssetsFile.readAssetsFile(requireActivity().getApplicationContext().getAssets(), "Star_AI_Instructions.txt");
+            Log.v("Asset Reader", "Opened AI Instructions from assets");
         } catch (IOException e) {
-            e.printStackTrace();
             instructions = requireActivity().getString(R.string.STAR_AI_INSTRUCTIONS);
+            e.printStackTrace();
         }
         final UserModel user = new UserModel(requireActivity());
 
@@ -336,9 +337,11 @@ public class AIFragment extends Fragment {
             @Override
             public void onSuccess(GenerateContentResponse generateContentResponse) {
                 String response = generateContentResponse.getText();
-                requireActivity().runOnUiThread(() -> {
-                    decodeAIResponse(response);
-                });
+                if(getActivity() != null){
+                    requireActivity().runOnUiThread(() -> {
+                        decodeAIResponse(response);
+                    });
+                }
 
             }
 
@@ -471,16 +474,14 @@ public class AIFragment extends Fragment {
 
 
         _taskJson.put("id", "#TASK-" + holder.getTasks().size());
+        _taskJson.put("globalId", "#TASK-" + holder.getTasks().size());
         _taskJson.put("name", taskJson.get("name"));
         _taskJson.put("time", time.getTimeInMillis());
         _taskJson.put("category", taskJson.get("category"));
         _taskJson.put("notifId", String.valueOf((int) AlarmManager.NOTIF_ID));
 
         TaskModel model = new TaskModel(_taskJson);
-        holder.addTask(model);
-
-        final AlarmManager taskReminder = new AlarmManager(requireActivity().getApplicationContext(), requireActivity());
-        taskReminder.setAlarm(model, false);
+        holder.addTask(model, false);
     }
     private void listTasks(HashMap<String,Object> criteria){
         TaskManager manager = new TaskManager(requireActivity());
