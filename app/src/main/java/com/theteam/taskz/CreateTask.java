@@ -57,7 +57,6 @@ public class CreateTask extends AppCompatActivity{
         button = findViewById(R.id.loadable_button);
 
 
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -133,10 +132,7 @@ public class CreateTask extends AppCompatActivity{
 
                             TaskModel model = new TaskModel(taskJson);
 
-                            holder.updateTask(model);
-                            final AlarmManager taskReminder = new AlarmManager(getApplicationContext(), CreateTask.this);
-                            taskReminder.cancelAlarm(model);
-                            taskReminder.setAlarm(model, false);
+                            holder.updateTask(model, true);
 
                             finish();
 
@@ -145,16 +141,14 @@ public class CreateTask extends AppCompatActivity{
                             HashMap<String,Object> taskJson = new HashMap<>();
                             //To set the is to "#TASK-(The index the model would have when it inserted into the list)
                             taskJson.put("id", "#TASK-" + holder.getTasks().size());
+                            taskJson.put("globalId", taskJson.get("id"));
                             taskJson.put("name", taskName.getText().trim());
                             taskJson.put("time", calendar.getTimeInMillis());
                             taskJson.put("category", taskCategory.getText().trim());
                             taskJson.put("notifId", String.valueOf((int) AlarmManager.NOTIF_ID));
 
                             TaskModel model = new TaskModel(taskJson);
-                            holder.addTask(model);
-
-                            final AlarmManager taskReminder = new AlarmManager(getApplicationContext(), CreateTask.this);
-                            taskReminder.setAlarm(model, true);
+                            holder.addTask(model, true);
                             finish();
                         }
 
