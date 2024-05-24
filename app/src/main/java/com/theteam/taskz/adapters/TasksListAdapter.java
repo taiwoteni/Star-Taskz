@@ -89,9 +89,6 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
                     holder.timeText.setBackgroundTintList(ColorStateList.valueOf(holder.itemView.getContext().getResources().getColor(R.color.themeColor)));
                     holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-                    if(Calendar.getInstance().toInstant().isBefore(task.date.toInstant())){
-                        manager.cancelAlarm(task);
-                    }
                 }
                 else{
                     task.updateStatus(TaskStatus.Pending);
@@ -101,11 +98,6 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
                     holder.timeText.setTextColor(theme.secondary);
                     holder.timeText.setBackgroundTintList(ColorStateList.valueOf(theme.tertiary));
                     holder.nameTxt.setPaintFlags(holder.nameTxt.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-
-                    if(Calendar.getInstance().toInstant().isBefore(task.date.toInstant())){
-                        manager.setAlarm(task, false);
-
-                    }
 
                 }
 
@@ -168,9 +160,6 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
             public boolean onMenuItemClick(MenuItem menuItem) {
                 final TaskModel task = current_tasks.get(index);
                 if(menuItem.getItemId() == R.id.delete){
-                    if(Calendar.getInstance().toInstant().isBefore(task.date.toInstant())){
-                        manager.cancelAlarm(task);
-                    }
                     new TaskManager(context).deleteTask(task);
                 }
                 if(menuItem.getItemId() == R.id.edit){
