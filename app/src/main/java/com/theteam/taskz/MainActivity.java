@@ -1,13 +1,18 @@
 package com.theteam.taskz;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.Voice;
 import android.util.Log;
@@ -25,47 +30,114 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+@RequiresApi(api = Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 public class MainActivity extends AppCompatActivity {
 
     private TextView app_name;
     private View lottie;
 
-    private boolean startedAnimation = false;
 
     private static final int REQUEST_NOTIFICATION_PERMISSION = 1;
+    private static final int REQUEST_DRAW_OVER_OTHER_APP_PERMISSION = 2;
+    private static final int REQUEST_SCHEDULE_ALARMS = 3;
+
+
+
+    private final String[] permissions = new String[]{
+            Manifest.permission.POST_NOTIFICATIONS,
+            Manifest.permission.SYSTEM_ALERT_WINDOW,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.SCHEDULE_EXACT_ALARM,
+            Manifest.permission.TURN_SCREEN_ON,
+            Manifest.permission.INTERNET,
+            Manifest.permission.SET_ALARM,
+            Manifest.permission.WAKE_LOCK
+    };
+
+    private boolean permissionsGranted(){
+        for(final String permission : permissions){
+            if(checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED){
+                return false;
+            }
+        }
+        return true;
+    }
 
     // Call this method from your activity or fragment
     private void requestNotificationPermission() {
+        requestPermissions(permissions, REQUEST_NOTIFICATION_PERMISSION);
+    }
+    public boolean canDrawOverOtherApps() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED ||
-                    checkSelfPermission(Manifest.permission.SYSTEM_ALERT_WINDOW) != PackageManager.PERMISSION_GRANTED ||
-                    checkSelfPermission(Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED ||
-                    checkSelfPermission(Manifest.permission.SET_ALARM) != PackageManager.PERMISSION_GRANTED ||
-                    checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED ||
-                    checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
-            ) {
-                requestPermissions(new String[]{
-                        Manifest.permission.POST_NOTIFICATIONS,
-                        Manifest.permission.SYSTEM_ALERT_WINDOW,
-                        Manifest.permission.RECORD_AUDIO,
-                        Manifest.permission.INTERNET,
-                        Manifest.permission.SET_ALARM,
-                        Manifest.permission.WAKE_LOCK
-                }, REQUEST_NOTIFICATION_PERMISSION);
+            return Settings.canDrawOverlays(this);
+        }
+        return true;
+    }
+    private void requestDrawOverOtherAppPermission(){
+        if(canDrawOverOtherApps()){
+            requestAlarmPermission();
+            return;
+        }
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, REQUEST_DRAW_OVER_OTHER_APP_PERMISSION);
+    }
+
+    public boolean canScheduleAlarms() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            return alarmManager.canScheduleExactAlarms();
+        }
+        return true; // For Android versions below S, the permission is not needed
+    }
+    private void requestAlarmPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if(canScheduleAlarms()){
+                requestNotificationPermission();
+                return;
             }
+            Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+            startActivityForResult(intent, REQUEST_SCHEDULE_ALARMS);
+        }
+        else {
+            initialize();
         }
     }
+
+
 
     // Override onRequestPermissionsResult to handle permission request result
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            boolean permissionsGranted = false;
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    //Can post Notifications
+                    grantResults[2] == PackageManager.PERMISSION_GRANTED
+                    //Can record audio
+            ){
+                permissionsGranted = true;
+            }
+            if (permissionsGranted) {
                 initialize();
-            } else {
+            }
+            else{
                 finish();
             }
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_DRAW_OVER_OTHER_APP_PERMISSION) {
+            requestAlarmPermission();
+        }
+        if(requestCode == REQUEST_SCHEDULE_ALARMS){
+            requestNotificationPermission();
         }
     }
 
@@ -73,7 +145,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        requestNotificationPermission();
+        if(!canDrawOverOtherApps()){
+            requestDrawOverOtherAppPermission();
+        }
+        else{
+            requestNotificationPermission();
+        }
+
 
         app_name = (TextView) findViewById(R.id.app_name);
         lottie = (LottieAnimationView) findViewById(R.id.loading_lottie);
@@ -105,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Intent i = new Intent(getApplicationContext(),model.isExists()? HomeActivity.class: LoginActivity.class);
-                        i.putExtra("first", "");
                         startActivity(i);
                         cancel();
                         finish();
