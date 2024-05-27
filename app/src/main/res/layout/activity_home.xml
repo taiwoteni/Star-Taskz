@@ -33,7 +33,7 @@
                 app:itemRippleColor="@android:color/transparent"
                 app:itemIconTint="@drawable/bottom_navigation_item_selector"
                 app:itemTextColor="@drawable/bottom_navigation_item_selector"
-                android:background="@drawable/bottom_bar_rounded_top_background_light"
+                android:background="@drawable/bottom_bar_rounded_top_background"
                 android:elevation="5dp" />
         </RelativeLayout>
     </FrameLayout>

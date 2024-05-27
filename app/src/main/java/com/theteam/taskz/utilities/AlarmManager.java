@@ -12,6 +12,7 @@ import android.icu.text.SimpleDateFormat;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
 import com.google.gson.Gson;
+import com.theteam.taskz.models.TaskManager;
 import com.theteam.taskz.receivers.AlarmsReceiver;
 import com.theteam.taskz.R;
 import com.theteam.taskz.models.TaskModel;
@@ -47,7 +49,7 @@ public class AlarmManager {
 
 
 
-    public void setAlarm(TaskModel model, boolean speak){
+    public void setAlarm(TaskModel model, boolean speak) {
         Bundle b = new Bundle();
         b.putString("TASK", new Gson().toJson(model.toJson()));
         Intent intent = new Intent(application_context, AlarmsReceiver.class);
@@ -58,18 +60,17 @@ public class AlarmManager {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         time = calendar.getTimeInMillis();
-        pi = PendingIntent.getBroadcast(application_context, model.notifIdExists?model.notifId:NOTIF_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+        pi = PendingIntent.getBroadcast(application_context, model.notifIdExists ? model.notifId : NOTIF_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        if(star_taskz == null){
+        if (star_taskz == null) {
             star_taskz = (android.app.AlarmManager) application_context.getSystemService(Context.ALARM_SERVICE);
         }
 
-        try{
+        try {
             star_taskz.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, time, pi);
             Log.v("ALARM", "SET EXACT ALARM");
 
-        }
-        catch(SecurityException e){
+        } catch (SecurityException e) {
             star_taskz.set(android.app.AlarmManager.RTC_WAKEUP, time, pi);
             Log.v("ALARM", e.getMessage());
         }
@@ -96,7 +97,6 @@ public class AlarmManager {
         taskChannel.setSound(soundUri, audioAttributes);
         nm.createNotificationChannel(taskChannel);
 
-
         Notification notif = new NotificationCompat.Builder(activity_context, model.id)
                 .setContentTitle(model.name)
                 .setContentText("Task would start by " + timeString)
@@ -114,20 +114,16 @@ public class AlarmManager {
         NOTIF_ID++;
 
         String timeDistance = "now";
-        if(isToday(model)){
+        if (isToday(model)) {
             timeDistance = getHourOrMinutesDistance(model);
-        }
-        else{
+        } else {
             timeDistance = getDaysDistance(model);
         }
 
-        if(speak){
+        if (speak) {
             AlarmManager.speech.speak("Star speaking,", TextToSpeech.QUEUE_ADD, null, null);
             AlarmManager.speech.speak("Your new task would start " + timeDistance, TextToSpeech.QUEUE_ADD, null, null);
         }
-
-
-
     }
 
     public void cancelAlarm(TaskModel model){
@@ -144,6 +140,15 @@ public class AlarmManager {
         }
 
         star_taskz.cancel(pi);
+    }
+
+    public void cancelAllAlarms(){
+        if(star_taskz == null){
+            star_taskz = (android.app.AlarmManager) activity_context.getSystemService(Context.ALARM_SERVICE);
+        }
+        for(TaskModel model: new TaskManager(activity_context).getTasks()){
+            cancelAlarm(model);
+        }
     }
 
     private boolean isToday(TaskModel model){

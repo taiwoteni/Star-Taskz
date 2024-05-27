@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.theteam.taskz.adapters.TasksListAdapter;
 import com.theteam.taskz.enums.TaskStatus;
@@ -36,6 +37,8 @@ public class TasksPageFragment extends Fragment {
     private ArrayList<TaskModel> tasks;
     private ArrayList<TaskModel> all_tasks;
     private TaskStatus status = null;
+
+    private LottieAnimationView no_tasks_lottie;
 
     private LinearProgressIndicator tasks_progress;
     private TextView progress_text;
@@ -77,6 +80,7 @@ public class TasksPageFragment extends Fragment {
         completedText = view.findViewById(R.id.completed_text);
         progress_text = view.findViewById(R.id.progress_text);
         tasks_progress = view.findViewById(R.id.task_progress);
+        no_tasks_lottie = view.findViewById(R.id.no_tasks_lottie);
         tasks_progress.setProgress(0);
 
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
@@ -213,6 +217,11 @@ public class TasksPageFragment extends Fragment {
             noTaskLayout.setVisibility(tasks.isEmpty()?View.VISIBLE:View.GONE);
         }
         else {
+            final ThemeManager themeManager = new ThemeManager(requireActivity());
+            no_tasks_lottie.setAnimation(themeManager.isDarkMode()? R.raw.empty_tasks_dark:R.raw.empty_tasks);
+            no_tasks_lottie.loop(true);
+            no_tasks_lottie.playAnimation();
+
             final DateFormat format = new SimpleDateFormat("MMM dd", Locale.getDefault());
             final String dateText = isToday(date)? "Today": "on " + format.format(date.getTime());
             noTaskLayout.setVisibility(View.VISIBLE);

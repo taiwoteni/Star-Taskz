@@ -35,6 +35,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.theteam.taskz.LoginActivity;
 import com.theteam.taskz.utilities.AlarmManager;
 import com.theteam.taskz.utilities.DateComparator;
 import com.theteam.taskz.R;
@@ -393,10 +394,26 @@ public class AIFragment extends Fragment {
                 listTasks(taskJson);
                 return;
             }
+            if(taskJson.get("request-type").equals("logout")){
+                new TaskManager(requireActivity()).clearTasks();
+                UserModel.clearUserData(requireActivity());
+
+                Intent i = new Intent(requireActivity().getApplicationContext(), LoginActivity.class);
+                requireActivity().startActivity(i);
+                requireActivity().finish();
+            }
 
         }
         else{
-            speechStart(string);
+            if(string.toLowerCase().contains("content generation stopped")){
+                if(string.toLowerCase().contains("safety")){
+                    speechStart("Sorry Pal, I've been instructed not to mention anything Safety ");
+                }
+
+            }
+            else{
+                speechStart(string);
+            }
         }
     }
     private void createTask(HashMap<String,Object> taskJson){
@@ -489,7 +506,7 @@ public class AIFragment extends Fragment {
         List<TaskModel> filteredTasks = new ArrayList<>();
         // First we filter based on date.
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm a", Locale.getDefault());
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
 
         for(final TaskModel task: tasks){
             final Calendar dateCalendar = getCalendarFromDate(criteria.get("date").toString());
@@ -534,7 +551,7 @@ public class AIFragment extends Fragment {
         filteredTasks.sort(new DateComparator());
 
         if(tasks.isEmpty()){
-            speechStart("You have do not have any tasks");
+            speechStart("You do not have any tasks");
         }
         else if(filteredTasks.isEmpty()){
             speechStart("No tasks concerning your descriptions were found");

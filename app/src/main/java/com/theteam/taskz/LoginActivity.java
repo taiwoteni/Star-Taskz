@@ -216,6 +216,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     void login(){
+        dialog.dismiss();
         ApiService apiService = new ApiService(this, getLayoutInflater());
         apiService.loginAccount();
     }

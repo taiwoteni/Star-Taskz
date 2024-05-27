@@ -16,6 +16,7 @@
         <item name="windowActionBar">false</item>
 
         <!-- Customize your theme here. -->
+        <item name="bottomSheetStyle">@style/CustomBottomSheetDialog</item>
     </style>
 
     <style name="Theme.Taskz.Fullscreen" parent="Theme.AppCompat.NoActionBar">
@@ -32,6 +33,17 @@
         <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textSize">10sp</item>
         <item name="menuGravity">center</item>
+    </style>
+    <style name="CustomBottomSheetDialog" parent="Widget.Design.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearance</item>
+    </style>
+
+    <style name="CustomShapeAppearance" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
     <style name="Theme.Taskz.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

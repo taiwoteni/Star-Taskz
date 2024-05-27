@@ -250,13 +250,14 @@ public class FocusFragment extends Fragment {
                 NumberFormat numberFormat = new DecimalFormat("00");
                 long sec = (millisUntilFinished / 1000) % 60;
                 if (sec % 60 == 59) {
-                    focusMin = focusMin - 1;
+                    focusMin = focusMin == 0? 0: focusMin-1;
 //                    if ((focusMin == 00 && sec == 00) || focusMin <= 00){
 //                        onFinish();
 //                    }else {
 //
 //                    }
                 }
+
                 if(resuming){
                     pomodorro_progress.setProgress((int)(intitialSetMilliseconds-millisUntilFinished), true);
                 }
@@ -268,11 +269,11 @@ public class FocusFragment extends Fragment {
                 pomodorro_progress_text.setText(focusMin + ":" + numberFormat.format(sec));
                 not_started.setTextColor(getResources().getColor(R.color.themeColor));
                 not_started.setText("Ends In " + focusMin + " minutes");
+
                 if(millisUntilFinished> time/2){
                     pomodorro_progress.setIndicatorColor(getResources().getColor(R.color.themeColor));
                     inward_progress.setIndicatorColor(getResources().getColor(R.color.themeColor));
                 }
-
                 if(millisUntilFinished<= time/2 && millisUntilFinished>time/4){
                     pomodorro_progress.setIndicatorColor(getResources().getColor(R.color.yellow));
                     inward_progress.setIndicatorColor(getResources().getColor(R.color.yellow));

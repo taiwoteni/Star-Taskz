@@ -3,6 +3,7 @@ package com.theteam.taskz.models;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.theteam.taskz.enums.TaskStatus;
+import com.theteam.taskz.utilities.AlarmManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +30,6 @@ public class TaskModel {
     public TaskStatus status;
 
 
-    private TaskModel(){}
     public TaskModel(Map<String, Object> json){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(parseStringToTime(json.get("time").toString()));
@@ -78,8 +78,9 @@ public class TaskModel {
         json.put("name", objectMap.get("taskName").toString());
         json.put("id", objectMap.get("fakeId").toString());
         json.put("globalId", objectMap.get("id").toString());
-        json.put("status", objectMap.get("taskStatus")==null? "pending":objectMap.get("taskStatus").toString().toLowerCase());
-        json.put("category", objectMap.get("taskCategory")==null? "Uncategorized":objectMap.get("taskCategory").toString().toLowerCase());
+        json.put("status", objectMap.get("taskStatus")==null? "pending":objectMap.get("taskStatus").toString());
+        json.put("category", objectMap.get("taskCategory")==null? "Uncategorized":objectMap.get("taskCategory"));
+        json.put("notifId", AlarmManager.NOTIF_ID++);
 
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -94,6 +95,8 @@ public class TaskModel {
             calendar.set(Calendar.HOUR_OF_DAY, timeCalendar.get(Calendar.HOUR_OF_DAY));
             calendar.set(Calendar.MINUTE, timeCalendar.get(Calendar.MINUTE));
             calendar.set(Calendar.SECOND, timeCalendar.get(Calendar.SECOND));
+
+
 
 
         } catch (ParseException e) {
@@ -178,8 +181,8 @@ public class TaskModel {
         jsonObject.put("startTime", isoFormat.format(date.getTime()));
         jsonObject.put("endDate", dateFormat.format(endDate.getTime()));
         jsonObject.put("endTime", isoFormat.format(endDate.getTime()));
-        jsonObject.put("taskStatus",status.name().toUpperCase());
-        jsonObject.put("taskCategory", category.toUpperCase());
+        jsonObject.put("taskStatus",status.name());
+        jsonObject.put("taskCategory", category);
 
 
         return jsonObject;

@@ -15,6 +15,7 @@
         android:orientation="vertical"
         android:gravity="center">
         <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/ai_lottie"
             android:layout_width="125dp"
             android:layout_height="125dp"
             app:lottie_rawRes="@raw/star_intro_light"

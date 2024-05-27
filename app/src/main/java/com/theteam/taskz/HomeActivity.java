@@ -1,6 +1,7 @@
 package com.theteam.taskz;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,15 +9,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.pm.ShortcutInfoCompat;
+import androidx.core.content.pm.ShortcutManagerCompat;
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.theteam.taskz.adapters.ViewPagerAdapter;
+import com.theteam.taskz.data.AuthenticationDataHolder;
+import com.theteam.taskz.data.StateHolder;
 import com.theteam.taskz.home_pages.AIFragment;
 import com.theteam.taskz.home_pages.CalendarFragment;
 import com.theteam.taskz.home_pages.FocusFragment;
 import com.theteam.taskz.home_pages.TaskFragment;
+import com.theteam.taskz.models.UserModel;
 import com.theteam.taskz.services.ApiService;
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.UnderlineTextView;
@@ -24,6 +31,9 @@ import com.theteam.taskz.view_models.UnderlineTextView;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -40,6 +50,11 @@ public class HomeActivity extends AppCompatActivity {
         views.add(new CalendarFragment());
         views.add(new AIFragment());
         views.add(new FocusFragment());
+        if(StateHolder.mediaPlayer != null){
+            if(StateHolder.mediaPlayer.isPlaying()){
+                StateHolder.mediaPlayer.pause();
+            }
+        }
 
         bottomNavigationView = findViewById(R.id.bottom_nav_bar);
         viewPager = findViewById(R.id.view_pager);
@@ -59,8 +74,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -76,11 +89,21 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        try {
-            loadTasks();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        final String desc = "com.theteam.taskz.STAR_AI";
+        Intent shortcutIntent = new Intent(getApplicationContext(),HomeActivity.class);
+        shortcutIntent.putExtra("ai", "");
+        shortcutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shortcutIntent.setAction(Intent.ACTION_DEFAULT);
+
+        ShortcutInfoCompat shortcut =  new ShortcutInfoCompat.Builder(getApplicationContext(), "STAR_AI")
+                .setCategories(Collections.singleton(desc))
+                .setIcon(IconCompat.createWithResource(getApplicationContext(), R.drawable.star_square))
+                .setIntent(shortcutIntent)
+                .setLongLived(true)
+                .setShortLabel("Star AI✨")
+                .build();
+        ShortcutManagerCompat.pushDynamicShortcut(getApplicationContext(), shortcut);
+
         checkIntro();
     }
 
@@ -110,6 +133,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void checkIntro(){
+        final UserModel model = new UserModel(this);
+
         if(getIntent().hasExtra("first")){
             Dialog dialog = new Dialog(HomeActivity.this);
 
@@ -133,12 +158,42 @@ public class HomeActivity extends AppCompatActivity {
             dialog.show();
 
         }
+        else if(getIntent().hasExtra("logged in")){
+            try {
+                loadTasks();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (model.tokenExpiration().getTime().before(Calendar.getInstance().getTime())){
+            refreshToken();
+        }
+        else{
+            checkIfSynced();
+            if(getIntent().hasExtra("ai")){
+                viewPager.setCurrentItem(2);
+            }
+        }
+
+    }
+
+    private void refreshToken(){
+        final UserModel model = new UserModel(this);
+        AuthenticationDataHolder.email = model.email();
+        AuthenticationDataHolder.password = model.password();
+        new ApiService(this).refreshToken();
+
+
     }
 
     private void loadTasks() throws JSONException {
         if(getIntent().hasExtra("logged in")){
-            new ApiService(this,getLayoutInflater()).saveTasks();
+            new ApiService(this,getLayoutInflater()).saveTasks(true);
         }
+    }
+
+    private void checkIfSynced(){
+        new ApiService(this,getLayoutInflater()).checkAndSynced();
     }
 
     private void showErrorMessage(final String message){

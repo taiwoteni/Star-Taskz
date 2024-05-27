@@ -1,5 +1,7 @@
 package com.theteam.taskz.receivers;
 
+import static com.theteam.taskz.utilities.AlarmManager.NOTIF_ID;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -27,6 +30,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.theteam.taskz.HomeActivity;
 import com.theteam.taskz.R;
+import com.theteam.taskz.TaskReminder;
+import com.theteam.taskz.data.StateHolder;
 import com.theteam.taskz.models.TaskModel;
 import com.theteam.taskz.utilities.AlarmManager;
 
@@ -51,6 +56,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
         Uri soundUri = Uri.parse("android.resource://" + context.getApplicationContext().getPackageName() + "/" + R.raw.notification);
 
 
+
         NotificationChannel taskChannel = new NotificationChannel(model.id, "Star Taskz", NotificationManager.IMPORTANCE_HIGH);
         taskChannel.setDescription("Task Reminder Channel");
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -70,15 +76,19 @@ public class AlarmsReceiver extends BroadcastReceiver {
 
         final String desc = "com.theteam.taskz.STAR_REMINDER";
         Person chatPerson = new Person.Builder()
-                .setName("Star✨")
+                .setName("Star Reminder✨")
                 .setIcon(IconCompat.createWithResource(context.getApplicationContext(), R.drawable.taskz_round))
                 .setImportant(true)
                 .build();
 
+        Intent shortcutIntent = new Intent(context.getApplicationContext(),HomeActivity.class);
+        shortcutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shortcutIntent.setAction(Intent.ACTION_DEFAULT);
+
         ShortcutInfoCompat shortcut =  new ShortcutInfoCompat.Builder(context.getApplicationContext(), "STAR_REMINDER")
                 .setCategories(Collections.singleton(desc))
-                .setIcon(IconCompat.createWithResource(context.getApplicationContext(), R.drawable.taskz_round))
-                .setIntent(new Intent(Intent.ACTION_DEFAULT))
+                .setIcon(IconCompat.createWithResource(context.getApplicationContext(), R.drawable.star_square))
+                .setIntent(shortcutIntent)
                 .setLongLived(true)
                 .setShortLabel(Objects.requireNonNull(chatPerson.getName()))
                 .build();
@@ -89,13 +99,34 @@ public class AlarmsReceiver extends BroadcastReceiver {
                 .addMessage("Your task '" + model.name + "' should start now 😊", model.date.getTimeInMillis(), chatPerson);
 
         NotificationCompat.BubbleMetadata bubbleData = new NotificationCompat.BubbleMetadata.Builder(bubbleIntent,
-                IconCompat.createWithResource(context.getApplicationContext(), R.drawable.taskz_round))
-                .setIcon(IconCompat.createWithResource(context.getApplicationContext(), R.drawable.taskz_round))
+                IconCompat.createWithResource(context.getApplicationContext(), R.drawable.star))
+                .setIcon(IconCompat.createWithResource(context.getApplicationContext(), R.drawable.star))
                 .setDesiredHeight(600)
                 .setIntent(bubbleIntent)
                 .setAutoExpandBubble(true)
                 .setSuppressNotification(true)
                 .build();
+
+        Context application_context = context.getApplicationContext();
+        Bundle b = (Bundle) intent.getExtras().clone();
+        Intent seenI = new Intent(context, TaskNotifReceiver.class);
+        seenI.setAction(TaskNotifReceiver.ACTION_PENDING);
+        seenI.putExtras(b);
+        PendingIntent seenPI = PendingIntent.getBroadcast(application_context,model.notifIdExists?model.notifId*100:NOTIF_ID*100,seenI, PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        Intent completedI = new Intent(context, TaskNotifReceiver.class);
+        completedI.setAction(TaskNotifReceiver.ACTION_COMPLETED);
+        completedI.putExtras(b);
+        PendingIntent completedPI= PendingIntent.getBroadcast(application_context,model.notifIdExists?model.notifId*100:NOTIF_ID*100,completedI, PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Uri mUri = Uri.parse("android.resource://" + context.getApplicationContext().getPackageName() + "/" + R.raw.energize_your_day);
+        StateHolder.mediaPlayer = MediaPlayer.create(application_context, mUri);
+        StateHolder.mediaPlayer.setVolume(1f, 1f);
+        StateHolder.mediaPlayer.seekTo(24000);
+        StateHolder.mediaPlayer.setLooping(true);
+        StateHolder.mediaPlayer.start();
+
 
         Notification notif = new NotificationCompat.Builder(context.getApplicationContext(), model.id)
                 .setSmallIcon(R.drawable.task)
@@ -108,8 +139,10 @@ public class AlarmsReceiver extends BroadcastReceiver {
                 .setSound(soundUri)
                 .setChannelId(model.id)
                 .setColor(context.getApplicationContext().getResources().getColor(R.color.themeColor))
+                .addAction(R.drawable.pause, "Seen", seenPI)
+                .addAction(R.drawable.check, "Completed", completedPI)
                 .build();
-        nm.notify(model.notifIdExists? model.notifId: AlarmManager.NOTIF_ID, notif);
+        nm.notify(model.notifIdExists? model.notifId: NOTIF_ID, notif);
 
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
@@ -131,10 +164,11 @@ public class AlarmsReceiver extends BroadcastReceiver {
 //            nm.notify(model.notifIdExists? model.notifId:AlarmManager.NOTIF_ID, notif);
 //        }
 
-
         if(!model.notifIdExists){
-           AlarmManager.NOTIF_ID++;
+           NOTIF_ID++;
         }
+
+
 
         if(AlarmManager.speech == null){
             AlarmManager.speech = new TextToSpeech(context.getApplicationContext(), new TextToSpeech.OnInitListener() {

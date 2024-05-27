@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.theteam.taskz.models.UserModel;
 import com.theteam.taskz.utilities.AlarmManager;
+import com.theteam.taskz.view_models.LoadableButton;
+import com.theteam.taskz.view_models.UnderlineTextView;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -56,12 +59,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private boolean permissionsGranted(){
-        for(final String permission : permissions){
-            if(checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED){
-                return false;
-            }
-        }
-        return true;
+        return checkSelfPermission(permissions[0]) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(permissions[2]) == PackageManager.PERMISSION_GRANTED;
     }
 
     // Call this method from your activity or fragment
@@ -145,22 +143,56 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(!canDrawOverOtherApps()){
-            requestDrawOverOtherAppPermission();
-        }
-        else{
-            requestNotificationPermission();
-        }
-
-
         app_name = (TextView) findViewById(R.id.app_name);
         lottie = (LottieAnimationView) findViewById(R.id.loading_lottie);
+
+        Dialog dialog = new Dialog(this);
+        View contentView = getLayoutInflater().inflate(R.layout.star_intro_dialog, null);
+        final LottieAnimationView star_intro = (LottieAnimationView) contentView.findViewById(R.id.ai_lottie);
+        final TextView content_title = (TextView) contentView.findViewById(R.id.content_title);
+        final TextView content_text = (TextView) contentView.findViewById(R.id.content_text);
+
+        final LoadableButton loadableButton = (LoadableButton) contentView.findViewById(R.id.go_button);
+        final UnderlineTextView skipButton = (UnderlineTextView) contentView.findViewById(R.id.skip_button);
+
+        star_intro.setAnimation(R.raw.star_happy);
+        star_intro.playAnimation();
+
+        content_title.setText("Hi!");
+        content_text.setText("Inorder to have smooth experience using Star Taskz, We would need the following permissions enabled:\n\n◼ Appear On Screen\n◼ Alarm Management\n◼ Audio Recording\n◼ Post Notifications");
+        loadableButton.setText("Enable Permissions >");
+        skipButton.setText("Close");
+        loadableButton.setOnClickListener(view -> {
+            dialog.dismiss();
+            if(!canDrawOverOtherApps()){
+                requestDrawOverOtherAppPermission();
+            }
+            else{
+                requestNotificationPermission();
+            }
+        });
+        skipButton.setOnClickListener(view -> {
+            finish();
+        });
+
+        dialog.setContentView(contentView);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+        dialog.setCancelable(false);
+
+        if(canScheduleAlarms() && canDrawOverOtherApps() && permissionsGranted()){
+            initialize();
+        }
+        else{
+            dialog.show();
+        }
 
     }
 
     void showMessage(final String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
+
+
 
     private void startAnimation(){
         final UserModel model = new UserModel(this);

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:background="?attr/background"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="4">
+            <ImageView
+                android:layout_width="355dp"
+                android:layout_height="355dp"
+                android:src="@drawable/item1"
+                android:id="@+id/image"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/large_value_size"
+            android:gravity="center_horizontal|top"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Create, Manager and Prioritize your tasks efficiently."
+                android:textColor="?attr/colorPrimary"
+                android:fontFamily="@font/poppins_medium"
+                android:paddingHorizontal="@dimen/extra_large_value_size"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

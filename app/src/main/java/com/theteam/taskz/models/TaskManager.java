@@ -36,8 +36,6 @@ public class TaskManager {
 
     private Context context;
 
-
-
     private UserModel userModel;
     public TaskManager(Context context){
         this.context = context;
@@ -113,9 +111,17 @@ public class TaskManager {
 
         ApiService.deleteTask(context, model);
     }
+    public void clearTasks(){
+        Gson gson = new Gson();
+        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
+
+        new AlarmManager(context, context.getApplicationContext()).cancelAllAlarms();
+        preferences.edit().putString("tasks", "[]").apply();
+
+    }
 
     public void updateTask(TaskModel model){
-        updateTaskOffline(model);
+        updateTaskOffline(model,false);
 
         try {
             ApiService.updateTask(context, model);
@@ -133,38 +139,6 @@ public class TaskManager {
         }
     }
 
-    public void updateTaskOffline(TaskModel model){
-        Gson gson = new Gson();
-        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
-        final String jsonString = preferences.getString("tasks", "[]");
-        Type listType = new TypeToken<ArrayList<Map<String, Object>>>(){}.getType();
-        ArrayList<Map<String, Object>> list = gson.fromJson(jsonString, listType);
-
-        final HashMap<String,Object> maps = model.toJson();
-
-        int index = 0;
-        final List<TaskModel> _tasks = getTasks();
-        for(final TaskModel _model: _tasks){
-            if(Objects.equals(_model.id, model.id)){
-                index = _tasks.indexOf(_model);
-            }
-        }
-
-        for(String key: maps.keySet()) {
-            if (list.get(index).containsKey(key)) {
-                list.get(index).replace(key, maps.get(key));
-            } else {
-                list.get(index).put(key, maps.get(key));
-            }
-        }
-        preferences.edit().putString("tasks", gson.toJson(list)).apply();
-        refresh(model);
-        if(Calendar.getInstance().getTime().before(model.date.getTime())){
-            final AlarmManager taskReminder = new AlarmManager(context.getApplicationContext(), context);
-            taskReminder.cancelAlarm(model);
-            taskReminder.setAlarm(model, false);
-        }
-    }
     public void updateTaskOffline(TaskModel model, boolean speak){
         Gson gson = new Gson();
         SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
@@ -190,6 +164,8 @@ public class TaskManager {
             }
         }
         preferences.edit().putString("tasks", gson.toJson(list)).apply();
+
+
         refresh(model);
         if(Calendar.getInstance().getTime().before(model.date.getTime())){
             final AlarmManager taskReminder = new AlarmManager(context.getApplicationContext(), context);

@@ -2,11 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="?attr/colorOnBackground"
+    android:background="@drawable/bottom_bar_rounded_top_background"
     android:paddingHorizontal="@dimen/medium_value_size"
-    android:paddingBottom="@dimen/medium_value_size"
+    android:paddingVertical="@dimen/medium_value_size"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="@dimen/extra_large_value_size"
+        android:layout_height="@dimen/small_value_size"
+        android:background="@drawable/bottom_sheet_handle"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

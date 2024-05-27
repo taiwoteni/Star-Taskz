@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -146,6 +147,7 @@ public class CreateTask extends AppCompatActivity{
                             taskJson.put("time", calendar.getTimeInMillis());
                             taskJson.put("category", taskCategory.getText().trim());
                             taskJson.put("notifId", String.valueOf((int) AlarmManager.NOTIF_ID));
+                            AlarmManager.NOTIF_ID++;
 
                             TaskModel model = new TaskModel(taskJson);
                             holder.addTask(model, true);
@@ -224,7 +226,7 @@ public class CreateTask extends AppCompatActivity{
 
     void showCategoryDialog(){
         BottomSheetDialog dialog = new BottomSheetDialog(CreateTask.this);
-        View v = getLayoutInflater().inflate(R.layout.select_category, null,false);
+        View v = getLayoutInflater().inflate(R.layout.select_category, null);
         final LinearLayout work = v.findViewById(R.id.work);
         final LinearLayout study = v.findViewById(R.id.study);
         final LinearLayout personal = v.findViewById(R.id.personal);
@@ -248,10 +250,10 @@ public class CreateTask extends AppCompatActivity{
             taskCategory.setText("Uncategorized");
             dialog.dismiss();
         });
-
         dialog.setContentView(v);
         dialog.setDismissWithAnimation(true);
         dialog.show();
+
     }
 
     private static long parseStringToTime(String timeString) {

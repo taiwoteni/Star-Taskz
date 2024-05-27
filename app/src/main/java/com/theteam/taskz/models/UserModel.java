@@ -34,6 +34,11 @@ public class UserModel {
 
         preferences.edit().putString("userdata",gson.toJson(map, mapType)).apply();
     }
+    public static void clearUserData(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
+
+        preferences.edit().remove("userdata").apply();
+    }
 
     public boolean isExists(){
         return !json.isEmpty();
@@ -48,12 +53,14 @@ public class UserModel {
 
     public Calendar tokenExpiration(){
         final String expirationDate = json.get("tokenExpiration").toString();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
 
         try {
-            Calendar c = Calendar.getInstance();
-            c.setTime(Objects.requireNonNull(sdf.parse(expirationDate)));
+            Log.i("API", expirationDate);
+            Log.e("API", sdf.format(calendar.getTime()));
+            calendar.setTime(Objects.requireNonNull(sdf.parse(expirationDate)));
+
         }
         catch (Exception e){
             Log.e("API", Objects.requireNonNull(e.getMessage()));
@@ -69,6 +76,9 @@ public class UserModel {
     }
     public String email(){
         return json.get("email").toString();
+    }
+    public String password(){
+        return json.get("password").toString();
     }
 
     public Calendar dob(){

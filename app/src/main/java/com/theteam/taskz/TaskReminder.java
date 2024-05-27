@@ -1,6 +1,7 @@
 package com.theteam.taskz;
 
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -26,6 +27,7 @@ public class TaskReminder extends AppCompatActivity {
     private LoadableButton complete_button,ignore_button;
     private TextView task_name;
     private TaskModel task;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,11 @@ public class TaskReminder extends AppCompatActivity {
             return insets;
         });
 
-        MediaPlayer mp = MediaPlayer.create(getApplicationContext(), Settings.System.DEFAULT_ALARM_ALERT_URI);
+        Uri soundUri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.energize_your_day);
+
+
+        mp = MediaPlayer.create(getApplicationContext(), soundUri);
+        mp.seekTo(23000);
         mp.setVolume(0.6f, 0.6f);
         mp.start();
 
@@ -71,6 +77,13 @@ public class TaskReminder extends AppCompatActivity {
                 finish();
             }
         });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mp.stop();
 
     }
 }
