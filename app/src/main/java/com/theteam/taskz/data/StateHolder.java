@@ -10,6 +10,7 @@ import java.util.List;
 public class StateHolder {
     public static List<TasksPageFragment> taskPageFragments;
     public static List<CalendarPageFragment> calendarPageFragments;
+    public static int currentIndex = 0;
 
     public static MediaPlayer mediaPlayer;
 }

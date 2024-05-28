@@ -28,6 +28,7 @@ import com.theteam.taskz.data.AuthenticationDataHolder;
 import com.theteam.taskz.models.TaskManager;
 import com.theteam.taskz.models.TaskModel;
 import com.theteam.taskz.models.UserModel;
+import com.theteam.taskz.utilities.AlarmManager;
 import com.theteam.taskz.view_models.LoadableButton;
 import com.theteam.taskz.view_models.UnderlineTextView;
 
@@ -69,6 +70,10 @@ public class ApiService {
         this.context = context;
     }
 
+    // In every error listener, we set needSync to true because:
+    // Initially needSync would be null (which counts as false), or false when immediately before we run the api
+    // But we need to be sure that needSync is set to false if any API operation at all fails.
+    // So we only setSync to true when it fails
     public static void addTask(Context context, TaskModel model) throws JSONException {
         if(queue == null){
             queue = Volley.newRequestQueue(context.getApplicationContext());
@@ -77,6 +82,7 @@ public class ApiService {
         final Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 Log.v("API_RESPONSE", jsonObject.toString());
                 final TaskManager manager = new TaskManager(context);
                 final HashMap<String,Object> modelData = model.toJson();
@@ -120,6 +126,7 @@ public class ApiService {
         final Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                new UserModel(context).setNeedsToSync(true);
                 final String message = volleyError.getMessage();
                 Log.e("API_RESPONSE", message==null? volleyError.toString(): message);
             }
@@ -164,6 +171,7 @@ public class ApiService {
         final Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                new UserModel(context).setNeedsToSync(true);
                 Log.e("API_RESPONSE", volleyError.toString());
             }
         };
@@ -205,6 +213,7 @@ public class ApiService {
         final Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                new UserModel(context).setNeedsToSync(true);
                 Log.e("API_RESPONSE", volleyError.toString());
             }
         };
@@ -387,7 +396,7 @@ public class ApiService {
                             addTask(context, model);
                         }
                         else{
-                            updateTask(context, models.get(i));
+                            updateTask(context, model);
                         }
                     }
                     saveTasks(false);
@@ -523,6 +532,7 @@ public class ApiService {
                     body.put("id", body.get("userId"));
                     body.put("authToken", body.get("token"));
                     body.put("password", AuthenticationDataHolder.password);
+                    body.put("sync", false);
 
                     // Then we remove the original data was derived from or not needed in the response body.
                     body.remove("statusCode");

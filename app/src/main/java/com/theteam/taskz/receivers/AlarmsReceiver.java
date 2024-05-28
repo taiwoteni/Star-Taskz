@@ -76,8 +76,8 @@ public class AlarmsReceiver extends BroadcastReceiver {
 
         final String desc = "com.theteam.taskz.STAR_REMINDER";
         Person chatPerson = new Person.Builder()
-                .setName("Star Reminder✨")
-                .setIcon(IconCompat.createWithResource(context.getApplicationContext(), R.drawable.taskz_round))
+                .setName("Star✨")
+                .setIcon(IconCompat.createWithResource(context.getApplicationContext(), R.drawable.star))
                 .setImportant(true)
                 .build();
 
@@ -87,10 +87,10 @@ public class AlarmsReceiver extends BroadcastReceiver {
 
         ShortcutInfoCompat shortcut =  new ShortcutInfoCompat.Builder(context.getApplicationContext(), "STAR_REMINDER")
                 .setCategories(Collections.singleton(desc))
-                .setIcon(IconCompat.createWithResource(context.getApplicationContext(), R.drawable.star_square))
+                .setIcon(chatPerson.getIcon())
                 .setIntent(shortcutIntent)
                 .setLongLived(true)
-                .setShortLabel(Objects.requireNonNull(chatPerson.getName()))
+                .setShortLabel("Star Reminder✨")
                 .build();
         ShortcutManagerCompat.pushDynamicShortcut(context.getApplicationContext(), shortcut);
 
@@ -176,16 +176,12 @@ public class AlarmsReceiver extends BroadcastReceiver {
                 public void onInit(int i) {
                     if(i == TextToSpeech.SUCCESS){
                         final int res = AlarmManager.speech.setLanguage(new Locale("en", "US"));
-                        AlarmManager.speech.setPitch(0.25f);
+                        AlarmManager.speech.setPitch(0.3f);
                         AlarmManager.speech.setSpeechRate(1.5f);
 
                         if(res == TextToSpeech.LANG_MISSING_DATA || res==TextToSpeech.LANG_NOT_SUPPORTED){
                             AlarmManager.speech.setLanguage(Locale.ENGLISH);
                             AlarmManager.speech.setVoice(new Voice("eng-USA",Locale.ENGLISH, Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_LOW,true, null));
-                        }
-                        else{
-                            final Voice voice = new Voice("eng-USA",new Locale("en", "US"), Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_HIGH,true, null);
-                            AlarmManager.speech.setVoice(voice);
                         }
 
 

@@ -171,7 +171,7 @@ public class HomeActivity extends AppCompatActivity {
         else{
             checkIfSynced();
             if(getIntent().hasExtra("ai")){
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(2,false);
             }
         }
 
@@ -193,7 +193,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void checkIfSynced(){
-        new ApiService(this,getLayoutInflater()).checkAndSynced();
+        if(new UserModel(this).needsSync()){
+            new UserModel(this).setNeedsToSync(false);
+            new ApiService(this,getLayoutInflater()).checkAndSynced();
+        }
+
     }
 
     private void showErrorMessage(final String message){

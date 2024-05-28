@@ -89,6 +89,7 @@ They will give:
 1. "date" (Date of the task, if it is not given by the user, by default is today. If the date is null, by default is today. The date should be in this format, yyyy-MM-dd ).
 2. "time" (The time of the task may be given and it would be in this format, HH:mm am/pm. If it is not given make it null).
 3. "category" (The category the category of the tasks. If it is not given make it null).
+4. "status" (The status of the task they want to get, Either "Pending" (means uncompleted) or "Completed". If it is not given, leave it as null).
 5. "request-type" (This will be 'list-tasks' in this scenario).
 
 

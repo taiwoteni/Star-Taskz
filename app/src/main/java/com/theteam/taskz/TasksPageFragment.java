@@ -215,13 +215,19 @@ public class TasksPageFragment extends Fragment {
         if (!all_tasks.isEmpty()){
             taskLayout.setVisibility(View.VISIBLE);
             noTaskLayout.setVisibility(tasks.isEmpty()?View.VISIBLE:View.GONE);
+            if(tasks.isEmpty()){
+                final ThemeManager themeManager = new ThemeManager(requireActivity());
+                no_tasks_lottie.setAnimation(themeManager.isDarkMode()? R.raw.empty_tasks_dark:R.raw.empty_tasks);
+                no_tasks_lottie.loop(true);
+                no_tasks_lottie.playAnimation();
+            }
+
         }
         else {
             final ThemeManager themeManager = new ThemeManager(requireActivity());
             no_tasks_lottie.setAnimation(themeManager.isDarkMode()? R.raw.empty_tasks_dark:R.raw.empty_tasks);
             no_tasks_lottie.loop(true);
             no_tasks_lottie.playAnimation();
-
             final DateFormat format = new SimpleDateFormat("MMM dd", Locale.getDefault());
             final String dateText = isToday(date)? "Today": "on " + format.format(date.getTime());
             noTaskLayout.setVisibility(View.VISIBLE);

@@ -118,12 +118,7 @@ public class MainActivity extends AppCompatActivity {
             ){
                 permissionsGranted = true;
             }
-            if (permissionsGranted) {
-                initialize();
-            }
-            else{
-                finish();
-            }
+            initialize();
         }
 
     }
@@ -172,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         skipButton.setOnClickListener(view -> {
-            finish();
+            initialize();
         });
 
         dialog.setContentView(contentView);
@@ -239,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.v("VOICES", v.getName());
                     }
                     final int res = AlarmManager.speech.setLanguage(new Locale("en", "US"));
-                    AlarmManager.speech.setPitch(0.25f);
+                    AlarmManager.speech.setPitch(0.3f);
                     AlarmManager.speech.setSpeechRate(1.5f);
 
                     if(res == TextToSpeech.LANG_MISSING_DATA || res==TextToSpeech.LANG_NOT_SUPPORTED){
@@ -247,9 +242,7 @@ public class MainActivity extends AppCompatActivity {
                         AlarmManager.speech.setVoice(new Voice("eng-USA",Locale.ENGLISH, Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_LOW,true, null));
                     }
                     else{
-                        final Voice voice = new Voice("eng-USA",new Locale("en", "US"), Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_HIGH,true, null);
-                        AlarmManager.speech.setVoice(voice);
-                    }
+                        }
 //                    AlarmManager.speech.speak("Welcome",TextToSpeech.QUEUE_ADD, null,null);
 
                 }

@@ -80,7 +80,7 @@ public class TaskModel {
         json.put("globalId", objectMap.get("id").toString());
         json.put("status", objectMap.get("taskStatus")==null? "pending":objectMap.get("taskStatus").toString());
         json.put("category", objectMap.get("taskCategory")==null? "Uncategorized":objectMap.get("taskCategory"));
-        json.put("notifId", AlarmManager.NOTIF_ID++);
+        json.put("notifId", String.valueOf((int) AlarmManager.NOTIF_ID++));
 
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

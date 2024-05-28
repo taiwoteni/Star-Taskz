@@ -242,9 +242,6 @@ public class AIFragment extends Fragment {
             public void onInit(int i) {
                 if(i==TextToSpeech.SUCCESS){
                     speech.setLanguage(new Locale("en", "US"));
-                    final Voice voice = new Voice("en-us-x-tpf-localmale",new Locale("en", "US"), Voice.QUALITY_VERY_HIGH, Voice.LATENCY_VERY_LOW,true, null);
-                    final int couldSetVoice = speech.setVoice(voice);
-
                     speech.setPitch(0.3f);
                     speech.setSpeechRate(1.5f);
 
@@ -517,7 +514,39 @@ public class AIFragment extends Fragment {
                 //if the time is not null we filter by time as well
                 if(criteria.get("time") != null){
                     if(timeFormat.format(task.date.getTime()).equalsIgnoreCase(criteria.get("time").toString())){
-
+                        //If status is null i.e (not specified meaning all) we add the task by default
+                        if(criteria.get("status")==null){
+                            //If category is null i.e (not specified meaning all) we add the task by default
+                            if(criteria.get("category")==null){
+                                filteredTasks.add(task);
+                            }
+                            // else we only add it if the category is the same with the specified category
+                            else{
+                                if(criteria.get("category").toString().equalsIgnoreCase(task.category)){
+                                    filteredTasks.add(task);
+                                }
+                            }
+                        }
+                        // else we only add it if the category is the same with the specified category
+                        else{
+                            if(criteria.get("status").toString().equalsIgnoreCase(task.status.name())){
+                                //If category is null i.e (not specified meaning all) we add the task by default
+                                if(criteria.get("category")==null){
+                                    filteredTasks.add(task);
+                                }
+                                // else we only add it if the category is the same with the specified category
+                                else{
+                                    if(criteria.get("category").toString().equalsIgnoreCase(task.category)){
+                                        filteredTasks.add(task);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else{
+                    //If status is null i.e (not specified meaning all) we add the task by default
+                    if(criteria.get("status")==null){
                         //If category is null i.e (not specified meaning all) we add the task by default
                         if(criteria.get("category")==null){
                             filteredTasks.add(task);
@@ -529,23 +558,24 @@ public class AIFragment extends Fragment {
                             }
                         }
                     }
-                }
-                //else we go and check for the date
-                else{
-                    //If category is null i.e (not specified meaning all) we add the task by default
-                    if(criteria.get("category")==null){
-                        filteredTasks.add(task);
-                    }
                     // else we only add it if the category is the same with the specified category
                     else{
-                        if(criteria.get("category").toString().equalsIgnoreCase(task.category)){
-                            filteredTasks.add(task);
+                        if(criteria.get("status").toString().equalsIgnoreCase(task.status.name())){
+                            //If category is null i.e (not specified meaning all) we add the task by default
+                            if(criteria.get("category")==null){
+                                filteredTasks.add(task);
+                            }
+                            // else we only add it if the category is the same with the specified category
+                            else{
+                                if(criteria.get("category").toString().equalsIgnoreCase(task.category)){
+                                    filteredTasks.add(task);
+                                }
+                            }
                         }
                     }
                 }
 
             }
-
 
         }
         filteredTasks.sort(new DateComparator());
@@ -557,11 +587,11 @@ public class AIFragment extends Fragment {
             speechStart("No tasks concerning your descriptions were found");
         }
         else{
-            StringBuilder str = new StringBuilder("I was able to find " + filteredTasks.size() + " task" + (filteredTasks.size() == 1 ? "" : "s") + " matching your description.\n");
+            StringBuilder str = new StringBuilder("I was able to find " + filteredTasks.size() + " task" + (filteredTasks.size() == 1 ? "" : "s") + " matching your description." + (filteredTasks.size() == 1 ? " Which is:" : " Which are:") + "\n");
             for (int i=0; i<filteredTasks.size(); i++){
                 final TaskModel task = filteredTasks.get(i);
                 boolean hasExpired = Calendar.getInstance().getTime().after(task.date.getTime());
-                String s = String.valueOf(i+1) + ") " + filteredTasks.get(i).name + " which start" + (hasExpired? "ed":"s") + " by ";
+                String s = (filteredTasks.size() == 1 ? "" : String.valueOf(i+1) + ") ")  + filteredTasks.get(i).name + " which start" + (hasExpired? "ed":"s") + " by ";
                 s = s + timeFormat.format(task.date.getTime());
                 // If it is not today i want to specify the day with the text as well
                 if(!dateFormat.format(task.date.getTime()).equals(criteria.get("date"))){

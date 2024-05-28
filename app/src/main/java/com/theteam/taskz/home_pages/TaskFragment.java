@@ -19,8 +19,13 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.theteam.taskz.CreateTask;
+import com.theteam.taskz.LoginActivity;
 import com.theteam.taskz.R;
 import com.theteam.taskz.adapters.TaskPageAdapter;
+import com.theteam.taskz.data.StateHolder;
+import com.theteam.taskz.data.ViewPagerDataHolder;
+import com.theteam.taskz.models.TaskManager;
+import com.theteam.taskz.models.UserModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,7 +35,7 @@ import java.util.Locale;
 public class TaskFragment extends Fragment {
 
     private TextView dayText,dateText,todayText;
-    private ImageView categoryIcon;
+    private ImageView categoryIcon,logoutIcon;
     private static LottieAnimationView confetti_lottie;
 
     private FloatingActionButton fab;
@@ -58,8 +63,22 @@ public class TaskFragment extends Fragment {
         dateText = view.findViewById(R.id.date_text);
         todayText = view.findViewById(R.id.today_text);
         categoryIcon = view.findViewById(R.id.category_icon);
+        logoutIcon = view.findViewById(R.id.logout_icon);
         fab = view.findViewById(R.id.fab);
         confetti_lottie = (LottieAnimationView) view.findViewById(R.id.confetti_lottie);
+
+        logoutIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new TaskManager(requireActivity()).clearTasks();
+                UserModel.clearUserData(requireActivity());
+                Intent i = new Intent(requireActivity().getApplicationContext(), LoginActivity.class);
+                requireActivity().startActivity(i);
+                requireActivity().finish();
+
+
+            }
+        });
 
         confetti_lottie.setAnimation(R.raw.confetti);
         confetti_lottie.setRepeatCount(0);
@@ -114,7 +133,9 @@ public class TaskFragment extends Fragment {
 
         adapter = new TaskPageAdapter(this, dates);
         viewerPagerTasks.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         viewerPagerTasks.setCurrentItem(middleIndex, false);
+
 
         currentDate = dates.get(middleIndex);
         sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
@@ -144,6 +165,7 @@ public class TaskFragment extends Fragment {
                 dayText.setText(dayOfWeekString);
 
                 todayText.setVisibility(isToday(date)? View.VISIBLE:View.GONE);
+                StateHolder.currentIndex = position;
 
                 // Now we also have to prevent users from adding new Tasks to
                 // Days that have expired.
@@ -167,6 +189,7 @@ public class TaskFragment extends Fragment {
                 dayText.setText(dayOfWeekString);
 
                 todayText.setVisibility(isToday(date)? View.VISIBLE:View.GONE);
+                StateHolder.currentIndex = position;
 
                 // Now we also have to prevent users from adding new Tasks to
                 // Days that have expired.
@@ -177,7 +200,28 @@ public class TaskFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //We only want to refresh the page after the user has gone past the AI fragment
+        if(ViewPagerDataHolder.viewPager != null && ViewPagerDataHolder.viewPager.getCurrentItem() > 2){
+            dates = generateDates();
+            int middleIndex = dates.size()/2;
+            for(Calendar cal : dates){
+                if(cal.get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
+                    middleIndex = dates.indexOf(cal);
+                }
+            }
 
+            adapter = new TaskPageAdapter(this, dates);
+            viewerPagerTasks.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            viewerPagerTasks.setCurrentItem(middleIndex, false);
+
+        }
+
+
+    }
 
     void showMessage(final String message){
         Toast.makeText(requireActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();

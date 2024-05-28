@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.theteam.taskz.enums.TaskStatus;
 import com.theteam.taskz.models.TaskManager;
 import com.theteam.taskz.models.TaskModel;
 import com.theteam.taskz.utilities.AlarmManager;
@@ -130,6 +131,7 @@ public class CreateTask extends AppCompatActivity{
                             taskJson.put("name", taskName.getText().trim());
                             taskJson.put("time", calendar.getTimeInMillis());
                             taskJson.put("category", taskCategory.getText().trim());
+                            taskJson.put("status", TaskStatus.Pending.name());
 
                             TaskModel model = new TaskModel(taskJson);
 

@@ -74,6 +74,15 @@
                             android:textSize="12sp"/>
 
                     </LinearLayout>
+                    <ImageView
+                        android:id="@+id/logout_icon"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="@dimen/regular_value_size"
+                        android:layout_marginEnd="@dimen/medium_value_size"
+                        android:src="@drawable/logout"
+                        app:tint="@color/red"
+                        android:scaleType="centerCrop"/>
 
                 </LinearLayout>
                 <LinearLayout

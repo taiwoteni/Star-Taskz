@@ -19,7 +19,10 @@ public class UserModel {
 
     private HashMap<String,Object> json;
 
+    private Context context;
+
     public UserModel(Context context){
+        this.context = context;
         SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
         final String jsonString = preferences.getString("userdata", "{}");
         Gson gson = new Gson();
@@ -38,6 +41,18 @@ public class UserModel {
         SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
 
         preferences.edit().remove("userdata").apply();
+    }
+
+    public void setNeedsToSync(boolean sync){
+        final HashMap<String,Object> userJson = (HashMap<String, Object>) json.clone();
+
+        userJson.replace("sync", sync);
+        saveUserData(userJson, context);
+    }
+
+    public boolean needsSync(){
+        return (boolean) json.get("sync");
+
     }
 
     public boolean isExists(){

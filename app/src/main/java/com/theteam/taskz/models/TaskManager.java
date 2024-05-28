@@ -138,7 +138,6 @@ public class TaskManager {
             e.printStackTrace();
         }
     }
-
     public void updateTaskOffline(TaskModel model, boolean speak){
         Gson gson = new Gson();
         SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
@@ -170,7 +169,7 @@ public class TaskManager {
         if(Calendar.getInstance().getTime().before(model.date.getTime())){
             final AlarmManager taskReminder = new AlarmManager(context.getApplicationContext(), context);
             taskReminder.cancelAlarm(model);
-            taskReminder.setAlarm(model, speak);
+            taskReminder.setAlarm(model, speak,false);
         }
 
     }
@@ -195,7 +194,7 @@ public class TaskManager {
         if(StateHolder.taskPageFragments!= null){
             //Inorder to automatically refresh the Page that needs this update,
             for(TasksPageFragment fragment: StateHolder.taskPageFragments){
-                if(fragment.date.get(Calendar.MONDAY) == model.date.get(Calendar.MONTH) && fragment.date.get(Calendar.DAY_OF_MONTH) == model.date.get(Calendar.DAY_OF_MONTH)){
+                if(fragment.date.get(Calendar.MONTH) == model.date.get(Calendar.MONTH) && fragment.date.get(Calendar.DAY_OF_MONTH) == model.date.get(Calendar.DAY_OF_MONTH)){
                     // We refresh
                     // An error might be thrown if the fragment does not have an activity
                     // Because in the instantiateTasks() method, we are calling requireActivity()
@@ -212,7 +211,7 @@ public class TaskManager {
         }
         if(StateHolder.calendarPageFragments != null){
             for(CalendarPageFragment fragment: StateHolder.calendarPageFragments){
-                if(fragment.date.get(Calendar.MONDAY) == model.date.get(Calendar.MONTH) && fragment.date.get(Calendar.DAY_OF_MONTH) == model.date.get(Calendar.DAY_OF_MONTH)){
+                if(fragment.date.get(Calendar.MONTH) == model.date.get(Calendar.MONTH) && fragment.date.get(Calendar.DAY_OF_MONTH) == model.date.get(Calendar.DAY_OF_MONTH)){
                     //We refresh
                     // We refresh
                     // An error might be thrown if the fragment does not have an activity
