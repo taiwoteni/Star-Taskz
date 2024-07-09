@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#BAB9B9</color>
     <color name="blue">#2196F3</color>
+    <color name="light_red">#FFC1BD</color>
     <color name="blueTransparent">#332196F3</color>
-
     <color name="red">#CC1B0E</color>
     <color name="redTransparent">#33CC1B0E</color>
 
