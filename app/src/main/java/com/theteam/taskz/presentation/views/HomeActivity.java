@@ -2,6 +2,7 @@ package com.theteam.taskz.presentation.views;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,12 +75,12 @@ public class HomeActivity extends AppCompatActivity {
         views.add(new AIFragment());
         // This is only meant to be added if it is personal
         // Else, it's meant to be profile fragment
-        views.add(new FocusFragment());
         if(account==AccountType.Personal){
             // Here it's meant to be settings fragment only for personal accounts
             views.add(new FocusFragment());
+        }else{
+            views.add(new ProfileFragment());
         }
-        views.add(new ViewProfileActivity());
 
         // View initialization
         splash_layout = findViewById(R.id.splash_layout);
@@ -138,12 +139,12 @@ public class HomeActivity extends AppCompatActivity {
     int getFragmentIndex(final int menuItemId){
         final boolean isPersonal = account == AccountType.Personal;
         final boolean isDark = new ThemeManager(this).isDarkMode();
-        bottomNavigationView.setBackgroundTintList(getResources().getColorStateList(!isDark? R.color.rootBackgroundLight:R.color.rootBackgroundDark));
+        bottomNavigationView.setBackgroundTintList(ColorStateList.valueOf(new ThemeManager(this).rootBackground));
         switch (menuItemId){
             case R.id.navigation_plans:
             case R.id.navigation_projects:
             case R.id.navigation_tasks:
-                bottomNavigationView.setBackgroundTintList(getResources().getColorStateList(!isDark? R.color.backgroundLight:R.color.backgroundDark));
+                bottomNavigationView.setBackgroundTintList(ColorStateList.valueOf(new ThemeManager(this).background));
                 return 0;
             case R.id.navigation_family:
             case R.id.navigation_collaboration:
@@ -152,6 +153,9 @@ public class HomeActivity extends AppCompatActivity {
                 return isPersonal? 1:2;
             case R.id.navigation_focus:
                 return 2;
+            case R.id.navigation_profile:
+                bottomNavigationView.setBackgroundTintList(ColorStateList.valueOf(new ThemeManager(this).background));
+                return 3;
             default:
                 return 3;
         }

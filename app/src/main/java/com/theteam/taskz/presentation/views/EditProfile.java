@@ -1,4 +1,4 @@
-package com.theteam.taskz;
+package com.theteam.taskz.presentation.views;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.theteam.taskz.R;
 
 public class EditProfile extends AppCompatActivity {
     ImageView goBackToPreviousPage;

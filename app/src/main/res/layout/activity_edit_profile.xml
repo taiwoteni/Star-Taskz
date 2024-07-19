@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/highlightColor"
     android:orientation="vertical"
-    tools:context=".EditProfile">
+    tools:context=".presentation.views.EditProfile">
 
     <LinearLayout
         android:layout_width="match_parent"

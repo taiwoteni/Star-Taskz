@@ -25,4 +25,20 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/large_value_size</item> <!-- Adjust the corner size as needed -->
     </style>
+
+    <!-- Text appearance for unselected tabs -->
+    <style name="TabUnselectedText">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">?attr/colorSecondary</item> <!-- gray color -->
+    </style>
+
+    <!-- Text appearance for selected tabs -->
+    <style name="TabSelectedText">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    <item name="android:textSize">15sp</item>
+    <item name="android:textColor">@color/themeColor</item>
+    </style>
 </resources>

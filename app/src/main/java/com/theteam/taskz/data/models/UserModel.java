@@ -108,7 +108,7 @@ public class UserModel {
         return json.get("firstName").toString();
     }
     public String lastName(){
-        return json.get("lastName").toString();
+        return json.get("lastName") == null? "": json.get("lastName").toString();
     }
     public String jobTitle(){
         return json.get("jobTitle").toString();
@@ -123,7 +123,7 @@ public class UserModel {
         return json.get("password").toString();
     }
 
-    public Calendar dob(){
+    public Calendar birthday(){
         String time = json.get("dateOfBirth").toString();
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();

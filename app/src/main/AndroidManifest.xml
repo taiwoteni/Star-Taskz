@@ -32,21 +32,15 @@
             android:name=".presentation.views.CreateWorkspaceActivity"
             android:exported="false"/>
         <activity
-            android:name=".GroupDetailsActivity"
+            android:name=".presentation.views.GroupDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".EditProfile"
+            android:name=".presentation.views.EditProfile"
             android:exported="false" />
         <activity
-            android:name=".ViewProfileActivity"
+            android:name=".presentation.views.ProfileFragment"
             android:exported="false" />
         <activity android:name=".SettingsActivity" />
-        <activity
-            android:name=".SyncNotion"
-            android:exported="false" />
-        <activity
-            android:name=".ViewProfileActivity"
-            android:exported="false" />
         <activity android:name=".presentation.views.SettingsActivity" />
         <activity
             android:name=".presentation.views.SyncNotion"
