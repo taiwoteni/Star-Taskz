@@ -44,7 +44,7 @@
             android:fontFamily="@font/poppins_regular"
             android:layout_marginTop="@dimen/small_value_size"
             android:layout_marginBottom="@dimen/medium_value_size"/>
-        <com.theteam.taskz.view_models.LoadableButton
+        <com.theteam.taskz.presentation.views.LoadableButton
             android:id="@+id/go_button"
             android:layout_width="match_parent"
             android:layout_height="50dp"

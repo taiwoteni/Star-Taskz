@@ -67,7 +67,7 @@
 
         </LinearLayout>
     </LinearLayout>
-    <com.theteam.taskz.view_models.LoadableButton
+    <com.theteam.taskz.presentation.views.LoadableButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:text="SET"

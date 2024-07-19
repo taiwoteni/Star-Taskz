@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/background"
-    tools:context=".RegisterActivity">
+    android:background="?attr/background">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,9 +23,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Get Started with Star Taskz."
-            android:layout_marginStart="@dimen/large_value_size"
+            android:text="Hey There! Welcome!"
             android:textSize="@dimen/large_font_size"
+            android:gravity="center"
             android:textColor="?attr/colorPrimary"
             android:layout_marginBottom="@dimen/small_value_size"
             android:fontFamily="@font/poppins_semibold"
@@ -34,16 +33,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Manage your taskz more efficiently."
-            android:layout_marginStart="@dimen/large_value_size"
+            android:text="What are your names?"
+            android:gravity="center"
             android:textSize="@dimen/regular_font_size"
             android:textColor="?attr/colorSecondary"
-            android:layout_marginBottom="@dimen/extra_large_value_size"
+            android:layout_marginBottom="@dimen/large_value_size"
             android:fontFamily="@font/poppins_regular"
             tools:ignore="HardcodedText" />
 
 
-        <com.theteam.taskz.view_models.TextInputFormField
+        <com.theteam.taskz.presentation.views.TextInputFormField
             android:id="@+id/first_name_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,38 +55,38 @@
             android:inputType="text"
             app:hintColor="?attr/colorSecondary"
             app:prefixIcon="@drawable/user"/>
-        <com.theteam.taskz.view_models.TextInputFormField
+        <com.theteam.taskz.presentation.views.TextInputFormField
             android:id="@+id/last_name_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/large_value_size"
-            android:layout_marginBottom="@dimen/large_value_size"
-            app:fontFamily="@font/poppins_regular"
-            app:hintColor="?attr/colorSecondary"
-            android:inputType="textPersonName"
-            app:hint="Last Name"
-            app:prefixIcon="@drawable/user"/>
-        <com.theteam.taskz.view_models.TextInputFormField
-            android:id="@+id/dob_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/large_value_size"
             android:layout_marginBottom="@dimen/extra_large_value_size"
             app:fontFamily="@font/poppins_regular"
             app:hintColor="?attr/colorSecondary"
-            android:inputType="none"
-            app:hint="Date Of Birth"
+            android:inputType="textPersonName"
+            app:hint="Last Name"
+            app:prefixIcon="@drawable/user"/>
+<!--        <com.theteam.taskz.presentation.views.TextInputFormField-->
+<!--            android:id="@+id/dob_form"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="@dimen/large_value_size"-->
+<!--            android:layout_marginBottom="@dimen/extra_large_value_size"-->
+<!--            app:fontFamily="@font/poppins_regular"-->
+<!--            app:hintColor="?attr/colorSecondary"-->
+<!--            android:inputType="none"-->
+<!--            app:hint="Date Of Birth"-->
 
-            app:prefixIcon="@drawable/calendar"/>
+<!--            app:prefixIcon="@drawable/calendar"/>-->
 
         <!-- Login Button Widget-->
 
 
-        <com.theteam.taskz.view_models.LoadableButton
+        <com.theteam.taskz.presentation.views.LoadableButton
             android:id="@+id/loadable_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/large_value_size"
+            android:layout_marginBottom="@dimen/extra_large_value_size"
             android:layout_marginHorizontal="@dimen/large_value_size"
             app:text="NEXT"
             app:backgroundColor="@color/themeColor"/>
@@ -112,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/colorSecondary"
-                android:text="or create with"
+                android:text="or register with"
                 android:fontFamily="@font/poppins_regular"
                 android:textSize="@dimen/small_font_size"
                 tools:ignore="HardcodedText" />
@@ -134,7 +133,7 @@
         </LinearLayout>
 
         <!-- Text to navigate to create account page-->
-        <com.theteam.taskz.view_models.UnderlineTextView
+        <com.theteam.taskz.presentation.views.UnderlineTextView
             android:id="@+id/have_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

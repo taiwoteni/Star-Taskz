@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/large_value_size"
+    android:layout_width="match_parent"
+    android:background="@drawable/bottom_bar_rounded_top_background"
+    android:backgroundTint="?attr/background"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="30dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/large_value_size"
+        android:background="@drawable/bottom_sheet_handle"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Workspace"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="@dimen/medium_font_size"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/medium_value_size"
+        android:layout_gravity="center"/>
+    <com.theteam.taskz.presentation.views.TextInputFormField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_value_size"
+        android:layout_marginBottom="@dimen/medium_value_size"
+        android:layout_marginHorizontal="@dimen/medium_value_size"
+        android:id="@+id/workspace_name_form"
+        app:hint="Workspace Name"
+        app:hintColor="?attr/colorSecondary"
+        app:prefixIcon="@drawable/collaboration"/>
+    <com.theteam.taskz.presentation.views.TextInputFormField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/extra_large_value_size"
+        android:layout_marginHorizontal="@dimen/medium_value_size"
+        android:id="@+id/workspace_description_form"
+        app:hint="Workspace Description"
+        app:hintColor="?attr/colorSecondary"
+        app:prefixIcon="@drawable/description"/>
+    <com.theteam.taskz.presentation.views.LoadableButton
+        android:id="@+id/create_workspace_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/medium_value_size"
+        android:layout_marginHorizontal="@dimen/medium_value_size"
+        app:text="Create Workspace"/>
+
+
+</LinearLayout>

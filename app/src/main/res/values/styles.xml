@@ -9,4 +9,20 @@
         <item name="android:background">?android:attr/colorBackground</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+
+    <style name="CustomBottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/BottomSheetShapeAppearance</item>
+    </style>
+
+    <style name="BottomSheetShapeAppearance">
+        <item name="boxCornerRadiusTopStart">@dimen/large_value_size</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/large_value_size</item>
+        <item name="cornerRadius">@dimen/large_value_size</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/large_value_size</item> <!-- Adjust the corner size as needed -->
+    </style>
 </resources>

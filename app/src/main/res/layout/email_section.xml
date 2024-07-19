@@ -23,8 +23,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter the below details."
-            android:layout_marginStart="@dimen/large_value_size"
+            android:text="...And Finally"
+            android:gravity="center"
             android:textSize="@dimen/large_font_size"
             android:textColor="?attr/colorPrimary"
             android:layout_marginBottom="@dimen/small_value_size"
@@ -33,8 +33,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter your email and password."
-            android:layout_marginStart="@dimen/large_value_size"
+            android:text="Your Login credentials"
+            android:gravity="center"
             android:textSize="@dimen/regular_font_size"
             android:textColor="?attr/colorSecondary"
             android:layout_marginBottom="@dimen/extra_large_value_size"
@@ -42,7 +42,7 @@
             tools:ignore="HardcodedText" />
 
 
-        <com.theteam.taskz.view_models.TextInputFormField
+        <com.theteam.taskz.presentation.views.TextInputFormField
             android:id="@+id/email_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:inputType="textEmailAddress"
             app:hintColor="?attr/colorSecondary"
             app:prefixIcon="@drawable/email"/>
-        <com.theteam.taskz.view_models.TextInputFormField
+        <com.theteam.taskz.presentation.views.TextInputFormField
             android:id="@+id/password_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             app:isPassword="true"
             app:hint="Enter Password"
             app:prefixIcon="@drawable/padlock"/>
-        <com.theteam.taskz.view_models.TextInputFormField
+        <com.theteam.taskz.presentation.views.TextInputFormField
             android:id="@+id/confirm_password_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,22 +83,21 @@
         <!-- Login Button Widget-->
 
 
-        <com.theteam.taskz.view_models.LoadableButton
+        <com.theteam.taskz.presentation.views.LoadableButton
             android:id="@+id/loadable_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/large_value_size"
             android:layout_marginHorizontal="@dimen/large_value_size"
-            app:text="CREATE"
+            app:text="REGISTER"
             app:backgroundColor="@color/themeColor"/>
 
         <!-- Text to navigate to select category page-->
-        <com.theteam.taskz.view_models.UnderlineTextView
+        <com.theteam.taskz.presentation.views.UnderlineTextView
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/large_value_size"
             android:text="back"
             android:fontFamily="@font/poppins_regular"
             android:textColor="@color/themeColor"

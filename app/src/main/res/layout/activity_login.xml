@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background"
-    tools:context=".LoginActivity">
+    tools:context=".presentation.views.LoginActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,7 +42,7 @@
             tools:ignore="HardcodedText" />
 
 
-        <com.theteam.taskz.view_models.TextInputFormField
+        <com.theteam.taskz.presentation.views.TextInputFormField
             android:id="@+id/email_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:inputType="textEmailAddress"
             app:hintColor="?attr/colorSecondary"
             app:prefixIcon="@drawable/email"/>
-        <com.theteam.taskz.view_models.TextInputFormField
+        <com.theteam.taskz.presentation.views.TextInputFormField
             android:id="@+id/password_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
         <!-- Login Button Widget-->
 
 
-        <com.theteam.taskz.view_models.LoadableButton
+        <com.theteam.taskz.presentation.views.LoadableButton
             android:id="@+id/loadable_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
         </LinearLayout>
 
         <!-- Text to navigate to create account page-->
-        <com.theteam.taskz.view_models.UnderlineTextView
+        <com.theteam.taskz.presentation.views.UnderlineTextView
             android:id="@+id/create_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -44,7 +44,7 @@
             tools:ignore="HardcodedText" />
 
 
-        <com.theteam.taskz.view_models.TextInputFormField
+        <com.theteam.taskz.presentation.views.TextInputFormField
             android:id="@+id/token_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             android:inputType="textEmailAddress"
             app:hintColor="?attr/colorSecondary"
             app:prefixIcon="@drawable/github_token"/>
-        <com.theteam.taskz.view_models.LoadableButton
+        <com.theteam.taskz.presentation.views.LoadableButton
             android:id="@+id/loadable_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

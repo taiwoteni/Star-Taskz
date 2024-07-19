@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background"
-    tools:context=".TaskReminder">
+    tools:context=".presentation.views.TaskReminder">
     <LinearLayout
         android:gravity="center"
         android:layout_width="match_parent"
@@ -81,7 +81,7 @@
         android:layout_marginBottom="@dimen/extra_large_value_size"
         android:layout_marginHorizontal="@dimen/medium_value_size"
         android:orientation="horizontal">
-        <com.theteam.taskz.view_models.LoadableButton
+        <com.theteam.taskz.presentation.views.LoadableButton
             android:id="@+id/ignore_button"
             android:layout_marginEnd="@dimen/regular_value_size"
             android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
             app:text="SEEN"
             app:textColor="?attr/colorSecondary"
             app:backgroundColor="?attr/colorTertiary"/>
-        <com.theteam.taskz.view_models.LoadableButton
+        <com.theteam.taskz.presentation.views.LoadableButton
             android:id="@+id/complete_button"
             android:layout_marginStart="@dimen/regular_value_size"
             android:layout_width="wrap_content"

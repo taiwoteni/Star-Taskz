@@ -6,7 +6,7 @@
     android:background="?attr/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SyncNotion">
+    tools:context=".presentation.views.SyncNotion">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -81,7 +81,7 @@
                 android:background="@drawable/divider_drawable"/>
 
         </LinearLayout>
-        <com.theteam.taskz.view_models.TextInputFormField
+        <com.theteam.taskz.presentation.views.TextInputFormField
             android:id="@+id/token_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             app:hintColor="?attr/colorSecondary"
             app:prefixIcon="@drawable/notion"/>
 
-        <com.theteam.taskz.view_models.LoadableButton
+        <com.theteam.taskz.presentation.views.LoadableButton
             android:id="@+id/loadable_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="?attr/colorTertiary"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/noTaskLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/no_tasks_lottie"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginTop="20dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/empty_tasks"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/no_tasks_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_value_size"
+            android:text="No Taskz Today"
+            android:textSize="@dimen/medium_font_size"
+            android:textColor="?attr/colorPrimary"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="8dp"/>
+            <TextView
+                android:id="@+id/tasksDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/large_value_size"
+                android:paddingVertical="@dimen/small_value_size"
+                android:text="Today"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="19sp"
+                android:textColor="?attr/colorPrimary"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tasksList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

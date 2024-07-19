@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/small_value_size">
+    <LinearLayout
+        android:id="@+id/task_item_layout"
+        android:background="@drawable/study_task_background"
+        android:paddingVertical="13sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:gravity="center"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:layout_marginBottom="@dimen/small_value_size"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/taskName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Creating pull request for profile pageffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/taskType"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:scaleType="centerCrop"
+                    app:tint="@color/white"
+                    android:layout_marginLeft="@dimen/regular_value_size"
+                    android:src="@drawable/pull_request" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/taskProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="20% Progress"
+                android:layout_marginBottom="4sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/collaborator1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="0.4dp"
+                            android:src="@drawable/profile_2"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/collaborator2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:translationX="-5dp"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="0.4dp"
+                            android:src="@drawable/profile_1"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/collaborator3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:translationX="-10dp"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="0.4dp"
+                            android:src="@drawable/star"/>
+                        <LinearLayout
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:translationX="-10dp"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="+3"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:gravity="center"
+                                android:fontFamily="@font/quicksand_semibold"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/taskTimeRange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/small_value_size"
+                    android:text="11:32 PM"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/quicksand_semibold"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

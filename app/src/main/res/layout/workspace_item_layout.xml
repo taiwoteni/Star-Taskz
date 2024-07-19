@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/medium_value_size"
+    android:paddingHorizontal="@dimen/medium_value_size"
+    android:paddingVertical="@dimen/regular_value_size">
+    <FrameLayout
+        android:layout_marginRight="@dimen/medium_value_size"
+        android:layout_width="55dp"
+        android:layout_height="55dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/workspace_profile_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/purple_700"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:id="@+id/workspace_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/quicksand_bold"
+                android:maxLength="1"
+                android:text="P"
+                android:gravity="center"
+                android:textSize="@dimen/extra_large_font_size"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/workspace_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prudent Marketing"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="?attr/colorPrimary"
+            android:gravity="start"
+            android:layout_marginBottom="2sp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/workspace_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Task Management workspace for Prudent Marketing"
+            android:lines="1"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="?attr/colorSecondary"
+            android:gravity="left"
+            android:textSize="@dimen/small_font_size"/>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_marginHorizontal="@dimen/regular_value_size"
+        android:layout_width="@dimen/medium_icon_size"
+        android:layout_height="@dimen/medium_icon_size"
+        android:src="@drawable/more_vert"
+        android:scaleType="centerCrop"
+        app:tint="?attr/colorPrimary"/>
+
+
+
+
+</LinearLayout>

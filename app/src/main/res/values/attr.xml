@@ -20,6 +20,14 @@
 
     </declare-styleable>
 
+    <declare-styleable name="SplashRefreshLayout">
+        <attr name="animation" format="enum">
+            <enum name="splash" value="0"/>
+            <enum name="loading" value="1"/>
+        </attr>
+
+    </declare-styleable>
+
     <declare-styleable name="LoadableButton">
         <attr name="loading" format="boolean"/>
         <attr name="text" format="string"/>
