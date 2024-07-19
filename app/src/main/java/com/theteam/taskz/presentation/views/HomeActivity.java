@@ -79,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
             // Here it's meant to be settings fragment only for personal accounts
             views.add(new FocusFragment());
         }
+        views.add(new ViewProfileActivity());
 
         // View initialization
         splash_layout = findViewById(R.id.splash_layout);
