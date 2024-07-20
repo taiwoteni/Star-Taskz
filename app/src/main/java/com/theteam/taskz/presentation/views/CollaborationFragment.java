@@ -1,5 +1,6 @@
 package com.theteam.taskz.presentation.views;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,11 +19,20 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.theteam.taskz.R;
+import com.theteam.taskz.data.models.UserModel;
 import com.theteam.taskz.utils.others.ThemeManager;
 
 import org.w3c.dom.Text;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CollaborationFragment extends Fragment {
 
@@ -32,6 +42,8 @@ public class CollaborationFragment extends Fragment {
     private RecyclerView workspaces_recycler_view;
     private EditText search_bar;
     private TextView title_text;
+    private UserModel user;
+    private CircleImageView profile_image;
 
     private FloatingActionButton fab;
 
@@ -58,6 +70,34 @@ public class CollaborationFragment extends Fragment {
         search_bar = (EditText) view.findViewById(R.id.search_bar);
         title_text = (TextView) view.findViewById(R.id.title_text);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        profile_image = view.findViewById(R.id.profile_image);
+
+        user = new UserModel(requireActivity());
+
+        if(user.hasProfile()){
+            Glide.with(this)
+                    .load(user.profile())
+                    .placeholder(R.drawable.avatar)
+                    .transition(DrawableTransitionOptions.withCrossFade(1000))
+                    .error(R.drawable.avatar)
+                    .addListener(new RequestListener<Drawable>() {
+
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Drawable> target, boolean b) {
+                            profile_image.setImageResource(R.drawable.avatar);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable drawable, Object o, Target<Drawable> target, DataSource dataSource, boolean b) {
+                            profile_image.setImageDrawable(drawable);
+                            profile_image.setScaleX(1f);
+                            profile_image.setScaleY(1f);
+                            return false;
+                        }
+                    })
+                    .into(profile_image);
+        }
 
 
         // We want to change the lottie to it's appropriate lottie when in dark mode or light mode

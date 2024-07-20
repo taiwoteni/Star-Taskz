@@ -1,271 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.theteam.taskz.presentation.views.SplashRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    app:animation="loading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/highlightColor"
-    android:orientation="vertical"
     tools:context=".presentation.views.EditProfile">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="30dp">
-
-            <ImageView
-                android:id="@+id/goBackToPreviousPage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@drawable/back_button_icon"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profile"
-                android:textColor="@color/black"
-                android:textSize="24dp"
-                android:textStyle="bold"
-                android:layout_centerInParent="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Save"
-                android:layout_centerVertical="true"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:layout_gravity="center">
-
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/profile_1"
-                android:clipToOutline="true"
-                android:background="@drawable/circle_background"
-                android:backgroundTint="@color/grey"/>
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/camera_icon"
-                android:background="@drawable/circle_background"
-                android:padding="6dp"
-                android:layout_gravity="end|bottom"/>
-        </FrameLayout>
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/curved_bottom_background"
-        android:padding="20dp"
+        android:background="?attr/colorTertiary"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/medium_value_size"
+                android:paddingHorizontal="@dimen/medium_value_size">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Profile"
+                    android:gravity="center"
+                    android:textSize="@dimen/medium_font_size"
+                    android:textColor="?attr/colorPrimary"
+                    android:fontFamily="@font/poppins_semibold"/>
+                <ImageView
+                    android:id="@+id/goBackToPreviousPage"
+                    android:layout_width="@dimen/regular_icon_size"
+                    android:layout_height="@dimen/regular_icon_size"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    app:tint="?attr/colorPrimary"
+                    android:src="@drawable/back"/>
+            </RelativeLayout>
+
+            <FrameLayout
                 android:layout_gravity="center"
-                android:textColor="@color/grey"
-                android:text="First Name"
-                android:textSize="14dp"
-                android:textStyle="bold"/>
+                android:id="@+id/profile_layout"
+                android:layout_marginBottom="@dimen/extra_large_value_size"
+                android:layout_width="110dp"
+                android:layout_height="110dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/avatar"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
+                        android:scaleType="centerCrop"
+                        android:id="@+id/profile_icon"/>
+                    <LinearLayout
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/small_value_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/small_value_size"
+                        android:background="@drawable/circle_background"
+                        android:gravity="center">
+                        <ImageView
+                            android:id="@+id/add_icon"
+                            android:layout_width="23sp"
+                            android:layout_height="23sp"
+                            android:src="@drawable/add_plus"
+                            android:scaleType="centerCrop"
+                            android:scaleX="1.1"
+                            android:scaleY="1.1"
+                            app:tint="@color/white"/>
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:textColor="@color/black"
-                android:text="Teni"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
 
+                    </LinearLayout>
+                </RelativeLayout>
+            </FrameLayout>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/grey"
-                android:text="Last Name"
-                android:textSize="14dp"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:textColor="@color/black"
-                android:text="Taiwo"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/grey"
-                android:text="Email Address"
-                android:textSize="14dp"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:textColor="@color/black"
-                android:text="tenitaiwo@gmail.com"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/curved_bottom_background"
+            android:backgroundTint="?attr/background"
             android:orientation="vertical">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/medium_value_size"
+                    android:paddingVertical="@dimen/large_value_size"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="30dp"
+                        android:layout_height="4dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/regular_value_size"
+                        android:background="@drawable/bottom_sheet_handle"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="First Name"
+                            android:gravity="start"
+                            android:layout_marginBottom="@dimen/small_value_size"
+                            android:paddingLeft="@dimen/medium_value_size"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorSecondary"
+                            android:fontFamily="@font/poppins_medium"/>
+                        <com.theteam.taskz.presentation.views.TextInputFormField
+                            android:id="@+id/first_name_form"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hint=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Last Name"
+                            android:gravity="start"
+                            android:layout_marginBottom="@dimen/small_value_size"
+                            android:paddingLeft="@dimen/medium_value_size"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorSecondary"
+                            android:fontFamily="@font/poppins_medium"/>
+                        <com.theteam.taskz.presentation.views.TextInputFormField
+                            android:id="@+id/last_name_form"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hint=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:gravity="start"
+                            android:layout_marginBottom="@dimen/small_value_size"
+                            android:paddingLeft="@dimen/medium_value_size"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorSecondary"
+                            android:fontFamily="@font/poppins_medium"/>
+                        <com.theteam.taskz.presentation.views.TextInputFormField
+                            android:id="@+id/email_form"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hint=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Birthday"
+                            android:gravity="start"
+                            android:layout_marginBottom="@dimen/small_value_size"
+                            android:paddingLeft="@dimen/medium_value_size"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorSecondary"
+                            android:fontFamily="@font/poppins_medium"/>
+                        <com.theteam.taskz.presentation.views.TextInputFormField
+                            android:id="@+id/birthday_form"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hint=""
+                            app:suffixIcon="@drawable/calendar"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/job_title_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Job Title"
+                            android:gravity="start"
+                            android:layout_marginBottom="@dimen/small_value_size"
+                            android:paddingLeft="@dimen/medium_value_size"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorSecondary"
+                            android:fontFamily="@font/poppins_medium"/>
+                        <com.theteam.taskz.presentation.views.TextInputFormField
+                            android:id="@+id/job_title_form"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hint=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/job_description_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Job Description"
+                            android:gravity="start"
+                            android:layout_marginBottom="@dimen/small_value_size"
+                            android:paddingLeft="@dimen/medium_value_size"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorSecondary"
+                            android:fontFamily="@font/poppins_medium"/>
+                        <com.theteam.taskz.presentation.views.TextInputFormField
+                            android:id="@+id/job_description_form"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hint=""/>
+                    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/grey"
-                android:text="Phone"
-                android:textSize="14dp"
-                android:textStyle="bold"/>
+                    <com.theteam.taskz.presentation.views.LoadableButton
+                        android:id="@+id/save_changes"
+                        android:layout_marginTop="@dimen/extra_large_value_size"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:text="Save"
+                        android:layout_marginBottom="@dimen/extra_large_value_size"/>
+                </LinearLayout>
+            </ScrollView>
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:textColor="@color/black"
-                android:text="+234 (0) 8162859346"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/grey"
-                android:text="Date of Birth"
-                android:textSize="14dp"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:textColor="@color/black"
-                android:text="01/07/2004"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/grey"
-                android:text="Phone"
-                android:textSize="14dp"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:textColor="@color/black"
-                android:text="+234 (0) 8162859346"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/grey"
-                android:text="Password"
-                android:textSize="14dp"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:textColor="@color/black"
-                android:hint="Change your password"
-                android:textColorHint="@color/black"
-                android:text=""
-                android:textSize="16dp"
-                android:textStyle="bold"/>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+</com.theteam.taskz.presentation.views.SplashRefreshLayout>

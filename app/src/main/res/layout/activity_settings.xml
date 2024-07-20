@@ -17,7 +17,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="40dp"
+                android:paddingBottom="35dp"
                 android:orientation="vertical">
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -25,6 +25,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="@dimen/large_value_size">
                     <ImageView
+                        android:id="@+id/back"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/forward_icon"
@@ -49,7 +50,8 @@
 
 
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_icon"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     android:layout_marginTop="40dp"
@@ -61,6 +63,7 @@
                     android:clipToOutline="true"/>
 
                 <TextView
+                    android:id="@+id/name_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/regular_value_size"
@@ -73,6 +76,7 @@
 
             <!-- Edit Profile-->
             <RelativeLayout
+                android:id="@+id/edit_profile_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -86,12 +90,12 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     app:cardElevation="0dp"
-                    android:backgroundTint="@color/greenTransparent"
+                    android:backgroundTint="#1D109E15"
                     app:cardCornerRadius="@dimen/regular_value_size">
                     <ImageView
-                        android:layout_width="@dimen/medium_icon_size"
-                        android:layout_height="@dimen/medium_icon_size"
-                        android:layout_margin="@dimen/regular_value_size"
+                        android:layout_width="23sp"
+                        android:layout_height="23sp"
+                        android:layout_margin="10sp"
                         app:tint="@color/themeColor"
                         android:src="@drawable/edit" />
                 </androidx.cardview.widget.CardView>
@@ -113,7 +117,192 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     app:cardElevation="0dp"
-                    android:backgroundTint="@color/greenTransparent"
+                    android:backgroundTint="#1D109E15"
+                    app:cardCornerRadius="55dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/regular_icon_size"
+                        android:layout_height="@dimen/regular_icon_size"
+                        android:layout_margin="@dimen/regular_value_size"
+                        android:src="@drawable/forward_icon"
+                        app:tint="@color/themeColor"/>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="?attr/colorTertiary"/>
+            <!-- Pomodorro-->
+            <RelativeLayout
+                android:id="@+id/platform_sync_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/sync_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:cardElevation="0dp"
+                    android:backgroundTint="@color/yellowTransparent"
+                    app:cardCornerRadius="@dimen/regular_value_size">
+                    <ImageView
+                        android:layout_width="23sp"
+                        android:layout_height="23sp"
+                        android:layout_margin="10sp"
+                        app:tint="@color/yellow"
+                        android:src="@drawable/sync" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/sync_icon"
+                    android:textSize="@dimen/regular_font_size"
+                    android:textColor="@color/yellow"
+                    android:text="Platform Integration"
+                    android:fontFamily="@font/poppins_medium"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:cardElevation="0dp"
+                    android:backgroundTint="@color/yellowTransparent"
+                    app:cardCornerRadius="55dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/regular_icon_size"
+                        android:layout_height="@dimen/regular_icon_size"
+                        android:layout_margin="@dimen/regular_value_size"
+                        android:src="@drawable/forward_icon"
+                        app:tint="@color/yellow"/>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="?attr/colorTertiary"/>
+
+            <!-- Weather-->
+            <RelativeLayout
+                android:id="@+id/weather_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/weather_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:cardElevation="0dp"
+                    android:backgroundTint="#1D109E15"
+                    app:cardCornerRadius="@dimen/regular_value_size">
+                    <ImageView
+                        android:layout_width="23sp"
+                        android:layout_height="23sp"
+                        android:layout_margin="10sp"
+                        app:tint="@color/themeColor"
+                        android:src="@drawable/weather" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/weather_icon"
+                    android:textSize="@dimen/regular_font_size"
+                    android:textColor="?attr/colorPrimary"
+                    android:text="Weather"
+                    android:fontFamily="@font/poppins_medium"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:cardElevation="0dp"
+                    android:backgroundTint="#1D109E15"
+                    app:cardCornerRadius="55dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/regular_icon_size"
+                        android:layout_height="@dimen/regular_icon_size"
+                        android:layout_margin="@dimen/regular_value_size"
+                        android:src="@drawable/forward_icon"
+                        app:tint="@color/themeColor"/>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="?attr/colorTertiary"/>
+
+            <!-- Pomodorro-->
+            <RelativeLayout
+                android:id="@+id/pomodorro_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/pomodorro_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:cardElevation="0dp"
+                    android:backgroundTint="#1D109E15"
+                    app:cardCornerRadius="@dimen/regular_value_size">
+                    <ImageView
+                        android:layout_width="23sp"
+                        android:layout_height="23sp"
+                        android:layout_margin="10sp"
+                        app:tint="@color/themeColor"
+                        android:src="@drawable/pomodoro" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/pomodorro_icon"
+                    android:textSize="@dimen/regular_font_size"
+                    android:textColor="?attr/colorPrimary"
+                    android:text="Timer"
+                    android:fontFamily="@font/poppins_medium"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:cardElevation="0dp"
+                    android:backgroundTint="#1D109E15"
                     app:cardCornerRadius="55dp">
 
                     <ImageView
@@ -134,63 +323,67 @@
                 android:background="?attr/colorTertiary"/>
 
             <!-- Dark Mode-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/dark_mode_layout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginEnd="20dp">-->
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/dark_mode_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    app:cardElevation="0dp"
-                    android:backgroundTint="@color/greenTransparent"
-                    app:cardCornerRadius="@dimen/regular_value_size">
-                    <ImageView
-                        android:layout_width="@dimen/medium_icon_size"
-                        android:layout_height="@dimen/medium_icon_size"
-                        android:layout_margin="@dimen/regular_value_size"
-                        app:tint="@color/themeColor"
-                        android:src="@drawable/night"
-                        />
-                </androidx.cardview.widget.CardView>
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/dark_mode_icon"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentStart="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    app:cardElevation="0dp"-->
+<!--                    android:backgroundTint="#1D109E15"-->
+<!--                    app:cardCornerRadius="@dimen/regular_value_size">-->
+<!--                    <ImageView-->
+<!--                        android:layout_width="23sp"-->
+<!--                        android:layout_height="23sp"-->
+<!--                        android:scaleX="0.9"-->
+<!--                        android:scaleY="0.9"-->
+<!--                        android:layout_margin="10sp"-->
+<!--                        app:tint="@color/themeColor"-->
+<!--                        android:src="@drawable/night"-->
+<!--                        />-->
+<!--                </androidx.cardview.widget.CardView>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/dark_mode_icon"
-                    android:textSize="@dimen/regular_font_size"
-                    android:textColor="?attr/colorPrimary"
-                    android:text="Dark Mode"
-                    android:fontFamily="@font/poppins_medium"/>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_toEndOf="@+id/dark_mode_icon"-->
+<!--                    android:textSize="@dimen/regular_font_size"-->
+<!--                    android:textColor="?attr/colorPrimary"-->
+<!--                    android:text="Dark Mode"-->
+<!--                    android:fontFamily="@font/poppins_medium"/>-->
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/dark_mode_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
-                    app:thumbTint="@color/themeColor"
-                    app:trackTint="?attr/colorTertiary"
-                    android:checked="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="?attr/colorTertiary"/>
+<!--                <com.google.android.material.switchmaterial.SwitchMaterial-->
+<!--                    android:id="@+id/dark_mode_switch"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    style="@style/Widget.Material3.CompoundButton.MaterialSwitch"-->
+<!--                    app:thumbTint="@color/white"-->
+<!--                    app:trackTint="?attr/colorTertiary"-->
+<!--                    android:checked="false"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_centerVertical="true"/>-->
+<!--            </RelativeLayout>-->
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_marginBottom="15dp"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                android:background="?attr/colorTertiary"/>-->
 
             <!-- Notifications-->
             <RelativeLayout
+                android:id="@+id/notifications_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -203,12 +396,12 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     app:cardElevation="0dp"
-                    android:backgroundTint="@color/greenTransparent"
+                    android:backgroundTint="#1D109E15"
                     app:cardCornerRadius="@dimen/regular_value_size">
                     <ImageView
-                        android:layout_width="@dimen/medium_icon_size"
-                        android:layout_height="@dimen/medium_icon_size"
-                        android:layout_margin="@dimen/regular_value_size"
+                        android:layout_width="23sp"
+                        android:layout_height="23sp"
+                        android:layout_margin="10sp"
                         app:tint="@color/themeColor"
                         android:src="@drawable/notifications"
                         />
@@ -230,8 +423,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
-                    app:thumbTint="@color/themeColor"
-                    app:trackTint="?attr/colorTertiary"
+                    app:thumbTint="@color/white"
+                    app:trackTint="@color/themeColor"
                     android:checked="true"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"/>
@@ -247,6 +440,7 @@
 
             <!-- Reminders-->
             <RelativeLayout
+                android:id="@+id/reminders_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -258,13 +452,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:backgroundTint="@color/greenTransparent"
+                    android:backgroundTint="#1D109E15"
                     app:cardElevation="0dp"
                     app:cardCornerRadius="@dimen/regular_value_size">
                     <ImageView
-                        android:layout_width="@dimen/medium_icon_size"
-                        android:layout_height="@dimen/medium_icon_size"
-                        android:layout_margin="@dimen/regular_value_size"
+                        android:layout_width="23sp"
+                        android:layout_height="23sp"
+                        android:layout_margin="10sp"
                         app:tint="@color/themeColor"
                         android:src="@drawable/alarm_clock"/>
                 </androidx.cardview.widget.CardView>
@@ -285,8 +479,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
-                    app:thumbTint="@color/themeColor"
-                    app:trackTint="?attr/colorTertiary"
+                    app:thumbTint="@color/white"
+                    app:trackTint="@color/themeColor"
                     android:checked="true"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"/>
@@ -302,6 +496,7 @@
 
             <!-- Ringtone-->
             <RelativeLayout
+                android:id="@+id/ringtone_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -314,12 +509,12 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     app:cardElevation="0dp"
-                    android:backgroundTint="@color/greenTransparent"
+                    android:backgroundTint="#1D109E15"
                     app:cardCornerRadius="@dimen/regular_value_size">
                     <ImageView
-                        android:layout_width="@dimen/medium_icon_size"
-                        android:layout_height="@dimen/medium_icon_size"
-                        android:layout_margin="@dimen/regular_value_size"
+                        android:layout_width="23sp"
+                        android:layout_height="23sp"
+                        android:layout_margin="10sp"
                         app:tint="@color/themeColor"
                         android:src="@drawable/music_note" />
                 </androidx.cardview.widget.CardView>
@@ -340,7 +535,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:backgroundTint="@color/greenTransparent"
+                    android:backgroundTint="#1D109E15"
                     app:cardElevation="0dp"
                     app:cardCornerRadius="60dp">
                     <ImageView
@@ -362,6 +557,7 @@
 
             <!-- Logout-->
             <RelativeLayout
+                android:id="@+id/logout_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -379,9 +575,9 @@
                     app:cardCornerRadius="@dimen/regular_value_size">
 
                     <ImageView
-                        android:layout_width="@dimen/medium_icon_size"
-                        android:layout_height="@dimen/medium_icon_size"
-                        android:layout_margin="@dimen/regular_value_size"
+                        android:layout_width="23sp"
+                        android:layout_height="23sp"
+                        android:layout_margin="10sp"
                         android:src="@drawable/logout"
                         app:tint="@color/red" />
                 </androidx.cardview.widget.CardView>

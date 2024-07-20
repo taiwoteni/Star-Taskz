@@ -19,9 +19,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.AuthenticationDataHolder;
+import com.theteam.taskz.data.models.UserData;
+import com.theteam.taskz.data.models.UserModel;
 import com.theteam.taskz.domain.repositories.AuthenticationRepository;
 import com.theteam.taskz.presentation.viewmodels.LoginViewModel;
 import com.theteam.taskz.utils.others.JsonUtils;
+
+import org.json.JSONException;
 
 import java.util.regex.Pattern;
 
@@ -125,8 +129,14 @@ public class EmailSection extends Fragment {
                 null,
                 jsonObject -> {
                     Log.i("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
-                    dialog.dismiss();
-                    loginViewModel.next();
+                    try {
+                        UserModel.saveUserData(JsonUtils.convertToHashMap(jsonObject), requireActivity());
+                        dialog.dismiss();
+                        loginViewModel.next();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 },
                 volleyError -> {
                     Log.e("API_RESPONSE", volleyError.toString());

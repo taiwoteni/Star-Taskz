@@ -3,6 +3,7 @@ package com.theteam.taskz.domain.repositories;
 import android.content.Context;
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
 import com.android.volley.Response;
 
 import org.json.JSONArray;
@@ -135,10 +136,11 @@ public class UserRepository {
             final Response.ErrorListener errorResponse
     ){
         HashMap<String, MultipartRequest.DataPart> data = new HashMap<>();
-        data.put("file", new MultipartRequest.DataPart(profilePath.substring(profilePath.lastIndexOf("/")), getFileDataFromPath(profilePath)));
+        data.put("file", new MultipartRequest.DataPart(profilePath.substring(profilePath.lastIndexOf("/")), getFileDataFromPath(profilePath), "image/jpeg"));
 
-        apiInterface.multipartPostRequest(
+        apiInterface.multipartRequest(
                 "user/upload-profileImage/"+id,
+                Request.Method.PUT,
                 null,
                 null,
                 data,

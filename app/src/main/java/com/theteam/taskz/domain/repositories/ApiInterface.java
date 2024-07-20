@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ApiInterface {
+class ApiInterface {
     private final String baseUrl = "https://star-taskz-backend.onrender.com/star-taskz/api/";
     private Context context;
     private RequestQueue queue;
@@ -63,8 +63,9 @@ public class ApiInterface {
         queue.add(objectRequest);
     }
 
-    public void multipartPostRequest(
+    public void multipartRequest(
             String path,
+            int method,
             HashMap<String,String> headers,
             HashMap<String,String> data,
             Map<String, MultipartRequest.DataPart> dataParts,
@@ -81,14 +82,14 @@ public class ApiInterface {
                 onFailure){
             @Override
             public int getMethod() {
-                return Method.POST;
+                return method;
             }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 ///TODO:Come back to this because multipart request has it's own content-type;
                 // In case no data is passed in as a header explicitly
                 final HashMap<String, String> header = new HashMap<>();
-                header.put("Content-Type","application/json");
+                header.put("Content-Type","multipart/form-data");
                 if(headers != null){
                     header.putAll(headers);
                 }
@@ -96,46 +97,7 @@ public class ApiInterface {
             }
         };
         multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_DEFAULT_TIMEOUT,
-                MY_MAX_RETRIES,
-                MY_BACKOFF_MULTIPLIER));
-        queue.add(multipartRequest);
-    }
-    public void multipartPatchRequest(
-            String path,
-            HashMap<String,String> headers,
-            HashMap<String,String> data,
-            Map<String, MultipartRequest.DataPart> dataParts,
-            Response.Listener<NetworkResponse> onSuccess,
-            Response.ErrorListener onFailure
-    ){
-
-        MultipartRequest multipartRequest = new MultipartRequest(
-                baseUrl+path,
-                headers,
-                data,
-                dataParts,
-                onSuccess,
-                onFailure){
-            @Override
-            public int getMethod() {
-                return Method.PATCH;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                ///TODO:Come back to this because multipart request has it's own content-type;
-                // In case no data is passed in as a header explicitly
-                final HashMap<String, String> header = new HashMap<>();
-                header.put("Content-Type","application/json");
-                if(headers != null){
-                    header.putAll(headers);
-                }
-                return header;
-            }
-        };
-        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_DEFAULT_TIMEOUT,
+                10000,
                 MY_MAX_RETRIES,
                 MY_BACKOFF_MULTIPLIER));
         queue.add(multipartRequest);

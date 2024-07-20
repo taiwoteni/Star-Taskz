@@ -1,5 +1,6 @@
 package com.theteam.taskz.presentation.views;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -16,7 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.theteam.taskz.R;
+import com.theteam.taskz.data.models.UserModel;
 import com.theteam.taskz.presentation.adapters.TaskDateListAdapter;
 import com.theteam.taskz.data.models.TaskDateModel;
 import com.theteam.taskz.presentation.adapters.ViewPagerAdapter;
@@ -27,12 +35,18 @@ import com.theteam.taskz.presentation.viewmodels.TasksViewModel;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TasksFragment extends Fragment {
 
     public static float MILLISECONDS_PER_INCH = 100f;
     private RecyclerView recyclerView;
     private TaskDateListAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
+
+    private CircleImageView profile_image;
+
+    private UserModel user;
 
     private ViewPager2 viewPager2;
 
@@ -51,6 +65,34 @@ public class TasksFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.dates_recycler_view);
         viewPager2 = view.findViewById(R.id.view_pager);
+        profile_image = view.findViewById(R.id.profile_image);
+
+        user = new UserModel(requireActivity());
+
+        if(user.hasProfile()){
+            Glide.with(this)
+                    .load(user.profile())
+                    .placeholder(R.drawable.avatar)
+                    .transition(DrawableTransitionOptions.withCrossFade(1000))
+                    .error(R.drawable.avatar)
+                    .addListener(new RequestListener<Drawable>() {
+
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Drawable> target, boolean b) {
+                            profile_image.setImageResource(R.drawable.avatar);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable drawable, Object o, Target<Drawable> target, DataSource dataSource, boolean b) {
+                            profile_image.setImageDrawable(drawable);
+                            profile_image.setScaleX(1f);
+                            profile_image.setScaleY(1f);
+                            return false;
+                        }
+                    })
+                    .into(profile_image);
+        }
 
         //Configure viewPager2
         viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
@@ -67,6 +109,8 @@ public class TasksFragment extends Fragment {
         // .. children (Date Items in RecyclerView) and TasksList
         tasksViewModel = new ViewModelProvider(requireActivity()).get(TasksViewModel.class);
         taskDatesViewModel = new ViewModelProvider(requireActivity()).get(TaskDatesViewModel.class);
+
+
 
         initialize();
 

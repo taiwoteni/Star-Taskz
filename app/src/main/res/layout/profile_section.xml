@@ -7,109 +7,101 @@
     android:layout_height="match_parent"
     android:background="?attr/background"
     tools:context=".presentation.views.ProfileSection">
-    <FrameLayout
+    <com.theteam.taskz.presentation.views.SplashRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
+        android:layout_height="match_parent"
+        app:animation="loading">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:scrollbars="vertical"
+            android:orientation="vertical">
+            <!--        <com.airbnb.lottie.LottieAnimationView-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="110dp"-->
+            <!--            app:lottie_rawRes="@raw/login_illustration"-->
+            <!--            android:scaleType="fitCenter"-->
+            <!--            app:lottie_autoPlay="true"-->
+            <!--            app:lottie_loop="true"-->
+            <!--          /> -->
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:text="...One More Thing"
+                android:textSize="@dimen/large_font_size"
                 android:gravity="center"
-                android:scrollbars="vertical"
-                android:orientation="vertical">
-                <!--        <com.airbnb.lottie.LottieAnimationView-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="110dp"-->
-                <!--            app:lottie_rawRes="@raw/login_illustration"-->
-                <!--            android:scaleType="fitCenter"-->
-                <!--            app:lottie_autoPlay="true"-->
-                <!--            app:lottie_loop="true"-->
-                <!--          /> -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="...One More Thing"
-                    android:textSize="@dimen/large_font_size"
-                    android:gravity="center"
-                    android:textColor="?attr/colorPrimary"
-                    android:layout_marginBottom="@dimen/small_value_size"
-                    android:fontFamily="@font/poppins_semibold"
-                    tools:ignore="HardcodedText" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="An awesome photo of yourself 📸"
-                    android:gravity="center"
-                    android:textSize="@dimen/regular_font_size"
-                    android:textColor="?attr/colorSecondary"
-                    android:layout_marginBottom="@dimen/large_value_size"
-                    android:fontFamily="@font/poppins_regular"
-                    tools:ignore="HardcodedText" />
-
-                <FrameLayout
-                    android:id="@+id/profile_layout"
-                    android:layout_marginBottom="@dimen/extra_large_value_size"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/avatar"
-                            android:scaleY="1.5"
-                            android:scaleX="1.5"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/profile_icon"/>
-                        <LinearLayout
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="@dimen/small_value_size"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/small_value_size"
-                            android:background="@drawable/circle_background"
-                            android:gravity="center">
-                            <ImageView
-                                android:layout_width="23sp"
-                                android:layout_height="23sp"
-                                android:src="@drawable/add_plus"
-                                android:scaleType="centerCrop"
-                                android:scaleX="1.1"
-                                android:scaleY="1.1"
-                                app:tint="@color/white"/>
-
-
-                        </LinearLayout>
-                    </RelativeLayout>
-                </FrameLayout>
-
-
-                <!-- Login Button Widget-->
-
-
-                <com.theteam.taskz.presentation.views.LoadableButton
-                    android:id="@+id/loadable_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/large_value_size"
-                    android:layout_marginHorizontal="@dimen/large_value_size"
-                    app:text="SKIP"
-                    app:backgroundColor="@color/themeColor"/>
-
-                <!-- Divider Widget-->
-            </LinearLayout>
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/splash_lottie"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginBottom="@dimen/small_value_size"
+                android:fontFamily="@font/poppins_semibold"
+                tools:ignore="HardcodedText" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:lottie_progress="0"/>
-        </RelativeLayout>
-    </FrameLayout>
+                android:layout_height="wrap_content"
+                android:text="An awesome photo of yourself 📸"
+                android:gravity="center"
+                android:textSize="@dimen/regular_font_size"
+                android:textColor="?attr/colorSecondary"
+                android:layout_marginBottom="@dimen/large_value_size"
+                android:fontFamily="@font/poppins_regular"
+                tools:ignore="HardcodedText" />
+
+            <FrameLayout
+                android:id="@+id/profile_layout"
+                android:layout_marginBottom="@dimen/extra_large_value_size"
+                android:layout_width="110dp"
+                android:layout_height="110dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/avatar"
+                        android:scaleY="1.5"
+                        android:scaleX="1.5"
+                        android:scaleType="centerCrop"
+                        android:id="@+id/profile_icon"/>
+                    <LinearLayout
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/small_value_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/small_value_size"
+                        android:background="@drawable/circle_background"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="23sp"
+                            android:layout_height="23sp"
+                            android:src="@drawable/add_plus"
+                            android:scaleType="centerCrop"
+                            android:scaleX="1.1"
+                            android:scaleY="1.1"
+                            app:tint="@color/white"/>
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </FrameLayout>
+
+
+            <!-- Login Button Widget-->
+
+
+            <com.theteam.taskz.presentation.views.LoadableButton
+                android:id="@+id/loadable_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/large_value_size"
+                android:layout_marginHorizontal="@dimen/large_value_size"
+                app:text="SKIP"
+                app:backgroundColor="@color/themeColor"/>
+
+            <!-- Divider Widget-->
+        </LinearLayout>
+    </com.theteam.taskz.presentation.views.SplashRefreshLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

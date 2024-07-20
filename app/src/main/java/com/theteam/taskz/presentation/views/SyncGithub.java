@@ -73,7 +73,9 @@ public class SyncGithub extends AppCompatActivity {
     void sync(){
         sync.startLoading();
         new Handler().postDelayed(() -> {
-            Github.validateUserToken(token_form.getText().trim(), getApplicationContext(),sync);
+            runOnUiThread(() -> {
+                Github.validateUserToken(token_form.getText().trim(), this,sync);
+            });
         }, 2000);
     }
 

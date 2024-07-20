@@ -209,11 +209,7 @@ public class HomeActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        else if (model.tokenExpiration().getTime().before(Calendar.getInstance().getTime())){
-            refreshToken();
-        }
-        else{
-            checkIfSynced();
+        else {
             if(getIntent().hasExtra("ai")){
                 viewPager.setCurrentItem(2,false);
             }
@@ -236,13 +232,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void checkIfSynced(){
-        if(new UserModel(this).needsSync()){
-            new UserModel(this).setNeedsToSync(false);
-            new ApiService(this,getLayoutInflater()).checkAndSynced();
-        }
 
-    }
 
     private void showErrorMessage(final String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();

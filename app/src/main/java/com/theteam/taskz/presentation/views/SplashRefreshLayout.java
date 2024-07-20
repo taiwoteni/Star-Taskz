@@ -1,5 +1,7 @@
 package com.theteam.taskz.presentation.views;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AndroidRuntimeException;
@@ -10,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.theteam.taskz.R;
@@ -95,13 +99,46 @@ public class SplashRefreshLayout extends FrameLayout {
 
     public void startAnimating() {
         splashLayout.setVisibility(View.VISIBLE);
+        if(ANIMATION_TYPE !=0){
+            splashLayout.setAlpha(0f);
+            ObjectAnimator fadeIn = ObjectAnimator.ofFloat(splashLayout, "alpha", 0f,1f);
+            fadeIn.setDuration(1000);
+            fadeIn.start();
+        }
         lottie.loop(ANIMATION_TYPE != 0);
         lottie.playAnimation();
     }
 
+
     public void stopAnimation(){
         lottie.pauseAnimation();
-        splashLayout.setVisibility(View.GONE);
+        if(ANIMATION_TYPE !=0){
+            splashLayout.setAlpha(1f);
+            ObjectAnimator fadeIn = ObjectAnimator.ofFloat(splashLayout, "alpha", 1f,0f);
+            fadeIn.setDuration(1000);
+            fadeIn.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(@NonNull Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(@NonNull Animator animator) {
+                    splashLayout.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationCancel(@NonNull Animator animator) {
+                    splashLayout.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationRepeat(@NonNull Animator animator) {
+
+                }
+            });
+        }
+
     }
 }
 

@@ -1,11 +1,13 @@
 package com.theteam.taskz.utils.others;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -22,9 +24,18 @@ public class JsonUtils {
         return hash;
     }
 
-    public static String prettyPrint(String string){
+    public static String prettyPrint(String src){
+        final String string = src.replaceAll("\\\\", "");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Object obj = gson.fromJson(string, Object.class);
         return gson.toJson(obj);
+    }
+    public static String prettyPrintHash(HashMap<String,Object> src){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(src);
+    }
+    public static String prettyPrintArray(ArrayList<HashMap<String,Object>> src){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(src);
     }
 }

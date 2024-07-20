@@ -32,8 +32,10 @@
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/large_value_size"
+                android:scaleY="1.5"
+                android:scaleX="1.5"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profile_2" />
+                android:src="@drawable/avatar" />
         </RelativeLayout>
         <EditText
             android:id="@+id/search_bar"

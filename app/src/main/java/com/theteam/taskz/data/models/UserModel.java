@@ -28,24 +28,28 @@ public class UserModel {
         final String jsonString = preferences.getString("userdata", "{}");
         Gson gson = new Gson();
         Type mapType = new TypeToken<HashMap<String, Object>>(){}.getType();
-//        json = gson.fromJson(jsonString, mapType);
+        json = gson.fromJson(jsonString, mapType);
+        json.put("accountType", "Business");
+        json.put("jobDescription", "A Front-End Software Engineer");
+        json.put("jobTitle", "Software Developer");
+
+
 
 //        For now, we are using a predefined data;
-
-        final HashMap<String,Object> userJson = new HashMap<>();
-        userJson.put("id", 1);
-        userJson.put("firstName", "John");
-        userJson.put("lastName", "Doe");
-        userJson.put("email", "john.doe@example.com");
-        userJson.put("password", "password");
-        userJson.put("dateOfBirth", "1990-01-01");
-        userJson.put("accountType", "Business");
-        userJson.put("jobDescription", "A Front-End Software Engineer");
-        userJson.put("jobTitle", "Software Developer");
-        userJson.put("authToken", "1234567890");
-        userJson.put("tokenExpiration", "2023-01-01T00:00:00");
-        userJson.put("sync", false);
-        json = userJson;
+//        final HashMap<String,Object> userJson = new HashMap<>();
+//        userJson.put("id", 1);
+//        userJson.put("firstName", "John");
+//        userJson.put("lastName", "Doe");
+//        userJson.put("email", "john.doe@example.com");
+//        userJson.put("password", "password");
+//        userJson.put("dateOfBirth", "1990-01-01");
+//        userJson.put("accountType", "Business");
+//        userJson.put("jobDescription", "A Front-End Software Engineer");
+//        userJson.put("jobTitle", "Software Developer");
+//        userJson.put("authToken", "1234567890");
+//        userJson.put("tokenExpiration", "2023-01-01T00:00:00");
+//        userJson.put("sync", false);
+//        json = userJson;
     }
 
     public static void saveUserData(HashMap<String,Object> map, Context context){
@@ -78,7 +82,7 @@ public class UserModel {
     }
 
     public String uid(){
-        return String.valueOf((int) Double.parseDouble(json.get("id").toString()));
+        return json.get("id").toString();
     }
     public String authToken(){
         return json.get("authToken").toString();
@@ -110,6 +114,9 @@ public class UserModel {
     public String lastName(){
         return json.get("lastName") == null? "": json.get("lastName").toString();
     }
+    public String fullName(){
+        return firstName() + (lastName().trim().isEmpty()?"":(" " + lastName()));
+    }
     public String jobTitle(){
         return json.get("jobTitle").toString();
     }
@@ -122,6 +129,19 @@ public class UserModel {
     public String password(){
         return json.get("password").toString();
     }
+
+    public String profile(){
+        return json.get("profile").toString();
+    }
+
+    public boolean isGoogleAccount(){
+        return  password().trim().equals("sTaR_TaSkZ@30_May@" + email());
+    }
+
+    public boolean hasProfile(){
+        return json.get("profile") != null;
+    }
+
 
     public Calendar birthday(){
         String time = json.get("dateOfBirth").toString();
