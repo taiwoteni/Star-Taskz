@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:gravity="center_vertical"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/medium_value_size"
-    android:paddingHorizontal="@dimen/medium_value_size"
+    android:layout_marginBottom="18sp"
+    android:paddingHorizontal="@dimen/large_value_size"
     android:paddingVertical="@dimen/regular_value_size">
     <FrameLayout
         android:layout_marginRight="@dimen/medium_value_size"
-        android:layout_width="55dp"
-        android:layout_height="55dp">
+        android:layout_width="52dp"
+        android:layout_height="52dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:gravity="center"
@@ -20,18 +20,16 @@
                 android:id="@+id/workspace_profile_icon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@color/purple_700"
+                android:src="@color/workspacePlaceholder"
                 android:scaleType="centerCrop"/>
-            <TextView
-                android:id="@+id/workspace_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/white"
-                android:fontFamily="@font/quicksand_bold"
-                android:maxLength="1"
-                android:text="P"
-                android:gravity="center"
-                android:textSize="@dimen/extra_large_font_size"/>
+            <ImageView
+                android:id="@+id/workspace_icon"
+                android:layout_width="@dimen/medium_icon_size"
+                android:layout_height="@dimen/medium_icon_size"
+                android:src="@drawable/collaboration"
+                android:scaleType="centerCrop"
+                android:layout_centerInParent="true"
+                app:tint="@color/white"/>
 
         </RelativeLayout>
     </FrameLayout>
@@ -50,7 +48,7 @@
             android:textColor="?attr/colorPrimary"
             android:gravity="start"
             android:layout_marginBottom="2sp"
-            android:textSize="14sp"/>
+            android:textSize="13.5sp"/>
         <TextView
             android:id="@+id/workspace_description"
             android:layout_width="match_parent"
@@ -61,7 +59,7 @@
             android:fontFamily="@font/poppins_regular"
             android:textColor="?attr/colorSecondary"
             android:gravity="left"
-            android:textSize="@dimen/small_font_size"/>
+            android:textSize="11.5sp"/>
 
     </LinearLayout>
     <ImageView

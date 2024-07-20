@@ -105,7 +105,7 @@ public class EditProfile extends AppCompatActivity {
             runOnUiThread(() -> {
                 refresh_layout.startAnimating();
                 new Handler().postDelayed(() -> {
-                    refresh_layout.stopAnimation();
+                    refresh_layout.stopAnimating();
                     finish();
                 },5000);
             });

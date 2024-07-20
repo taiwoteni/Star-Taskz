@@ -110,7 +110,7 @@ public class SplashRefreshLayout extends FrameLayout {
     }
 
 
-    public void stopAnimation(){
+    public void stopAnimating(){
         lottie.pauseAnimation();
         if(ANIMATION_TYPE !=0){
             splashLayout.setAlpha(1f);
@@ -137,6 +137,7 @@ public class SplashRefreshLayout extends FrameLayout {
 
                 }
             });
+            fadeIn.start();
         }
 
     }

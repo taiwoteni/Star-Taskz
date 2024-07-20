@@ -3,6 +3,7 @@ package com.theteam.taskz.utils.others;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +23,19 @@ public class JsonUtils {
         }
 
         return hash;
+    }
+
+    public static JSONObject convertToJsonObject(HashMap<String,Object> map){
+        JSONObject object = new JSONObject();
+        map.forEach((string, o) -> {
+            try {
+                object.put(string,o);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+
+        return object;
     }
 
     public static String prettyPrint(String src){

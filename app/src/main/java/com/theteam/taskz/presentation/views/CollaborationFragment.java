@@ -6,10 +6,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +30,19 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.domain.entities.Workspace;
+import com.theteam.taskz.domain.repositories.WorkspaceRepository;
+import com.theteam.taskz.presentation.adapters.WorkspacesListAdapter;
+import com.theteam.taskz.presentation.transformers.NonScrollableLinearLayoutManager;
+import com.theteam.taskz.presentation.viewmodels.SplashViewModel;
+import com.theteam.taskz.presentation.viewmodels.WorkspacesViewModel;
+import com.theteam.taskz.utils.others.JsonUtils;
 import com.theteam.taskz.utils.others.ThemeManager;
 
-import org.w3c.dom.Text;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,11 +52,13 @@ public class CollaborationFragment extends Fragment {
     private LinearLayout create_workspace_layout;
     private ScrollView workspace_layout;
     private RecyclerView workspaces_recycler_view;
+    private WorkspacesListAdapter workspacesListAdapter;
     private EditText search_bar;
     private TextView title_text;
     private UserModel user;
     private CircleImageView profile_image;
-
+    private WorkspacesViewModel workspacesViewModel;
+    private SplashViewModel splashViewModel;
     private FloatingActionButton fab;
 
     public CollaborationFragment() {
@@ -72,7 +86,24 @@ public class CollaborationFragment extends Fragment {
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         profile_image = view.findViewById(R.id.profile_image);
 
+        initializeUseCases();
+        initializeUi();
+        addListeners();
+        addObservers();
+
+
+
+    }
+    private void initializeUseCases(){
+        workspacesViewModel = new ViewModelProvider(requireActivity()).get(WorkspacesViewModel.class);
+        splashViewModel = new ViewModelProvider(requireActivity()).get(SplashViewModel.class);
         user = new UserModel(requireActivity());
+        workspacesViewModel.initializeWithRepository(requireActivity().getApplicationContext());
+    }
+    private void initializeUi(){
+        LinearLayoutManager layoutManager =new NonScrollableLinearLayoutManager(requireActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        workspaces_recycler_view.setLayoutManager(layoutManager);
 
         if(user.hasProfile()){
             Glide.with(this)
@@ -98,8 +129,6 @@ public class CollaborationFragment extends Fragment {
                     })
                     .into(profile_image);
         }
-
-
         // We want to change the lottie to it's appropriate lottie when in dark mode or light mode
         if(new ThemeManager(requireActivity()).isDarkMode()){
             create_workspace_lottie.setAnimation(R.raw.create_worskpace_dark);
@@ -110,19 +139,34 @@ public class CollaborationFragment extends Fragment {
         create_workspace_lottie.loop(true);
         create_workspace_lottie.playAnimation();
 
-
-        // Now we want to show the workspace lists only if the user has workspaces involved
         workspace_layout.setVisibility(View.GONE);
 
-
+    }
+    private void addListeners(){
         fab.setOnClickListener(view1 -> {
             createWorkspace();
         });
 
+    }
 
+    private void addObservers(){
+        workspacesViewModel.getWorkspaces().observe(getViewLifecycleOwner(), workspaces -> {
+            create_workspace_layout.setVisibility(workspaces.isEmpty()?View.VISIBLE:View.GONE);
+            workspace_layout.setVisibility(workspaces.isEmpty()? View.GONE:View.VISIBLE);
+            if(workspacesListAdapter == null){
+                workspacesListAdapter = new WorkspacesListAdapter(workspaces,requireActivity());
+                workspaces_recycler_view.setAdapter(workspacesListAdapter);
+                workspacesListAdapter.notifyDataSetChanged();
+            }else{
+                workspacesListAdapter.update(workspaces);
+            }
+
+
+        });
     }
 
     private void createWorkspace(){
+        RoundedBottomSheetDialog bottomSheetDialog = new RoundedBottomSheetDialog(requireActivity());
         View workspaceView = requireActivity().getLayoutInflater().inflate(R.layout.create_workspace_sheet, null);
         // Configurations and listeners to be made...
 
@@ -166,9 +210,37 @@ public class CollaborationFragment extends Fragment {
             }
         });
 
+        createWorkspaceButton.setOnClickListener(view -> {
+            HashMap<String,Object> hash = new HashMap<>();
+            hash.put("workspaceTitle", workspaceName.getText().trim());
+            hash.put("workspaceDescription", workspaceDescription.getText().trim());
+            Workspace workspace = Workspace.fromJson(new Gson().toJson(hash));
+            createWorkspaceButton.startLoading();
+            new Handler().postDelayed(() -> {
+                createWorkspaceButton.stopLoading();
+                bottomSheetDialog.dismiss();
+                requireActivity().runOnUiThread(() -> {
+                    splashViewModel.getHomeSplashLayout().getValue().startAnimating();
+                    new WorkspaceRepository(requireActivity()).createWorkspace(
+                            workspace,
+                            jsonObject -> {
+                                splashViewModel.getHomeSplashLayout().getValue().stopAnimating();
+                                Log.v("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
+                                workspacesViewModel.addWorkspace(workspace);
+                            },
+                            volleyError -> {
+                                splashViewModel.getHomeSplashLayout().getValue().stopAnimating();
+                                Log.e("API_RESPONSE", volleyError.toString());
+                                workspacesViewModel.addWorkspace(workspace);
+                            }
+                    );
+
+                });
+            },2000);
+        });
 
 
-        RoundedBottomSheetDialog bottomSheetDialog = new RoundedBottomSheetDialog(requireActivity());
+
         bottomSheetDialog.setContentView(workspaceView);
         bottomSheetDialog.setDismissWithAnimation(true);
         bottomSheetDialog.show();

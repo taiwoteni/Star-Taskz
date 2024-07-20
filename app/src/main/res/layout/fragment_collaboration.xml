@@ -37,25 +37,6 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/avatar" />
         </RelativeLayout>
-        <EditText
-            android:id="@+id/search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/search_bar_icon"
-            android:layout_marginHorizontal="@dimen/medium_value_size"
-            android:drawableTint="?attr/colorSecondary"
-            android:background="@drawable/rounded_corner_background"
-            android:paddingHorizontal="@dimen/medium_value_size"
-            android:paddingVertical="14dp"
-            android:drawablePadding="@dimen/medium_value_size"
-            android:hint="Search Workspace"
-            android:layout_marginTop="@dimen/regular_value_size"
-            android:textSize="@dimen/regular_font_size"
-            android:textColorHint="?attr/colorSecondary"
-            android:textColor="?attr/colorPrimary"
-            android:fontFamily="@font/poppins_regular"
-            android:backgroundTint="?attr/colorTertiary"
-            android:orientation="horizontal"/>
         <LinearLayout
             android:id="@+id/create_workspace_layout"
             android:layout_width="match_parent"
@@ -93,10 +74,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
-                android:paddingVertical="@dimen/medium_value_size"
+                android:paddingBottom="@dimen/medium_value_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <EditText
+                    android:id="@+id/search_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/search_bar_icon"
+                    android:layout_marginHorizontal="@dimen/medium_value_size"
+                    android:drawableTint="?attr/colorSecondary"
+                    android:background="@drawable/rounded_corner_background"
+                    android:paddingHorizontal="@dimen/medium_value_size"
+                    android:paddingVertical="14dp"
+                    android:drawablePadding="@dimen/medium_value_size"
+                    android:layout_marginBottom="@dimen/large_value_size"
+                    android:hint="Search Workspace"
+                    android:layout_marginTop="@dimen/regular_value_size"
+                    android:textSize="@dimen/regular_font_size"
+                    android:textColorHint="?attr/colorSecondary"
+                    android:textColor="?attr/colorPrimary"
+                    android:fontFamily="@font/poppins_regular"
+                    android:backgroundTint="?attr/colorTertiary"
+                    android:orientation="horizontal"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/workspaces_recycler_view"
                     android:layout_width="match_parent"

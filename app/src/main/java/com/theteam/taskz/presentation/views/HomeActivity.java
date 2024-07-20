@@ -26,6 +26,7 @@ import com.theteam.taskz.presentation.viewmodels.LoginViewModel;
 import com.theteam.taskz.presentation.viewmodels.SplashViewModel;
 import com.theteam.taskz.presentation.viewmodels.TaskDatesViewModel;
 import com.theteam.taskz.presentation.viewmodels.TasksViewModel;
+import com.theteam.taskz.presentation.viewmodels.WorkspacesViewModel;
 import com.theteam.taskz.utils.enums.AccountType;
 import com.theteam.taskz.data.models.UserModel;
 import com.theteam.taskz.domain.repositories.ApiService;
@@ -49,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
     private TasksViewModel tasksViewModel;
     private TaskDatesViewModel taskDatesViewModel;
     private SplashViewModel splashViewModel;
+    private WorkspacesViewModel workspacesViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         tasksViewModel = new ViewModelProvider(this).get(TasksViewModel.class);
         taskDatesViewModel = new ViewModelProvider(this).get(TaskDatesViewModel.class);
         splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+        workspacesViewModel = new ViewModelProvider(this).get(WorkspacesViewModel.class);
 
         // To pause the alarm ringing media player if the app when activity opened
         if(StateHolder.mediaPlayer != null){

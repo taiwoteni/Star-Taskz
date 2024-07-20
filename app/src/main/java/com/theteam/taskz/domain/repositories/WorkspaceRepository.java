@@ -1,15 +1,24 @@
 package com.theteam.taskz.domain.repositories;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.android.volley.Response;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.theteam.taskz.data.models.TaskModel;
+import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.domain.entities.Workspace;
+import com.theteam.taskz.utils.others.JsonUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -18,99 +27,44 @@ import java.util.Locale;
 public class WorkspaceRepository {
     private Context context;
     private ApiInterface apiInterface;
+    private SharedPreferences workspacePref;
+
+    private UserModel user;
 
     public WorkspaceRepository(Context context){
         this.context = context;
         apiInterface = new ApiInterface(context);
+        workspacePref = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
+        user = new UserModel(context);
     }
 
-    public void createTask(
-            final String id,
-            final TaskModel task,
-            final HashMap<String,String> headers,
-            final Response.Listener<JSONObject> okResponse,
-            final Response.ErrorListener errorResponse
-    ) throws JSONException {
-        final JSONObject jsonObject = task.toJsonObject();
+    public ArrayList<Workspace> getWorkspaces(){
+        final String workspaces = workspacePref.getString("workspaces", null);
+        if(workspaces == null){
+            return new ArrayList<>();
+        }
+        Gson gson = new Gson();
+        return gson.fromJson(workspaces, new TypeToken<ArrayList<Workspace>>(){}.getType());
+    }
+
+    public void createWorkspace(
+            final Workspace workspace,
+            final Response.Listener<JSONObject> okListener,
+            final Response.ErrorListener errorListener
+            ){
+        HashMap<String,Object> dataMap = new HashMap<>();
+        dataMap.put("workspaceTitle", workspace.workspaceTitle());
+        dataMap.put("workspaceDescription", workspace.workspaceDescription());
+        JSONObject data = JsonUtils.convertToJsonObject(dataMap);
 
         apiInterface.postRequest(
-                "task/add/"+id,
-                headers,
-                jsonObject,
-                okResponse,
-                errorResponse
-        );
-    }
-
-    public void updateTaskStatus(
-            final String id,
-            final String taskId,
-            final String status,
-            final HashMap<String,String> headers,
-            final Response.Listener<JSONObject> okResponse,
-            final Response.ErrorListener errorResponse
-    ) throws JSONException {
-        final JSONObject jsonObject = new JSONObject();
-        jsonObject.put("status", status);
-        apiInterface.postRequest(
-                "task/update-status/"+id + taskId,
-                headers,
-                jsonObject,
-                okResponse,
-                errorResponse
-        );
-    }
-
-    public void updateTaskStartTime(
-            final String id,
-            final String taskId,
-            final Calendar calendar,
-            final HashMap<String,String> headers,
-            final Response.Listener<JSONObject> okResponse,
-            final Response.ErrorListener errorResponse
-    ) throws JSONException {
-        final SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-
-        final JSONObject jsonObject = new JSONObject();
-        jsonObject.put("startedAt", timeFormat.format(calendar.getTime()));
-        apiInterface.postRequest(
-                "task/update-taskDateTime/"+id + taskId,
-                headers,
-                jsonObject,
-                okResponse,
-                errorResponse
-        );
-    }
-
-    public void getOneTask(
-            final String id,
-            final String taskId,
-            final HashMap<String,String> headers,
-            final Response.Listener<JSONObject> okResponse,
-            final Response.ErrorListener errorResponse
-    ) throws JSONException {
-        apiInterface.getRequest(
-                "task/single-task/"+id + taskId,
-                headers,
+                "create-workSpace/"+user.uid(),
                 null,
-                okResponse,
-                errorResponse
+                data,
+                okListener,
+                errorListener
         );
-    }
 
-    public void getAllTasks(
-            final String id,
-            final HashMap<String,String> headers,
-            final Response.Listener<JSONArray> okResponse,
-            final Response.ErrorListener errorResponse
-    ) throws JSONException {
-        apiInterface.getRequestArray(
-                "task/all/"+id,
-                headers,
-                null,
-                okResponse,
-                errorResponse
-        );
     }
 
 

@@ -28,6 +28,8 @@
     <color name="rootBackgroundLight">#FFFFFF</color>
     <color name="rootBackgroundDark">#1F1F20</color>
 
+    <color name="workspacePlaceholder">#FACFCCCC</color>
+
 
     <color name="themeColor">#FF109E15</color>
     <color name="themeColorTransparent">#FF109E15</color>
