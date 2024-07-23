@@ -1,7 +1,9 @@
 package com.theteam.taskz.presentation.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +19,11 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.gson.Gson;
 import com.theteam.taskz.R;
 import com.theteam.taskz.domain.entities.Workspace;
+import com.theteam.taskz.presentation.views.GroupsScreen;
+import com.theteam.taskz.utils.others.JsonUtils;
 
 import java.util.ArrayList;
 
@@ -79,6 +84,7 @@ public class WorkspacesListAdapter extends RecyclerView.Adapter<WorkspacesListAd
         }
 
         public void bind(Workspace workspace){
+            Log.v("API_RESPONSE", JsonUtils.prettyPrintHash(workspace.toJson()));
             workspaceTitle.setText(workspace.workspaceTitle());
             workspaceDescription.setText(workspace.workspaceDescription());
 
@@ -102,6 +108,12 @@ public class WorkspacesListAdapter extends RecyclerView.Adapter<WorkspacesListAd
                         }).into(workspaceProfile);
 
             }
+
+            root.setOnClickListener(view -> {
+                final Intent groupsIntent = new Intent(context, GroupsScreen.class);
+                groupsIntent.putExtra("workspace", new Gson().toJson(workspace.toJson()));
+                context.startActivity(groupsIntent);
+            });
 
         }
     }

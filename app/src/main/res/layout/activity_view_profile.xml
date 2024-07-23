@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,220 +8,245 @@
     android:background="?attr/background"
     android:orientation="vertical"
     tools:context=".presentation.views.ProfileFragment">
-
-    <TextView
-        android:id="@+id/title_text"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Profile"
-        android:paddingVertical="@dimen/medium_value_size"
-        android:gravity="center"
-        android:textSize="@dimen/medium_font_size"
-        android:textColor="?attr/colorPrimary"
-        android:fontFamily="@font/poppins_semibold"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/regular_value_size"
-        android:gravity="center">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        android:background="?attr/background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Closed Projects"
-                android:gravity="center"
-                android:padding="0dp"
-                android:textColor="?attr/colorSecondary"
-                android:fontFamily="@font/poppins_semibold"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:id="@+id/closed_tasks_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="361"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="19sp"
-                android:fontFamily="@font/poppins_bold"/>
-        </LinearLayout>
-        <FrameLayout
-            android:id="@+id/profile_layout"
-            android:layout_width="90dp"
-            android:layout_height="90dp">
-            <RelativeLayout
+            app:titleCollapseMode="fade"
+            app:contentScrim="?attr/background"
+            app:title="Your Profile"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <!--I want this to be the collapsing appbar layout-->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/avatar"
-                    android:scaleY="1.5"
-                    android:scaleX="1.5"
-                    android:scaleType="centerCrop"
-                    android:id="@+id/profile_icon"/>
+                android:layout_height="wrap_content"
+                app:layout_collapseMode="parallax"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your Profile"
+                    android:paddingVertical="@dimen/medium_value_size"
+                    android:gravity="center"
+                    android:textSize="@dimen/medium_font_size"
+                    android:textColor="?attr/colorPrimary"
+                    android:fontFamily="@font/poppins_semibold"/>
+
                 <LinearLayout
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/small_value_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/regular_value_size"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Closed Projects"
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:textColor="?attr/colorSecondary"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textSize="10sp"/>
+
+                        <TextView
+                            android:id="@+id/closed_tasks_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="361"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="19sp"
+                            android:fontFamily="@font/poppins_bold"/>
+                    </LinearLayout>
+                    <FrameLayout
+                        android:id="@+id/profile_layout"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/avatar"
+                                android:scaleY="1.5"
+                                android:scaleX="1.5"
+                                android:scaleType="centerCrop"
+                                android:id="@+id/profile_icon"/>
+                            <LinearLayout
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="@dimen/small_value_size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:translationY="@dimen/small_value_size"
+                                android:translationX="-4sp"
+                                android:padding="@dimen/small_value_size"
+                                android:background="@drawable/circle_background"
+                                android:backgroundTint="?attr/background"
+                                android:gravity="center">
+                                <ImageView
+                                    android:id="@+id/online_icon"
+                                    android:layout_width="@dimen/regular_icon_size"
+                                    android:layout_height="@dimen/regular_icon_size"
+                                    android:src="@drawable/circle_background"
+                                    android:scaleType="centerCrop"/>
+
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </FrameLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Open Projects"
+                            android:textColor="?attr/colorSecondary"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textSize="10sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="19sp"
+                            android:fontFamily="@font/poppins_bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/name_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:translationY="@dimen/small_value_size"
-                    android:translationX="-4sp"
-                    android:padding="@dimen/small_value_size"
-                    android:background="@drawable/circle_background"
-                    android:backgroundTint="?attr/background"
-                    android:gravity="center">
+                    android:layout_marginTop="@dimen/medium_value_size"
+                    android:text="Ifechukwu Nwachukwu"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/job_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UI/UX Designer"
+                    android:textColor="?attr/colorSecondary"
+                    android:textSize="11.5sp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
                     <ImageView
-                        android:id="@+id/online_icon"
-                        android:layout_width="@dimen/regular_icon_size"
-                        android:layout_height="@dimen/regular_icon_size"
-                        android:src="@drawable/circle_background"
-                        android:scaleType="centerCrop"/>
-
+                        android:id="@+id/share_icon"
+                        android:layout_gravity="center"
+                        android:src="@drawable/share_icon"
+                        app:tint="@color/themeColor"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="13dp"
+                        android:layout_marginHorizontal="@dimen/regular_value_size"
+                        android:background="@drawable/circle_stroke" />
+                    <ImageView
+                        android:id="@+id/message_icon"
+                        android:src="@drawable/message_bubble_outlined"
+                        app:tint="@color/themeColor"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="13dp"
+                        android:layout_marginHorizontal="@dimen/regular_value_size"
+                        android:background="@drawable/circle_stroke" />
+                    <ImageView
+                        android:id="@+id/settings_icon"
+                        android:src="@drawable/settings_icon"
+                        app:tint="@color/themeColor"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="13dp"
+                        android:layout_marginHorizontal="@dimen/regular_value_size"
+                        android:background="@drawable/circle_stroke" />
                 </LinearLayout>
-            </RelativeLayout>
-        </FrameLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Open Projects"
-                android:textColor="?attr/colorSecondary"
-                android:fontFamily="@font/poppins_semibold"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="19sp"
-                android:fontFamily="@font/poppins_bold"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_value_size"
-        android:text="Ifechukwu Nwachukwu"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="14sp"
-        android:fontFamily="@font/poppins_bold"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:id="@+id/job_title_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UI/UX Designer"
-        android:textColor="?attr/colorSecondary"
-        android:textSize="11.5sp"
-        android:fontFamily="@font/poppins_medium"
-        android:layout_gravity="center"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/share_icon"
-            android:layout_gravity="center"
-            android:src="@drawable/share_icon"
-            app:tint="@color/themeColor"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="13dp"
-            android:layout_marginHorizontal="@dimen/regular_value_size"
-            android:background="@drawable/circle_stroke" />
-        <ImageView
-            android:id="@+id/message_icon"
-            android:src="@drawable/message_bubble_outlined"
-            app:tint="@color/themeColor"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="13dp"
-            android:layout_marginHorizontal="@dimen/regular_value_size"
-            android:background="@drawable/circle_stroke" />
-         <ImageView
-             android:id="@+id/settings_icon"
-             android:src="@drawable/settings_icon"
-             app:tint="@color/themeColor"
-             android:layout_width="50dp"
-             android:layout_height="50dp"
-             android:padding="13dp"
-             android:layout_marginHorizontal="@dimen/regular_value_size"
-             android:background="@drawable/circle_stroke" />
-    </LinearLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large_value_size"
-        android:layout_marginBottom="@dimen/small_value_size"
-        android:paddingHorizontal="@dimen/regular_value_size"
-        app:tabBackground="?attr/background"
-        app:tabIndicator="@drawable/profile_tab_indicator"
-        app:tabIndicatorColor="@color/themeColor"
-        app:tabIndicatorFullWidth="false"
-        app:tabSelectedTextAppearance="@style/TabSelectedText"
-        app:tabTextAppearance="@style/TabUnselectedText"
-        app:tabSelectedTextColor="@color/themeColor"
-        app:tabTextColor="?attr/colorSecondary">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_projects"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Projects"
-            android:textSize="16dp" />
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_people"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Colleagues" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_item2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="About" />
+            </LinearLayout>
 
 
-    </com.google.android.material.tabs.TabLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/top_rounded_large"
-        android:backgroundTint="?attr/colorTertiary"
-        android:layout_weight="1">
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        <!-- This tab bar isn't collapsed-->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-</LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_value_size"
+            android:layout_marginBottom="@dimen/small_value_size"
+            android:paddingHorizontal="@dimen/regular_value_size"
+            app:tabBackground="?attr/background"
+            app:tabIndicator="@drawable/profile_tab_indicator"
+            app:tabIndicatorColor="@color/themeColor"
+            app:tabIndicatorFullWidth="false"
+            app:tabSelectedTextAppearance="@style/TabSelectedText"
+            app:tabTextAppearance="@style/TabUnselectedText"
+            app:tabSelectedTextColor="@color/themeColor"
+            app:tabTextColor="?attr/colorSecondary">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_projects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Projects"
+                android:textSize="16dp" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Colleagues" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="About" />
+
+
+        </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+    <!--This is the layout containing the viewpager that contains the scrollable framents-->
+    <androidx.viewpager2.widget.ViewPager2
+    android:id="@+id/view_pager"
+    android:background="@drawable/top_rounded_large"
+    android:backgroundTint="?attr/colorTertiary"
+    android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_height="match_parent"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

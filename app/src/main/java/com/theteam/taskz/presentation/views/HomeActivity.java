@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -45,7 +46,9 @@ public class HomeActivity extends AppCompatActivity {
     private SplashRefreshLayout splash_layout;
     private ViewPagerAdapter viewPagerAdapter;
     private BottomNavigationView bottomNavigationView;
-    private AccountType account = AccountType.Business;
+    private AccountType account;
+
+    private UserModel user;
     private final ArrayList<Fragment> views = new ArrayList<>();
     private TasksViewModel tasksViewModel;
     private TaskDatesViewModel taskDatesViewModel;
@@ -62,6 +65,9 @@ public class HomeActivity extends AppCompatActivity {
         taskDatesViewModel = new ViewModelProvider(this).get(TaskDatesViewModel.class);
         splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         workspacesViewModel = new ViewModelProvider(this).get(WorkspacesViewModel.class);
+
+        user = new UserModel(this);
+        account = user.accountType();
 
         // To pause the alarm ringing media player if the app when activity opened
         if(StateHolder.mediaPlayer != null){
@@ -120,6 +126,8 @@ public class HomeActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(getFragmentIndex(menuItem.getItemId()), true);
                 }
         });
+
+        Log.v("API_RESPONSE", String.valueOf(user.toJson().get("profile")));
 
 
         // TO automatically create a Shortcut once activity opens

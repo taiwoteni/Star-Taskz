@@ -19,6 +19,7 @@ import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.AuthenticationDataHolder;
 import com.theteam.taskz.presentation.viewmodels.LoginViewModel;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -33,6 +34,28 @@ public class BirthdaySection extends Fragment {
 
     public BirthdaySection() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(AuthenticationDataHolder.dob!= null){
+            Calendar calendar = Calendar.getInstance();
+            final SimpleDateFormat secondFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            final SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd", Locale.getDefault());
+
+            try {
+                loadable_button.setText("NEXT");
+
+                calendar.setTime(secondFormat.parse(AuthenticationDataHolder.dob));
+                dob_form.setText(dateFormat.format(calendar.getTime()));
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     @Override
@@ -80,7 +103,8 @@ public class BirthdaySection extends Fragment {
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog
+(requireContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int _year, int _month, int day) {
                 calendar.set(Calendar.MONTH, _month);
@@ -88,7 +112,7 @@ public class BirthdaySection extends Fragment {
                 String dayString = String.valueOf(day);
                 String monthString = String.valueOf(_month+1);
 
-                final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM dd", Locale.getDefault());
+                final SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd", Locale.getDefault());
                 final SimpleDateFormat secondFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
                 AuthenticationDataHolder.dob = secondFormat.format(calendar.getTime());
@@ -98,7 +122,6 @@ public class BirthdaySection extends Fragment {
         },year,month,dayOfMonth);
         datePickerDialog.show();
     }
-
     void showErrorMessage(final String message){
         Toast.makeText(requireActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }

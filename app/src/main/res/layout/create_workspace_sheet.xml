@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingVertical="@dimen/large_value_size"
     android:layout_width="match_parent"
@@ -14,6 +15,7 @@
         android:layout_marginBottom="@dimen/large_value_size"
         android:background="@drawable/bottom_sheet_handle"/>
     <TextView
+        android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Workspace"
@@ -36,19 +38,30 @@
     <com.theteam.taskz.presentation.views.TextInputFormField
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/extra_large_value_size"
         android:layout_marginHorizontal="@dimen/medium_value_size"
         android:id="@+id/workspace_description_form"
         app:hint="Workspace Description"
         app:hintColor="?attr/colorSecondary"
         app:prefixIcon="@drawable/description"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" * The Workspace Name and Description should be at least 4 digits in length."
+        android:layout_marginHorizontal="@dimen/large_value_size"
+        android:paddingTop="@dimen/medium_value_size"
+        android:layout_marginBottom="@dimen/extra_large_value_size"
+        android:paddingLeft="@dimen/medium_value_size"
+        android:textSize="11sp"
+        android:textColor="?attr/colorSecondary"
+        android:fontFamily="@font/poppins_regular"
+        tools:ignore="HardcodedText" />
     <com.theteam.taskz.presentation.views.LoadableButton
         android:id="@+id/create_workspace_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/medium_value_size"
         android:layout_marginHorizontal="@dimen/medium_value_size"
-        app:text="Create Workspace"/>
+        app:text="Create"/>
 
 
 </LinearLayout>

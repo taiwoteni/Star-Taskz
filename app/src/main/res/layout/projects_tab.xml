@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:layout_columnWeight="1"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.views.ProjectsTabFragment">
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginVertical="@dimen/extra_large_value_size"
+        android:layout_weight="1">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/empty_lottie"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:scaleType="centerCrop"
+            app:lottie_loop="true"
+            android:scaleX="1.1"
+            android:scaleY="1.1"
+            app:lottie_progress="0.5"
+            app:lottie_autoPlay="true"
+            android:layout_marginBottom="@dimen/large_value_size"
+            app:lottie_rawRes="@raw/empty_tasks"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorSecondary"
+            android:text="No projects in this workspace."
+            android:fontFamily="@font/poppins_regular"/>
+    </LinearLayout>
+
+
+</ScrollView>

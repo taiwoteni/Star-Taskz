@@ -45,6 +45,10 @@ public class SelectPlatformSync extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), githubSynced? GithubProfileScreen.class:SyncGithub.class));
         });
 
+        jira_button.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(), SyncJira.class));
+        });
+
         notion_button.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), SyncNotion.class));
         });

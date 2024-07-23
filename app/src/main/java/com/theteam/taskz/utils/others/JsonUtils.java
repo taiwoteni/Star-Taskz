@@ -8,21 +8,22 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class JsonUtils {
 
-    public static HashMap<String,Object> convertToHashMap(JSONObject jsonObject) throws JSONException {
-        final HashMap<String,Object> hash = new HashMap<>();
+    public static HashMap<String,Object> convertToHashMap(JSONObject jsonObject){
+        final Type hashType = new TypeToken<HashMap<String,Object>>(){}.getType();
 
-        for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
-            String key = it.next();
-            hash.put(key, jsonObject.get(key));
-        }
+        return new Gson().fromJson(jsonObject.toString(), hashType);
+    }
+    public static HashMap<String,Object> convertToHashMap(String src){
+        final Type hashType = new TypeToken<HashMap<String,Object>>(){}.getType();
 
-        return hash;
+        return new Gson().fromJson(src, hashType);
     }
 
     public static JSONObject convertToJsonObject(HashMap<String,Object> map){

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.Response;
 import com.theteam.taskz.data.models.TaskModel;
+import com.theteam.taskz.data.models.UserModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +19,8 @@ import java.util.Locale;
 public class TaskRepository {
     private Context context;
     private ApiInterface apiInterface;
+
+    private UserModel user;
 
     public TaskRepository(Context context){
         this.context = context;

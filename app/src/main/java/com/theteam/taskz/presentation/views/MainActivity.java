@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.data.repositories.WorkspaceDataRepository;
+import com.theteam.taskz.presentation.viewmodels.WorkspacesViewModel;
 import com.theteam.taskz.utils.others.AlarmManager;
 
 import java.util.Timer;
@@ -138,6 +141,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         app_name = (TextView) findViewById(R.id.app_name);
         lottie = (LottieAnimationView) findViewById(R.id.loading_lottie);
+
+        WorkspaceDataRepository.getInstance().getWorkspaces().observe(this, workspaces -> {
+            Log.v("API_RESPONSE", "MA " + workspaces.toString());
+        });
 
         Dialog dialog = new Dialog(this);
         View contentView = getLayoutInflater().inflate(R.layout.star_intro_dialog, null);

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/root"
+    android:background="?attr/colorTertiary"
+    android:gravity="start|bottom"
+    android:paddingHorizontal="@dimen/small_value_size"
+    android:paddingTop="@dimen/small_value_size"
+    android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_icon"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:src="@drawable/avatar"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="@dimen/regular_value_size"/>
+
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chat_background_receiver"
+        android:paddingHorizontal="14sp"
+        android:paddingVertical="8sp"
+        android:text="Hello world, how are we doing?"
+        android:textColor="?attr/colorPrimary"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="12sp"/>
+</LinearLayout>

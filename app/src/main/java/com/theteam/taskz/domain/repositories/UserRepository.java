@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.theteam.taskz.data.models.UserModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,9 +24,12 @@ public class UserRepository {
     private Context context;
     private ApiInterface apiInterface;
 
+    private UserModel user;
+
     public UserRepository(Context context){
         this.context = context;
         apiInterface = new ApiInterface(context);
+        user = new UserModel(context);
     }
 
     public void getUsers(
@@ -52,54 +56,6 @@ public class UserRepository {
                 "user/"+id,
                 headers,
                 null,
-                okResponse,
-                errorResponse
-        );
-    }
-
-    public void updateNames(
-            final String id,
-            final String firstName,
-            final String lastName,
-            final HashMap<String,String> headers,
-            final Response.Listener<JSONObject> okResponse,
-            final Response.ErrorListener errorResponse
-    ){
-        final JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("firstName", firstName);
-            jsonObject.put("lastName", lastName);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        apiInterface.postRequest(
-                "user/update-names/"+id,
-                headers,
-                jsonObject,
-                okResponse,
-                errorResponse
-        );
-    }
-
-    public void updateEmail(
-            final String id,
-            final String email,
-            final HashMap<String,String> headers,
-            final Response.Listener<JSONObject> okResponse,
-            final Response.ErrorListener errorResponse
-    ){
-        final JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("email", email);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        apiInterface.postRequest(
-                "user/update-email/"+id,
-                headers,
-                jsonObject,
                 okResponse,
                 errorResponse
         );
@@ -132,7 +88,7 @@ public class UserRepository {
             final String id,
             final String profilePath,
             final HashMap<String,String> headers,
-            final Response.Listener<NetworkResponse> okResponse,
+            final Response.Listener<String> okResponse,
             final Response.ErrorListener errorResponse
     ){
         HashMap<String, MultipartRequest.DataPart> data = new HashMap<>();
@@ -140,16 +96,99 @@ public class UserRepository {
 
         apiInterface.multipartRequest(
                 "user/upload-profileImage/"+id,
-                Request.Method.PUT,
+                Request.Method.POST,
                 null,
                 null,
                 data,
                 okResponse,
                 errorResponse
         );
-
-
     }
+
+    public void updateNames(
+            final String firstName,
+            final String lastName,
+            final Response.Listener<JSONObject> listener,
+            final Response.ErrorListener errorListener
+    ){
+        JSONObject data = new JSONObject();
+        try {
+            data.put("firstName", firstName);
+            data.put("lastName", lastName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiInterface.putRequest(
+                "user/update-names/"+ user.uid(),
+                null,
+                data,
+                listener,
+                errorListener
+        );
+    }
+
+    public void updateEmail(
+            final String email,
+            final Response.Listener<JSONObject> listener,
+            final Response.ErrorListener errorListener
+    ){
+        JSONObject data = new JSONObject();
+        try {
+            data.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiInterface.putRequest(
+                "user/update-email/"+ user.uid(),
+                null,
+                data,
+                listener,
+                errorListener
+        );
+    }
+
+    public void updateJobTitle(
+            final String jobTitle,
+            final Response.Listener<JSONObject> listener,
+            final Response.ErrorListener errorListener
+    ){
+        JSONObject data = new JSONObject();
+        try {
+            data.put("jobTitle", jobTitle);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiInterface.putRequest(
+                "user/update-jobTitle/"+ user.uid(),
+                null,
+                data,
+                listener,
+                errorListener
+        );
+    }
+
+    public void updateBirthday(
+            final Calendar birthday,
+            final Response.Listener<JSONObject> listener,
+            final Response.ErrorListener errorListener
+    ){
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault());
+        JSONObject data = new JSONObject();
+        try {
+            data.put("dateOfBirth", format.format(birthday.getTime()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiInterface.putRequest(
+                "user/update-dateOfBirth/"+ user.uid(),
+                null,
+                data,
+                listener,
+                errorListener
+        );
+    }
+
+
 
     public void updateDateOfBirth(
             final String id,
@@ -186,6 +225,20 @@ public class UserRepository {
         }
 
         return fileData;
+    }
+
+    public void getUserByMail(
+            final String mail,
+            final Response.Listener<JSONObject> okResponse,
+            final Response.ErrorListener errorResponse
+    ){
+        apiInterface.getRequest(
+                "user/get-by-mail/"+mail,
+                null,
+                null,
+                okResponse,
+                errorResponse
+        );
     }
 
 

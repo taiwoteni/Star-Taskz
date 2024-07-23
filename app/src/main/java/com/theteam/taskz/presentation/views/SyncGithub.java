@@ -24,8 +24,6 @@ public class SyncGithub extends AppCompatActivity {
     private TextInputFormField token_form;
 
     private TextView textView;
-    private final String client_id = "Ov23liNeRJLQcSordD0M";
-    private final String client_secrets = "8b7c03cea5ab5bc357fa7133802900caf385bf91";
 
     private LinearLayout github_sign_in;
     private LoadableButton sync;

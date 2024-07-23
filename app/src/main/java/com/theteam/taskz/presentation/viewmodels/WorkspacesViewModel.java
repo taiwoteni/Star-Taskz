@@ -29,7 +29,7 @@ public class WorkspacesViewModel extends ViewModel {
     public void initializeWithRepository(Context context){
         this.context = context;
         workspaceRepository = new WorkspaceRepository(context);
-        setInitialWorkspaces(workspaceRepository.getWorkspaces());
+//        setInitialWorkspaces(workspaceRepository.getWorkspaces());
     }
 
     private void setInitialWorkspaces(ArrayList<Workspace> workspaces){

@@ -55,12 +55,8 @@ public class Github {
 
             // When data is gotten, we save the data;
 
-            try {
-                UserData.saveGithubAccessToken(GithubAccount.fromJson(JsonUtils.convertToHashMap(jsonObject)),token, application_context);
-                ((AppCompatActivity)application_context).finish();
-            } catch (JSONException e) {
-                Log.v("API_RESPONSE", e.toString());
-            }
+            UserData.saveGithubAccessToken(GithubAccount.fromJson(JsonUtils.convertToHashMap(jsonObject)),token, application_context);
+            ((AppCompatActivity)application_context).finish();
 
         };
 

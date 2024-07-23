@@ -61,6 +61,9 @@ public class AuthenticationRepository {
             data.put("jobTitle", AuthenticationDataHolder.jobTitle);
             data.put("jobDescription", AuthenticationDataHolder.jobDescription);
             data.put("accountType", AuthenticationDataHolder.selecAccountType.name());
+            if (AuthenticationDataHolder.urlPhoto != null){
+                data.put("profileImageUrl", AuthenticationDataHolder.urlPhoto);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

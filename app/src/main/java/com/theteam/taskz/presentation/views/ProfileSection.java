@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,8 @@ import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.UserModel;
 import com.theteam.taskz.domain.repositories.AuthenticationRepository;
 import com.theteam.taskz.domain.repositories.UserRepository;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -58,12 +61,12 @@ public class ProfileSection extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.v("tapped", "Got data");
-        Log.v("tapped", "Data is null:"+(data.getData()==null));
 
 
         if (requestCode == PICK_IMAGE_REQ && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri imageUri = data.getData();
             // Handle the selected image URI (e.g., display it in an ImageView)
+            loadableButton.setText("Save");
             imagePath = getRealPathFromURI(requireActivity().getApplicationContext(), imageUri);
             Log.v("tapped", imagePath);
             profile_icon.setScaleY(1f);
@@ -133,21 +136,40 @@ public class ProfileSection extends Fragment {
     private void go(){
         if(imagePath == null){
             // we are skipping
+            // Normally, we are meant to be redirected to the page where we select AI voices
+            // But due to time, we are skipping.
+            startActivity(new Intent(requireActivity(), HomeActivity.class));
+            requireActivity().finish();
         }
         else{
             final UserModel user = new UserModel(requireActivity().getApplicationContext());
             UserRepository userRepo = new UserRepository(requireActivity().getApplicationContext());
-            userRepo.uploadProfilePic(
-                    user.uid(),
-                    imagePath,
-                    null,
-                    networkResponse -> {
-                        Log.v("API_RESPONSE", networkResponse.data.toString());
-                    },
-                    volleyError -> {
-                        Log.e("API_RESPONSE", volleyError.toString());
-                    }
-            );
+            refreshLayout.startAnimating();
+            new Handler().postDelayed(() -> {
+                userRepo.uploadProfilePic(
+                        user.uid(),
+                        imagePath,
+                        null,
+                        networkResponse -> {
+                            Log.v("API_RESPONSE", networkResponse);
+                            final HashMap<String,Object> userJson = user.toJson();
+                            userJson.put("profile", networkResponse);
+                            UserModel.saveUserData(userJson, requireActivity());
+                            refreshLayout.stopAnimating();
+                            new Handler().postDelayed(() -> {
+                                startActivity(new Intent(requireActivity(), HomeActivity.class));
+                                requireActivity().finish();
+                            }, 2000);
+                        },
+                        volleyError -> {
+                            loadableButton.setText("Skip");
+                            imagePath = null;
+                            refreshLayout.stopAnimating();
+                            Log.e("API_RESPONSE", volleyError.toString());
+                        }
+                );
+            },2500);
+
 
         }
     }

@@ -5,6 +5,8 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -19,6 +21,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.theteam.taskz.R;
+import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.utils.enums.AccountType;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -28,17 +32,20 @@ import java.util.Locale;
 
 public class CreateTask extends AppCompatActivity{
 
-    private EditText taskName,taskDescription;
+    private EditText taskName;
     private LinearLayout startDateLayout, startTimeLayout, endDateLayout, endTimeLayout;
+    private SplashRefreshLayout refresh_layout;
 
-    private LinearLayout workLayout, personalLayout, uncategorizedLayout,studyLayout;
+    private LinearLayout workLayout, personalLayout, uncategorizedLayout,studyLayout, collaborators_list;
     private LoadableButton button;
-    private TextView startDateText,startTimeText,endDateText,endTimeText;
+    private TextView startDateText,startTimeText,endDateText,endTimeText,add_collaborators, titl_text;
 
-    private TextView workText,personalText,uncategorizedText,studyText;
+    private TextView workText,personalText,uncategorizedText,studyText,collaborators_text;
 
     private String category = "uncategorized";
     private Calendar calendar = Calendar.getInstance();
+
+    private UserModel user;
 
     @Override
     public void onBackPressed() {
@@ -57,6 +64,8 @@ public class CreateTask extends AppCompatActivity{
             return insets;
         });
 
+        user = new UserModel(this);
+
         startDateLayout = findViewById(R.id.start_date_layout);
         startTimeLayout = findViewById(R.id.start_time_layout);
         endDateLayout = findViewById(R.id.end_date_layout);
@@ -66,7 +75,6 @@ public class CreateTask extends AppCompatActivity{
         endDateText = findViewById(R.id.end_date_text);
         endTimeText = findViewById(R.id.end_time_text);
         taskName = findViewById(R.id.task_name);
-        taskDescription = findViewById(R.id.task_description);
         workLayout = findViewById(R.id.work_category);
         personalLayout = findViewById(R.id.personal_category);
         uncategorizedLayout = findViewById(R.id.uncategorized_category);
@@ -75,6 +83,12 @@ public class CreateTask extends AppCompatActivity{
         personalText = findViewById(R.id.personal_text);
         uncategorizedText = findViewById(R.id.uncategorized_text);
         studyText = findViewById(R.id.study_text);
+        button = findViewById(R.id.loadable_button);
+        add_collaborators = findViewById(R.id.add_collaborators);
+        titl_text = findViewById(R.id.title_text);
+        collaborators_text = findViewById(R.id.collaborators_text);
+        collaborators_list = findViewById(R.id.collaborators_list);
+        refresh_layout = findViewById(R.id.refresh_layout);
 
         findViewById(R.id.back).setOnClickListener(view -> {
             onBackPressed();
@@ -112,6 +126,13 @@ public class CreateTask extends AppCompatActivity{
             category = "study";
             refreshCategories();
         });
+
+        titl_text.setText("Create new " + (user.accountType() == AccountType.Business?"Project":"Task"));
+        if(user.accountType() == AccountType.Personal){
+            collaborators_text.setVisibility(View.GONE);
+            collaborators_list.setVisibility(View.GONE);
+        }
+
 
 //        title_text = findViewById(R.id.title_text);
 //        subtitle_text = findViewById(R.id.subtitle_text);
@@ -396,10 +417,32 @@ public class CreateTask extends AppCompatActivity{
         }
     }
 
+    private void addCollaborators(){
+        final RoundedBottomSheetDialog roundedBottomSheetDialog = new RoundedBottomSheetDialog(this);
+        View layout = getLayoutInflater().inflate(R.layout.add_collaborator_sheet, null);
 
+        final TextInputFormField collaborator_email = layout.findViewById(R.id.collaborator_name_form);
+        final LoadableButton add_collaborator = layout.findViewById(R.id.add_collaborator_button);
+
+        add_collaborator.setOnClickListener(view -> {
+            if(collaborator_email.getText().isEmpty()){
+                return;
+            }
+            add_collaborator.startLoading();
+            new Handler().postDelayed(() -> {
+                add_collaborator.stopLoading();
+                roundedBottomSheetDialog.dismiss();
+                refresh_layout.startAnimating();
+            },2500);
+        });
+    }
 
     void showMessage(final String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void searchCollaborator(final String email){
+
     }
 
 }

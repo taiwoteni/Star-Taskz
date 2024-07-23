@@ -1,11 +1,15 @@
 package com.theteam.taskz.presentation.views;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,9 +18,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.AuthenticationDataHolder;
+import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.domain.repositories.AuthenticationRepository;
 import com.theteam.taskz.presentation.adapters.ViewPagerAdapter;
 import com.theteam.taskz.presentation.viewmodels.LoginViewModel;
 import com.theteam.taskz.utils.enums.AccountType;
+import com.theteam.taskz.utils.others.JsonUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CategorySection extends Fragment {
 
@@ -24,6 +34,10 @@ public class CategorySection extends Fragment {
     private LoadableButton button;
     private UnderlineTextView back;
     private LoginViewModel loginViewModel;
+
+    private AuthenticationRepository authenticationRepository;
+
+    private Dialog dialog;
 
     @Override
     public void onResume() {
@@ -46,6 +60,7 @@ public class CategorySection extends Fragment {
         familyAccount = (SelectableButton) view.findViewById(R.id.family_account);
         personalAccount = (SelectableButton) view.findViewById(R.id.personal_account);
 
+        authenticationRepository = new AuthenticationRepository(requireActivity());
         loginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
 
         button = view.findViewById(R.id.loadable_button);
@@ -102,6 +117,10 @@ public class CategorySection extends Fragment {
                         @Override
                         public void run() {
                             button.stopLoading();
+
+                            if(AuthenticationDataHolder.googleSignIn && !isBusiness){
+                                createAccount();
+                            }
                             loginViewModel.next();
                         }
                     },
@@ -126,5 +145,96 @@ public class CategorySection extends Fragment {
             businessAccount.select(false);
             familyAccount.select(false);
         }
+    }
+
+    private void createAccount(){
+        showStarLoading("Validating Credentials");
+        authenticationRepository.registerUser(
+                null,
+                jsonObject -> {
+                    final JSONObject object = jsonObject;
+                    Log.i("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
+                    try {
+                        object.put("accountType", AuthenticationDataHolder.selecAccountType.name());
+                        object.put("jobTitle", AuthenticationDataHolder.jobTitle);
+                        object.put("jobDescription", AuthenticationDataHolder.jobDescription);
+                        object.put("password", AuthenticationDataHolder.password);
+                        UserModel.saveUserData(JsonUtils.convertToHashMap(object), requireActivity());
+                        dialog.dismiss();
+
+
+                        Intent intent = new Intent(requireActivity().getApplicationContext(), HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                },
+                volleyError -> {
+                    Log.e("API_RESPONSE", volleyError.toString());
+                    showStarError("Couldn't validate credentials");
+
+                }
+        );
+    }
+
+    private void showStarError(String message){
+        if(dialog!= null){
+            if(dialog.isShowing()){
+                dialog.dismiss();
+            }
+        }
+        else{
+            dialog = new Dialog(requireActivity());
+        }
+
+
+        View contentView = getLayoutInflater().inflate(R.layout.star_error_dialog, null);
+        final LoadableButton loadableButton = contentView.findViewById(R.id.go_button);
+        final TextView contentText = contentView.findViewById(R.id.content_text);
+
+        contentText.setText(message);
+
+        loadableButton.setOnClickListener(view -> {
+            dialog.dismiss();
+        });
+
+        dialog.setContentView(contentView);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+        dialog.setCancelable(true);
+        try{
+            dialog.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    private void showStarLoading(String message){
+        if(dialog!= null){
+            if(dialog.isShowing()){
+                dialog.dismiss();
+            }
+        }
+        else{
+            dialog = new Dialog(requireActivity());
+        }
+
+
+        View contentView = getLayoutInflater().inflate(R.layout.star_loading_dialog, null);
+        final TextView contentText = contentView.findViewById(R.id.content_text);
+        contentText.setText(message);
+
+        dialog.setContentView(contentView);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_background);
+        dialog.setCancelable(false);
+        try{
+            dialog.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

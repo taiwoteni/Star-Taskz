@@ -28,7 +28,11 @@
     <color name="rootBackgroundLight">#FFFFFF</color>
     <color name="rootBackgroundDark">#1F1F20</color>
 
+    <color name="whiteTransparent">#99FFFFFF</color>
+
     <color name="workspacePlaceholder">#FACFCCCC</color>
+    <color name="cloudy_weather">#0C0C3A</color>
+    <color name="sunny_weather">#F9C61D</color>
 
 
     <color name="themeColor">#FF109E15</color>

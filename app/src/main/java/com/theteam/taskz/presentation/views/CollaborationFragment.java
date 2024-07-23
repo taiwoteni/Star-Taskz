@@ -33,6 +33,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.data.repositories.WorkspaceDataRepository;
+import com.theteam.taskz.data.repositories.WorkspacePreferences;
 import com.theteam.taskz.domain.entities.Workspace;
 import com.theteam.taskz.domain.repositories.WorkspaceRepository;
 import com.theteam.taskz.presentation.adapters.WorkspacesListAdapter;
@@ -41,6 +43,8 @@ import com.theteam.taskz.presentation.viewmodels.SplashViewModel;
 import com.theteam.taskz.presentation.viewmodels.WorkspacesViewModel;
 import com.theteam.taskz.utils.others.JsonUtils;
 import com.theteam.taskz.utils.others.ThemeManager;
+
+import org.json.JSONException;
 
 import java.util.HashMap;
 
@@ -57,7 +61,6 @@ public class CollaborationFragment extends Fragment {
     private TextView title_text;
     private UserModel user;
     private CircleImageView profile_image;
-    private WorkspacesViewModel workspacesViewModel;
     private SplashViewModel splashViewModel;
     private FloatingActionButton fab;
 
@@ -95,12 +98,12 @@ public class CollaborationFragment extends Fragment {
 
     }
     private void initializeUseCases(){
-        workspacesViewModel = new ViewModelProvider(requireActivity()).get(WorkspacesViewModel.class);
         splashViewModel = new ViewModelProvider(requireActivity()).get(SplashViewModel.class);
         user = new UserModel(requireActivity());
-        workspacesViewModel.initializeWithRepository(requireActivity().getApplicationContext());
     }
     private void initializeUi(){
+        WorkspacePreferences workspacePreferences = new WorkspacePreferences(requireActivity());
+
         LinearLayoutManager layoutManager =new NonScrollableLinearLayoutManager(requireActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         workspaces_recycler_view.setLayoutManager(layoutManager);
@@ -138,8 +141,17 @@ public class CollaborationFragment extends Fragment {
         }
         create_workspace_lottie.loop(true);
         create_workspace_lottie.playAnimation();
-
         workspace_layout.setVisibility(View.GONE);
+
+        // If there are locally saved workspaces:
+        if(!workspacePreferences.getCachedWorkspaces().isEmpty()){
+            workspace_layout.setVisibility(View.VISIBLE);
+            create_workspace_layout.setVisibility(View.GONE);
+
+            workspacesListAdapter = new WorkspacesListAdapter(workspacePreferences.getCachedWorkspaces(), requireActivity());
+            workspaces_recycler_view.setAdapter(workspacesListAdapter);
+            workspacesListAdapter.notifyDataSetChanged();
+        }
 
     }
     private void addListeners(){
@@ -150,7 +162,7 @@ public class CollaborationFragment extends Fragment {
     }
 
     private void addObservers(){
-        workspacesViewModel.getWorkspaces().observe(getViewLifecycleOwner(), workspaces -> {
+        WorkspaceDataRepository.getInstance().getWorkspaces().observe(getViewLifecycleOwner(), workspaces -> {
             create_workspace_layout.setVisibility(workspaces.isEmpty()?View.VISIBLE:View.GONE);
             workspace_layout.setVisibility(workspaces.isEmpty()? View.GONE:View.VISIBLE);
             if(workspacesListAdapter == null){
@@ -173,47 +185,15 @@ public class CollaborationFragment extends Fragment {
         final TextInputFormField workspaceName = workspaceView.findViewById(R.id.workspace_name_form);
         final TextInputFormField workspaceDescription = workspaceView.findViewById(R.id.workspace_description_form);
         final LoadableButton createWorkspaceButton = workspaceView.findViewById(R.id.create_workspace_button);
-        createWorkspaceButton.setEnabled(false);
 
-        workspaceName.addTextChangeListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                createWorkspaceButton.setEnabled(workspaceName.getText().trim().length() >= 4 && workspaceDescription.getText().trim().length() >= 4);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        workspaceDescription.addTextChangeListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                createWorkspaceButton.setEnabled(workspaceName.getText().trim().length() >= 4 && workspaceDescription.getText().trim().length() >= 4);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
         createWorkspaceButton.setOnClickListener(view -> {
+            if(workspaceName.getText().trim().length() < 4 || workspaceDescription.getText().trim().length() < 4){
+                return;
+            }
             HashMap<String,Object> hash = new HashMap<>();
-            hash.put("workspaceTitle", workspaceName.getText().trim());
-            hash.put("workspaceDescription", workspaceDescription.getText().trim());
+            hash.put("workSpaceTitle", workspaceName.getText().trim());
+            hash.put("workSpaceDescription", workspaceDescription.getText().trim());
             Workspace workspace = Workspace.fromJson(new Gson().toJson(hash));
             createWorkspaceButton.startLoading();
             new Handler().postDelayed(() -> {
@@ -225,13 +205,17 @@ public class CollaborationFragment extends Fragment {
                             workspace,
                             jsonObject -> {
                                 splashViewModel.getHomeSplashLayout().getValue().stopAnimating();
-                                Log.v("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
-                                workspacesViewModel.addWorkspace(workspace);
+                                Log.v("API_RESPONSE", "Final response: " + JsonUtils.prettyPrint(jsonObject.toString()));
+                                try {
+                                    jsonObject.put("workSpaceDescription", workspace.workspaceDescription());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             },
                             volleyError -> {
                                 splashViewModel.getHomeSplashLayout().getValue().stopAnimating();
                                 Log.e("API_RESPONSE", volleyError.toString());
-                                workspacesViewModel.addWorkspace(workspace);
+//                                workspacesViewModel.addWorkspace(workspace);
                             }
                     );
 

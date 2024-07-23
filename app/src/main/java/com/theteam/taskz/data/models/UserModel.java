@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 
+import javax.annotation.Nullable;
+
+
 public class UserModel {
 
     private HashMap<String,Object> json;
@@ -29,9 +32,9 @@ public class UserModel {
         Gson gson = new Gson();
         Type mapType = new TypeToken<HashMap<String, Object>>(){}.getType();
         json = gson.fromJson(jsonString, mapType);
-        json.put("accountType", "Business");
-        json.put("jobDescription", "A Front-End Software Engineer");
-        json.put("jobTitle", "Software Developer");
+//        json.put("accountType", "Business");
+//        json.put("jobDescription", "A Front-End Software Engineer");
+//        json.put("jobTitle", "Software Developer");
 
 
 
@@ -58,6 +61,9 @@ public class UserModel {
         Type mapType = new TypeToken<HashMap<String, Object>>(){}.getType();
 
         preferences.edit().putString("userdata",gson.toJson(map, mapType)).apply();
+    }
+    public HashMap<String,Object> toJson(){
+        return json;
     }
     public static void clearUserData(Context context){
         SharedPreferences preferences = context.getSharedPreferences("userData", Context.MODE_PRIVATE);
@@ -87,24 +93,6 @@ public class UserModel {
     public String authToken(){
         return json.get("authToken").toString();
     }
-
-    public Calendar tokenExpiration(){
-        final String expirationDate = json.get("tokenExpiration").toString();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-        Calendar calendar = Calendar.getInstance();
-
-        try {
-            Log.i("API", expirationDate);
-            Log.e("API", sdf.format(calendar.getTime()));
-            calendar.setTime(Objects.requireNonNull(sdf.parse(expirationDate)));
-
-        }
-        catch (Exception e){
-            Log.e("API", Objects.requireNonNull(e.getMessage()));
-        }
-        return calendar;
-
-    }
     public AccountType accountType(){
         return AccountType.valueOf(json.get("accountType").toString().trim());
     }
@@ -131,7 +119,10 @@ public class UserModel {
     }
 
     public String profile(){
-        return json.get("profile").toString();
+        String src = json.get("profilePicture") == null? json.get("profile").toString():json.get("profilePicture").toString();
+        // Becos glide does'nt accept http
+        final String httpsString = src.startsWith("https://")? src: src.replace("http://", "https://");
+        return httpsString;
     }
 
     public boolean isGoogleAccount(){
@@ -139,7 +130,12 @@ public class UserModel {
     }
 
     public boolean hasProfile(){
-        return json.get("profile") != null;
+
+        return json.get("profile") != null || json.get("profilePicture") != null;
+    }
+
+    public boolean hasBirthday(){
+        return json.get("dateOfBirth") != null;
     }
 
 

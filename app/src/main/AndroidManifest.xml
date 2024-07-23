@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
@@ -21,6 +21,7 @@
     </queries>
 
     <application
+        android:name=".StarApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -30,6 +31,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Taskz"
         tools:targetApi="31">
+
+        <activity
+            android:name=".presentation.views.WorkspaceDescriptionScreen"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.views.SyncJira"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.views.ChatScreen"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.views.GroupsScreen"
+            android:exported="false" />
         <activity
             android:name=".presentation.views.GithubProfileScreen"
             android:exported="false" />
@@ -51,6 +65,9 @@
             android:exported="false" />
         <activity
             android:name=".presentation.views.NotionWebView"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.views.JiraWebView"
             android:exported="false" />
         <activity
             android:name=".presentation.views.SelectPlatformSync"
@@ -109,6 +126,16 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".presentation.views.WeatherScreen"
+            android:exported="true"
+            android:theme="@style/Theme.Taskz">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

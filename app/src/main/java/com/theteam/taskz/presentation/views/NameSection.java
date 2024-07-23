@@ -3,6 +3,7 @@ package com.theteam.taskz.presentation.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,6 +164,10 @@ public class NameSection extends Fragment {
             AuthenticationDataHolder.lastName = account.getFamilyName() == null? "":account.getFamilyName();
             AuthenticationDataHolder.email = account.getEmail();
             AuthenticationDataHolder.password = "sTaR_TaSkZ@30_May@" + account.getEmail();
+
+            if(account.getPhotoUrl() != null){
+                AuthenticationDataHolder.urlPhoto = account.getPhotoUrl().toString();
+            }
             googleSignOut();
             createAccount();
         } catch (ApiException e) {
@@ -183,8 +188,7 @@ public class NameSection extends Fragment {
 
 
     void createAccount(){
-        ApiService apiService = new ApiService(requireActivity(), requireActivity().getLayoutInflater());
-        apiService.createAccount();
-
+        AuthenticationDataHolder.googleSignIn = true;
+        loginViewModel.next();
     }
 }

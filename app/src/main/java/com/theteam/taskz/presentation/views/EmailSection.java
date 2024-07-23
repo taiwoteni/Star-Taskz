@@ -26,6 +26,7 @@ import com.theteam.taskz.presentation.viewmodels.LoginViewModel;
 import com.theteam.taskz.utils.others.JsonUtils;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Pattern;
 
@@ -128,9 +129,14 @@ public class EmailSection extends Fragment {
         authenticationRepository.registerUser(
                 null,
                 jsonObject -> {
+                    final JSONObject object = jsonObject;
                     Log.i("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
                     try {
-                        UserModel.saveUserData(JsonUtils.convertToHashMap(jsonObject), requireActivity());
+                        object.put("accountType", AuthenticationDataHolder.selecAccountType.name());
+                        object.put("jobTitle", AuthenticationDataHolder.jobTitle);
+                        object.put("jobDescription", AuthenticationDataHolder.jobDescription);
+                        object.put("password", AuthenticationDataHolder.password);
+                        UserModel.saveUserData(JsonUtils.convertToHashMap(object), requireActivity());
                         dialog.dismiss();
                         loginViewModel.next();
                     } catch (JSONException e) {

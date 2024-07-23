@@ -8,6 +8,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -23,8 +24,8 @@ class ApiInterface {
     private Context context;
     private RequestQueue queue;
 
-    private static final int MY_DEFAULT_TIMEOUT = 10000; // 5 seconds
-    private static final int MY_MAX_RETRIES = 2;        // Number of retry attempts
+    private static final int MY_DEFAULT_TIMEOUT = 20000; // 20 seconds
+    private static final int MY_MAX_RETRIES = 3;        // Number of retry attempts
     private static final float MY_BACKOFF_MULTIPLIER = 1.0f;
 
     public ApiInterface(Context application_context){
@@ -41,6 +42,37 @@ class ApiInterface {
     ){
         JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.POST,
+                path.startsWith("http")?path:baseUrl+path,
+                data,
+                onSuccess,
+                onFailure){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // In case no data is passed in as a header explicitly
+                final HashMap<String, String> header = new HashMap<>();
+                header.put("Content-Type","application/json");
+                if(headers != null){
+                    header.putAll(headers);
+                }
+                return header;
+            }
+        };
+        objectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_DEFAULT_TIMEOUT,
+                MY_MAX_RETRIES,
+                MY_BACKOFF_MULTIPLIER));
+        queue.add(objectRequest);
+    }
+    public void putRequest(
+            String path,
+            HashMap<String,String> headers,
+            JSONObject data,
+            Response.Listener<JSONObject> onSuccess,
+            Response.ErrorListener onFailure
+    ){
+        JsonObjectRequest objectRequest = new JsonObjectRequest(
+                Request.Method.PUT,
                 baseUrl+path,
                 data,
                 onSuccess,
@@ -69,33 +101,18 @@ class ApiInterface {
             HashMap<String,String> headers,
             HashMap<String,String> data,
             Map<String, MultipartRequest.DataPart> dataParts,
-            Response.Listener<NetworkResponse> onSuccess,
+            Response.Listener<String> onSuccess,
             Response.ErrorListener onFailure
     ){
 
         MultipartRequest multipartRequest = new MultipartRequest(
                 baseUrl+path,
                 headers,
+                method,
                 data,
                 dataParts,
                 onSuccess,
-                onFailure){
-            @Override
-            public int getMethod() {
-                return method;
-            }
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                ///TODO:Come back to this because multipart request has it's own content-type;
-                // In case no data is passed in as a header explicitly
-                final HashMap<String, String> header = new HashMap<>();
-                header.put("Content-Type","multipart/form-data");
-                if(headers != null){
-                    header.putAll(headers);
-                }
-                return header;
-            }
-        };
+                onFailure);
         multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
                 10000,
                 MY_MAX_RETRIES,

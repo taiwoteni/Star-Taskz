@@ -22,8 +22,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.AuthenticationDataHolder;
+import com.theteam.taskz.data.models.UserData;
+import com.theteam.taskz.data.models.UserModel;
 import com.theteam.taskz.domain.repositories.ApiService;
+import com.theteam.taskz.domain.repositories.AuthenticationRepository;
+import com.theteam.taskz.utils.others.JsonUtils;
 
+import org.json.JSONException;
+
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
@@ -35,8 +42,11 @@ public class LoginActivity extends AppCompatActivity {
     private LinearLayout googleSignInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInOptions gso;
+
+    private SplashRefreshLayout refresh_layout;
     final int RC_SIGN_IN = 200;
 
+    private AuthenticationRepository authenticationRepository;
     private Dialog dialog;
 
     @Override
@@ -48,9 +58,12 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
+        authenticationRepository = new AuthenticationRepository(getApplicationContext());
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // View initializations
+        refresh_layout = findViewById(R.id.splash_layout);
         emailFormField = findViewById(R.id.email_form);
         passwordFormField = findViewById(R.id.password_form);
         button = findViewById(R.id.loadable_button);
@@ -194,7 +207,31 @@ public class LoginActivity extends AppCompatActivity {
     }
     void login(){
         dialog.dismiss();
-        ApiService apiService = new ApiService(this, getLayoutInflater());
-        apiService.loginAccount();
+        refresh_layout.startAnimating();
+        authenticationRepository.loginUser(
+                AuthenticationDataHolder.email,
+                AuthenticationDataHolder.password,
+                null,
+                jsonObject -> {
+                    refresh_layout.stopAnimating();
+                    final HashMap<String,Object> hashMap = JsonUtils.convertToHashMap(jsonObject);
+                    hashMap.put("password", AuthenticationDataHolder.password);
+                    UserModel.saveUserData(hashMap, this);
+
+                    new Handler().postDelayed(() -> {
+
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        },2000);
+
+                },
+                volleyError -> {
+                    refresh_layout.stopAnimating();
+                    new Handler().postDelayed(() -> showError("Couldn't log you in"), 2000);
+
+                }
+        );
+
     }
 }

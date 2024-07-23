@@ -1,4 +1,5 @@
 package com.theteam.taskz.domain.repositories;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -13,21 +14,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MultipartRequest extends Request<NetworkResponse> {
+public class MultipartRequest extends Request<String> {
     private static final String PROTOCOL_CHARSET = "utf-8";
-    private final Response.Listener<NetworkResponse> mListener;
+    private final Response.Listener<String> mListener;
     private final Map<String, String> mHeaders;
     private final Map<String, String> mStringParts;
     private final Map<String, DataPart> mFileParts;
     private static final String BOUNDARY = "apiclient-" + System.currentTimeMillis();
     private static final String MULTIPART_FORM_DATA = "multipart/form-data;boundary=" + BOUNDARY;
 
-    public MultipartRequest(String url, Map<String, String> headers, Map<String, String> stringParts,
-                            Map<String, DataPart> fileParts, Response.Listener<NetworkResponse> listener,
+    public MultipartRequest(String url, Map<String, String> headers, int method, Map<String, String> stringParts,
+                            Map<String, DataPart> fileParts, Response.Listener<String> listener,
                             Response.ErrorListener errorListener) {
-        super(Method.POST, url, errorListener);
+        super(method, url, errorListener);
         this.mListener = listener;
-        this.mHeaders = headers != null ? headers : new HashMap<String, String>();
+        this.mHeaders = headers != null ? headers : new HashMap<>();
         this.mStringParts = stringParts;
         this.mFileParts = fileParts;
     }
@@ -70,17 +71,17 @@ public class MultipartRequest extends Request<NetworkResponse> {
     }
 
     @Override
-    protected Response<NetworkResponse> parseNetworkResponse(NetworkResponse response) {
+    protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-            return Response.success(response, HttpHeaderParser.parseCacheHeaders(response));
+            return Response.success(jsonString, HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new com.android.volley.ParseError(e));
         }
     }
 
     @Override
-    protected void deliverResponse(NetworkResponse response) {
+    protected void deliverResponse(String response) {
         mListener.onResponse(response);
     }
 
@@ -127,4 +128,5 @@ public class MultipartRequest extends Request<NetworkResponse> {
         }
     }
 }
+
 

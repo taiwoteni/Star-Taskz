@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cloudy_weather"
+    tools:context=".presentation.views.WeatherScreen">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginTop="@dimen/regular_value_size"
+                        android:id="@+id/title_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Weather Forecast"
+                        android:paddingVertical="@dimen/medium_value_size"
+                        android:gravity="center"
+                        android:textSize="@dimen/medium_font_size"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/poppins_semibold"/>
+                    <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/forward_icon"
+                        app:tint="@color/white"
+                        android:layout_marginLeft="@dimen/large_value_size"
+                        android:rotation="180"
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop"
+                        />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_marginTop="@dimen/large_value_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/weather_icon"
+                        android:layout_width="27sp"
+                        android:layout_height="27sp"
+                        android:src="@drawable/cloud_rain"
+                        app:tint="@color/blue"
+                        android:layout_marginRight="12sp"
+                        android:scaleType="centerCrop"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/quicksand_semibold"
+                            android:textSize="23sp"/>
+                        <TextView
+                            android:id="@+id/date_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mon, 21 Jul"
+                            android:textColor="@color/whiteTransparent"
+                            android:textSize="11sp"
+                            android:layout_marginTop="1sp"
+                            android:fontFamily="@font/quicksand_medium"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end|center_vertical"
+
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/temparature_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:text="28"
+                        android:layout_marginLeft="@dimen/medium_value_size"
+                        android:gravity="center"
+                        android:textSize="80sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/quicksand_light"/>
+                    <TextView
+                        android:id="@+id/celsius"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/regular_value_size"
+                        android:layout_marginBottom="@dimen/regular_value_size"
+                        android:text="°C"
+                        android:textColor="@color/whiteTransparent"
+                        android:fontFamily="@font/quicksand_regular"
+                        android:textSize="25sp"/>
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lekki, Lagos"
+                    android:textColor="@color/whiteTransparent"
+                    android:textSize="12sp"
+                    android:layout_marginTop="1sp"
+                    android:fontFamily="@font/quicksand_semibold"/>
+
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

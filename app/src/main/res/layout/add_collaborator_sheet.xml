@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/large_value_size"
+    android:layout_width="match_parent"
+    android:background="@drawable/bottom_bar_rounded_top_background"
+    android:backgroundTint="?attr/background"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="30dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/large_value_size"
+        android:background="@drawable/bottom_sheet_handle"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Collaborator"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="@dimen/medium_font_size"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/medium_value_size"
+        android:layout_gravity="center"/>
+    <com.theteam.taskz.presentation.views.TextInputFormField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_value_size"
+        android:layout_marginHorizontal="@dimen/medium_value_size"
+        android:id="@+id/collaborator_name_form"
+        app:hint="Collaborator Email"
+        app:hintColor="?attr/colorSecondary"
+        app:prefixIcon="@drawable/email"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" * The email of this collaborator has to be the email he/she us to register their Star Taskz account"
+        android:layout_marginHorizontal="@dimen/large_value_size"
+        android:paddingTop="@dimen/medium_value_size"
+        android:layout_marginBottom="@dimen/extra_large_value_size"
+        android:paddingLeft="@dimen/medium_value_size"
+        android:textSize="11sp"
+        android:textColor="?attr/colorSecondary"
+        android:fontFamily="@font/poppins_regular"
+        tools:ignore="HardcodedText" />
+
+    <com.theteam.taskz.presentation.views.LoadableButton
+        android:id="@+id/add_collaborator_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/medium_value_size"
+        android:layout_marginHorizontal="@dimen/medium_value_size"
+        app:text="Add User"/>
+
+
+</LinearLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="?attr/background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.views.SyncJira">
+    <com.theteam.taskz.presentation.views.SplashRefreshLayout
+        android:id="@+id/splash_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:animation="loading">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sync with Jira"
+                android:layout_marginHorizontal="@dimen/large_value_size"
+                android:textSize="@dimen/large_font_size"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginBottom="@dimen/small_value_size"
+                android:fontFamily="@font/poppins_semibold"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sync all your Issues, Tasks and Projects from Jira into Star Taskz.You can enter your access token below if you have or just login directly.\nYou are just a click away."
+                android:layout_marginHorizontal="@dimen/large_value_size"
+                android:textSize="@dimen/regular_font_size"
+                android:layout_marginBottom="@dimen/extra_large_value_size"
+                android:textColor="?attr/colorSecondary"
+                android:fontFamily="@font/poppins_regular"
+                tools:ignore="HardcodedText" />
+
+
+            <com.theteam.taskz.presentation.views.TextInputFormField
+                android:id="@+id/token_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/large_value_size"
+                android:layout_marginTop="@dimen/large_value_size"
+                android:layout_marginBottom="@dimen/extra_large_value_size"
+                app:fontFamily="@font/poppins_regular"
+                app:hint="Enter Token"
+                app:isPassword="false"
+                android:inputType="textEmailAddress"
+                app:hintColor="?attr/colorSecondary"
+                app:prefixIcon="@drawable/jira"/>
+            <com.theteam.taskz.presentation.views.LoadableButton
+                android:id="@+id/loadable_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/large_value_size"
+                android:layout_marginHorizontal="@dimen/large_value_size"
+                app:text="Sync"
+                app:backgroundColor="@color/themeColor"/>
+            <LinearLayout
+                android:layout_marginHorizontal="@dimen/extra_large_value_size"
+                android:layout_width="match_parent"
+                android:weightSum="2"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/large_value_size"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_value_size"
+                    android:layout_weight="1"
+                    android:background="@drawable/divider_drawable"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/colorSecondary"
+                    android:text="or"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="@dimen/small_font_size"
+                    tools:ignore="HardcodedText" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/medium_value_size"
+                    android:layout_weight="1"
+                    android:background="@drawable/divider_drawable"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/jira_sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/large_value_size">
+                <include layout="@layout/jira_signup_button"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.theteam.taskz.presentation.views.SplashRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

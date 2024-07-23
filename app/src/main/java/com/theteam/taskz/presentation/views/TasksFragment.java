@@ -88,7 +88,7 @@ public class TasksFragment extends Fragment {
                             profile_image.setImageDrawable(drawable);
                             profile_image.setScaleX(1f);
                             profile_image.setScaleY(1f);
-                            return false;
+                            return true;
                         }
                     })
                     .into(profile_image);

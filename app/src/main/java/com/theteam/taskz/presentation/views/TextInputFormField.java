@@ -123,6 +123,7 @@ public class TextInputFormField extends LinearLayout {
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         // Can only work when
+        editText.setOnClickListener(l);
         if(suffixDrawable != null && suffixIcon != null){
             suffixIcon.setOnClickListener(l);
         }
