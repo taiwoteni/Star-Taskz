@@ -2,7 +2,6 @@ package com.theteam.taskz.presentation.views;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +33,7 @@ import java.util.Map;
 
 public class JiraWebView extends AppCompatActivity {
     private static final String AUTHORIZATION_URL = "https://auth.atlassian.com/authorize";
-    private static final String CLIENT_ID = Jira.jiraClient;
+    private static final String CLIENT_ID = Jira.jiraInt;
     private static final String REDIRECT_URI = "https://star-taskz.vercel.app/";
     private static final String RESPONSE_TYPE = "code";
     private static final String SCOPE = "read:jira-work read:jira-user";
@@ -105,8 +104,8 @@ public class JiraWebView extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("grant_type","authorization_code");
-            jsonObject.put("client_id", Jira.jiraClient);
-            jsonObject.put("client_secret", Jira.jiraSecret);
+            jsonObject.put("client_id", Jira.jiraInt);
+            jsonObject.put("client_secret", Jira.jiraString);
             jsonObject.put("code",code);
             jsonObject.put("redirect_uri","https://star-taskz.vercel.app/");
 
