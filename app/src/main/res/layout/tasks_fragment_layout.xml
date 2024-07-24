@@ -7,6 +7,7 @@
     android:background="?attr/colorTertiary"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:orientation="vertical"
         android:gravity="start"
@@ -83,4 +84,15 @@
             android:layout_width="match_parent"
             android:layout_height="75dp"/>
     </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_plus"
+        app:tint="@color/white"
+        app:backgroundTint="@color/themeColor"
+        android:layout_marginHorizontal="@dimen/medium_value_size"
+        android:layout_marginBottom="91dp"
+        android:layout_gravity="bottom|right"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

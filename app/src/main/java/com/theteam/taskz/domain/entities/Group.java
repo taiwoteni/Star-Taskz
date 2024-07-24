@@ -41,6 +41,11 @@ public class Group {
     public boolean hasPhoto(){
         return groupImageUrl !=null;
     }
+    public String groupPhoto(){
+        final String src = groupImageUrl;
+        final String httpsString = src.startsWith("https://")? src: src.replace("http://", "https://");
+        return httpsString;
+    }
     public ArrayList<String> members(){
         return members;
     }

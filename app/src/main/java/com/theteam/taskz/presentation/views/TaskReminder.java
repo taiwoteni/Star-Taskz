@@ -62,7 +62,7 @@ public class TaskReminder extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 task.updateStatus(TaskStatus.Completed);
-                new TaskManager(getApplicationContext()).updateTask(task);
+//                new TaskManager(getApplicationContext()).updateTask(task);
                 mp.stop();
                 finish();
             }
@@ -71,7 +71,7 @@ public class TaskReminder extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 task.updateStatus(TaskStatus.Pending);
-                new TaskManager(getApplicationContext()).updateTask(task);
+//                new TaskManager(getApplicationContext()).updateTask(task);
                 mp.stop();
                 finish();
             }

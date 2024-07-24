@@ -6,8 +6,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.theteam.taskz.data.repositories.TasksPreferences;
+import com.theteam.taskz.domain.entities.Task;
 import com.theteam.taskz.utils.enums.TaskStatus;
-import com.theteam.taskz.domain.repositories.ApiService;
 import com.theteam.taskz.utils.others.AlarmManager;
 
 import org.json.JSONException;
@@ -21,170 +22,47 @@ import java.util.Map;
 import java.util.Objects;
 
 public class TaskManager {
-    final public static ArrayList<TaskModel> tasks = new ArrayList<>();
-    public static String END_POINT = "https://startaskzbackend-production.up.railway.app/";
-
     private Context context;
 
     private UserModel userModel;
+    private TasksPreferences tasksPreferences;
+
     public TaskManager(Context context){
         this.context = context;
-        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
-        final String jsonString = preferences.getString("tasks", "[]");
-        Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType();
-        ArrayList<HashMap<String, Object>> list = gson.fromJson(jsonString, listType);
-        tasks.clear();
-        for(final HashMap<String,Object> json : list) {
-            if (!json.containsKey("id")) {
-                json.put("id", "#TASK-" + list.indexOf(json));
-            }
-            tasks.add(new TaskModel(json));
-        }
+       tasksPreferences = new TasksPreferences(context);
+       userModel = new UserModel(context);
 
     }
 
-    public void addTask(TaskModel model, boolean speak){
-        userModel = new UserModel(context);
-        tasks.add(model);
-        Gson gson = new Gson();
-        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
-        final String jsonString = preferences.getString("tasks", "[]");
-        Type listType = new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType();
-        ArrayList<HashMap<String, Object>> list = gson.fromJson(jsonString, listType);
-        list.add(model.toJson());
-        preferences.edit().putString("tasks", gson.toJson(list, new TypeToken<ArrayList<HashMap<String,Object>>>(){}.getType())).apply();
+    public void addTask(Task task, boolean speak){
 
-
-        if(model.id.equals(model.globalId)){
-            //Now, We try to add the task in the cloud using the create-task endpoint.
-            try {
-                ApiService.addTask(context, model);
-            } catch (JSONException e) {
-                Log.e("API_RESPONSE", "JSON EXCEPTION");
-                Log.e("API_RESPONSE", e.toString());
-            }
-        }
-        if(Calendar.getInstance().getTime().before(model.startTime.getTime())){
-            if(model.status != TaskStatus.Completed){
+        if(Calendar.getInstance().getTime().before(task.startTime().getTime())){
+            if(!task.completed()){
                 final AlarmManager taskReminder = new AlarmManager(context.getApplicationContext(), context);
-                taskReminder.setAlarm(model, speak);
+                taskReminder.setAlarm(task, speak);
             }
 
         }
+    }
+
+    public void createTaskOffline(Task task, boolean speak){
+
+        final String string = String.valueOf(tasksPreferences.generateOfflineId());
+        final HashMap<String,Object> hashMap = task.toJson();
+        hashMap.put("alarmId", string);
+        if(!hashMap.containsKey("id")){
+            hashMap.put("id",string);
+        }
+
+        hashMap.put("status", TaskStatus.Pending.name());
+
+        final Task generatedTask = Task.fromJson(hashMap);
+        addTask(generatedTask, speak);
 
     }
 
-    public void deleteTask(TaskModel model){
-        Gson gson = new Gson();
-        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
-        final String jsonString = preferences.getString("tasks", "[]");
-        Type listType = new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType();
-        ArrayList<HashMap<String, Object>> list = gson.fromJson(jsonString, listType);
+    public void updateTaskOffline(){
 
-        int index = -1;
-        for(int i = 0; i<getTasks().size(); i++){
-            if(getTasks().get(i).id.equals(model.id)){
-                index = i;
-                break;
-            }
-        }
-
-        if(index != -1){
-            list.remove(index);
-        }
-        preferences.edit().putString("tasks", gson.toJson(list, new TypeToken<ArrayList<HashMap<String,Object>>>(){}.getType())).apply();
-
-        if(Calendar.getInstance().getTime().before(model.startTime.getTime())){
-            final AlarmManager taskReminder = new AlarmManager(context.getApplicationContext(), context);
-            taskReminder.cancelAlarm(model);
-        }
-
-        ApiService.deleteTask(context, model);
-    }
-    public void clearTasks(){
-        Gson gson = new Gson();
-        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
-
-        new AlarmManager(context, context.getApplicationContext()).cancelAllAlarms();
-        preferences.edit().putString("tasks", "[]").apply();
-
-    }
-
-    public void updateTask(TaskModel model){
-        updateTaskOffline(model,false);
-
-        try {
-            ApiService.updateTask(context, model);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-    public void updateTask(TaskModel model, boolean speak){
-        updateTaskOffline(model, speak);
-
-        try {
-            ApiService.updateTask(context, model);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-    public void updateTaskOffline(TaskModel model, boolean speak){
-        Gson gson = new Gson();
-        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
-        final String jsonString = preferences.getString("tasks", "[]");
-        Type listType = new TypeToken<ArrayList<Map<String, Object>>>(){}.getType();
-        ArrayList<Map<String, Object>> list = gson.fromJson(jsonString, listType);
-
-        final HashMap<String,Object> maps = model.toJson();
-
-        int index = 0;
-        final List<TaskModel> _tasks = getTasks();
-        for(final TaskModel _model: _tasks){
-            if(Objects.equals(_model.id, model.id)){
-                index = _tasks.indexOf(_model);
-            }
-        }
-
-        for(String key: maps.keySet()) {
-            if (list.get(index).containsKey(key)) {
-                list.get(index).replace(key, maps.get(key));
-            } else {
-                list.get(index).put(key, maps.get(key));
-            }
-        }
-        preferences.edit().putString("tasks", gson.toJson(list)).apply();
-
-
-        final AlarmManager taskReminder = new AlarmManager(context.getApplicationContext(), context);
-
-
-        if(Calendar.getInstance().getTime().before(model.startTime.getTime())){
-            taskReminder.cancelAlarm(model);
-            taskReminder.setAlarm(model, speak,false);
-        }
-        else{
-            if(model.status == TaskStatus.Completed){
-                taskReminder.cancelAlarm(model);
-            }
-        }
-
-    }
-
-    public ArrayList<TaskModel> getTasks(){
-        SharedPreferences preferences = context.getSharedPreferences("GLOBAL", Context.MODE_PRIVATE);
-        final String jsonString = preferences.getString("tasks", "[]");
-        Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType();
-        ArrayList<HashMap<String, Object>> list = gson.fromJson(jsonString, listType);
-        tasks.clear();
-        for(final HashMap<String,Object> json : list){
-            if(!json.containsKey("id")){
-                json.put("id", "#TASK-" + list.indexOf(json));
-            }
-            tasks.add(new TaskModel(json));
-        }
-        return tasks;
     }
 
 }

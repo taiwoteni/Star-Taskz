@@ -1,13 +1,16 @@
 package com.theteam.taskz.presentation.views;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,17 +26,18 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.UserModel;
 import com.theteam.taskz.presentation.adapters.TaskDateListAdapter;
 import com.theteam.taskz.data.models.TaskDateModel;
 import com.theteam.taskz.presentation.adapters.ViewPagerAdapter;
-import com.theteam.taskz.presentation.transformers.CustomLinearLayoutManager;
 import com.theteam.taskz.presentation.viewmodels.TaskDatesViewModel;
-import com.theteam.taskz.presentation.viewmodels.TasksViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -42,16 +46,20 @@ public class TasksFragment extends Fragment {
     public static float MILLISECONDS_PER_INCH = 100f;
     private RecyclerView recyclerView;
     private TaskDateListAdapter adapter;
+
+    private TextView monthText;
     private LinearLayoutManager linearLayoutManager;
 
     private CircleImageView profile_image;
 
     private UserModel user;
 
-    private ViewPager2 viewPager2;
+    final SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM", Locale.getDefault());
 
-    private TasksViewModel tasksViewModel;
+    private ViewPager2 viewPager2;
     private TaskDatesViewModel taskDatesViewModel;
+
+    private FloatingActionButton fab;
 
     @Nullable
     @Override
@@ -66,6 +74,9 @@ public class TasksFragment extends Fragment {
         recyclerView = view.findViewById(R.id.dates_recycler_view);
         viewPager2 = view.findViewById(R.id.view_pager);
         profile_image = view.findViewById(R.id.profile_image);
+        monthText = view.findViewById(R.id.month_text);
+        fab = view.findViewById(R.id.fab);
+
 
         user = new UserModel(requireActivity());
 
@@ -107,18 +118,28 @@ public class TasksFragment extends Fragment {
         
         // We call the ViewModelProviders to enable access to this Fragment activities
         // .. children (Date Items in RecyclerView) and TasksList
-        tasksViewModel = new ViewModelProvider(requireActivity()).get(TasksViewModel.class);
         taskDatesViewModel = new ViewModelProvider(requireActivity()).get(TaskDatesViewModel.class);
 
+        fab.setOnClickListener(view1 -> {
+            Intent createIntent = new Intent(requireActivity().getApplicationContext(), CreateTask.class);
+            createIntent.putExtra("fromWorkspace", false);
+            startActivity(createIntent);
+        });
+
+        monthText.setText(monthFormat.format(Calendar.getInstance().getTime()));
+
+        monthText.setOnClickListener(view1 -> {
+            showPopupMenu(view1);
+        });
 
 
-        initialize();
+
+        initialize(Calendar.getInstance());
 
 
     }
 
-    private void initialize() {
-        Calendar calendar = Calendar.getInstance();
+    private void initialize(Calendar calendar) {
 
         ArrayList<TaskDateModel> taskDateModels = new ArrayList<>();
 
@@ -168,5 +189,36 @@ public class TasksFragment extends Fragment {
 
 
 
+    }
+
+    private void showPopupMenu(View view) {
+        PopupMenu popup = new PopupMenu(requireActivity(), view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.cal, popup.getMenu());
+        Calendar __calendar = Calendar.getInstance();
+        __calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH)+1);
+
+        popup.getMenu().findItem(R.id.month1).setTitle(monthFormat.format(Calendar.getInstance().getTime()));
+        popup.getMenu().findItem(R.id.month2).setTitle(monthFormat.format(__calendar.getTime()));
+
+
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.month1:
+                        Calendar calendar = Calendar.getInstance();
+                        initialize(calendar);
+                        return true;
+                    default:
+                        Calendar _calendar = Calendar.getInstance();
+                        _calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH)+1);
+                        initialize(_calendar);
+                        return true;
+                }
+            }
+        });
+        popup.show();
     }
 }

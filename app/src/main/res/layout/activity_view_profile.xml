@@ -54,7 +54,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Closed Projects"
+                            android:text="Closed Tasks"
                             android:gravity="center"
                             android:padding="0dp"
                             android:textColor="?attr/colorSecondary"
@@ -118,12 +118,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Open Projects"
+                            android:text="Open Tasks"
                             android:textColor="?attr/colorSecondary"
                             android:fontFamily="@font/poppins_semibold"
                             android:textSize="10sp"/>
 
                         <TextView
+                            android:id="@+id/open_tasks_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="10"
@@ -197,56 +198,30 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
         <!-- This tab bar isn't collapsed-->
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
+        <TextView
+           android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_value_size"
             android:layout_marginBottom="@dimen/small_value_size"
-            android:paddingHorizontal="@dimen/regular_value_size"
-            app:tabBackground="?attr/background"
-            app:tabIndicator="@drawable/profile_tab_indicator"
-            app:tabIndicatorColor="@color/themeColor"
-            app:tabIndicatorFullWidth="false"
-            app:tabSelectedTextAppearance="@style/TabSelectedText"
-            app:tabTextAppearance="@style/TabUnselectedText"
-            app:tabSelectedTextColor="@color/themeColor"
-            app:tabTextColor="?attr/colorSecondary">
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_projects"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Projects"
-                android:textSize="16dp" />
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_people"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Colleagues" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_item2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="About" />
-
-
-        </com.google.android.material.tabs.TabLayout>
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="@dimen/medium_font_size"
+            android:textColor="?attr/colorSecondary"
+            android:text=""
+            android:paddingHorizontal="@dimen/large_value_size"/>
     </com.google.android.material.appbar.AppBarLayout>
 
 
 
 
     <!--This is the layout containing the viewpager that contains the scrollable framents-->
-    <androidx.viewpager2.widget.ViewPager2
+    <LinearLayout
     android:id="@+id/view_pager"
     android:background="@drawable/top_rounded_large"
     android:backgroundTint="?attr/colorTertiary"
     android:layout_width="match_parent"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent">
+
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

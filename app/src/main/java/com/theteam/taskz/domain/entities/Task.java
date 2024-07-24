@@ -1,7 +1,10 @@
 package com.theteam.taskz.domain.entities;
 
+import android.content.Context;
+
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.theteam.taskz.data.repositories.TasksPreferences;
 import com.theteam.taskz.utils.enums.TaskStatus;
 
 import java.lang.reflect.Type;
@@ -14,14 +17,14 @@ import java.util.Locale;
 
 public class Task {
     private String id;
-    private String globalId;
+    private String alarmId;
     private String taskName;
-    private ArrayList<String> assignedTo;
+    private String assignedTo;
     private String createdAt;
     private String startedAt;
     private String endedAt;
 
-    private boolean needsSync;
+    private String taskCategory;
 
     private ArrayList<SubTask> steps;
 
@@ -53,16 +56,31 @@ public class Task {
         return id;
     }
 
-    public int taskLocalId(){
-        return (int)(Double.parseDouble(globalId));
+    public boolean isCollaborating(){
+        return assignedTo!= null && !assignedTo.isEmpty();
     }
 
-    public boolean taskNeedsSync(){
-        return needsSync;
+    public int taskLocalId(){
+        return (int)(Double.parseDouble(alarmId));
+    }
+
+    public String taskCategory(){
+        return taskCategory==null?"uncategorized":taskCategory;
+    }
+
+    public boolean taskScheduledOffline(){
+
+        return alarmId!=null && !alarmId.equals(id);
     }
 
     public ArrayList<SubTask> taskSteps(){
         return steps;
+    }
+
+    public ArrayList<String> assignees(){
+        final ArrayList<String> s = new ArrayList<>();
+        s.add(assignedTo);
+        return s;
     }
 
     public TaskStatus taskStatus(){
@@ -94,7 +112,7 @@ public class Task {
 
     public Calendar createdTime(){
         final Calendar calendar = Calendar.getInstance();
-        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
 
         try {
             calendar.setTime(format.parse(createdAt));
@@ -122,9 +140,44 @@ public class Task {
         return endedAt!=null;
     }
 
+    public boolean existsOffline(Context context){
+        final ArrayList<Task> tasks = new TasksPreferences(context).getCachedTasks();
+
+        boolean exists = false;
+        for (final Task task:tasks){
+            if (task.taskId().equals(this.taskId())){
+                exists = true;
+                break;
+            }
+        }
+
+        return exists;
+    }
+
+    public int getOfflineId(Context context){
+        final ArrayList<Task> tasks = new TasksPreferences(context).getCachedTasks();
+
+        int offlineId = 0;
+        for (final Task offlineTask:tasks){
+            if (offlineTask.taskId().equals(this.taskId())){
+                offlineId = offlineTask.taskLocalId();
+                break;
+            }
+        }
+
+
+
+        return offlineId;
+
+    }
+
+    public boolean taskHasSteps(){
+        return steps!=null && !steps.isEmpty();
+    }
+
     public Calendar dueTime(){
         final Calendar calendar = Calendar.getInstance();
-        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
 
         try {
             calendar.setTime(format.parse(endedAt));

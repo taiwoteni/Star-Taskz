@@ -2,28 +2,26 @@ package com.theteam.taskz.data.models;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.theteam.taskz.domain.entities.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GithubIssue extends TaskModel{
-    private GithubIssue(Map<String, Object> json) {
-        super(json);
-    }
+public class GithubIssue extends Task{
 
-    public static GithubIssue fromRawJson(HashMap<String,Object> json){
+    public static Task fromRawJson(HashMap<String,Object> json){
         HashMap<String,Object> issueJson = new HashMap<>();
 
         issueJson.put("id", json.get("id"));
         issueJson.put("globalId", json.get("id"));
-        issueJson.put("name", json.get("title").toString());
-        issueJson.put("status", json.get("state").toString().equalsIgnoreCase("open")?"pending":"completed");
-        issueJson.put("time", json.get("created_at"));
-        issueJson.put("end", json.get("closed_at"));
-        issueJson.put("description",json.get("body"));
-        issueJson.put("category","uncategorized");
+        issueJson.put("taskName", json.get("title").toString());
+        issueJson.put("taskStatus", json.get("state").toString().equalsIgnoreCase("open")?"pending":"completed");
+        issueJson.put("startedAt", json.get("created_at"));
+        issueJson.put("endedAt", json.get("closed_at"));
+        issueJson.put("taskDescription",json.get("body"));
+        issueJson.put("taskCategory","uncategorized");
 
         final List<String> categories = new ArrayList<String>();
         categories.add("work");
@@ -35,12 +33,12 @@ public class GithubIssue extends TaskModel{
             final ArrayList<Map<String,Object>> labels = new Gson().fromJson(json.get("labels").toString(), new TypeToken<ArrayList<Map<String,Object>>>(){}.getType());
             for(final Map<String,Object> label : labels){
                 if(categories.add(label.get("name").toString().toLowerCase())){
-                    issueJson.replace("category",label);
+                    issueJson.replace("taskCategory",label);
                     break;
                 }
             }
         }
-        return new GithubIssue(issueJson);
+        return Task.fromJson(issueJson);
     }
 
 

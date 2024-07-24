@@ -144,7 +144,7 @@ public class ChatScreen extends AppCompatActivity {
     }
 
     private void sendMessage(){
-        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.getDefault());
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
         ArrayList<String> seen = new ArrayList<>();
         seen.add(user.uid());
         HashMap<String,Object> message = new HashMap<>();
@@ -161,7 +161,7 @@ public class ChatScreen extends AppCompatActivity {
                 group,
                 Message.fromJson(message),
                 jsonObject -> {
-                    Log.v("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
+//                    Log.v("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
                 },
                 volleyError -> {
                     Log.e("API_RESPONSE", volleyError.toString());

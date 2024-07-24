@@ -8,121 +8,138 @@
     <LinearLayout
         android:id="@+id/task_item_layout"
         android:background="@drawable/study_task_background"
-        android:paddingVertical="13sp"
+        android:paddingVertical="5sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
             android:gravity="center"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|left"
-                android:layout_marginBottom="@dimen/small_value_size"
+                android:layout_marginTop="@dimen/small_value_size"
+                android:layout_marginBottom="3sp"
                 android:orientation="horizontal">
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <TextView
-                        android:id="@+id/taskName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Creating pull request for profile pageffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"/>
-                </LinearLayout>
+                    android:paddingHorizontal="6sp"
+                    android:paddingVertical="@dimen/small_value_size"
+                    android:background="@drawable/small_rounded_corner_background"
+                    android:backgroundTint="#3EFFFFFF"
+                    android:text="Pending"
+                    android:gravity="center"
+                    android:textSize="8sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="@dimen/medium_value_size"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:id="@+id/taskStatus"/>
                 <ImageView
-                    android:id="@+id/taskType"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:scaleType="centerCrop"
+                    android:id="@+id/dot"
+                    android:layout_width="3sp"
+                    android:layout_height="3sp"
+                    android:src="@drawable/circle_dot"
                     app:tint="@color/white"
-                    android:layout_marginLeft="@dimen/regular_value_size"
-                    android:src="@drawable/pull_request" />
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="4.5sp"/>
+                <TextView
+                    android:id="@+id/task_progress"
+                    android:layout_marginStart="1sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80%"
+                    android:maxLines="1"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:padding="0dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/more"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:src="@drawable/more_vert"
+                        android:layout_marginEnd="@dimen/medium_value_size"
+                        app:tint="@color/white"
+                        android:scaleX="1.1"
+                        android:scaleY="1.1"/>
+                </LinearLayout>
             </LinearLayout>
-            <TextView
-                android:id="@+id/taskProgress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="20% Progress"
-                android:layout_marginBottom="4sp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:fontFamily="@font/poppins_regular"
-                android:textColor="@color/white"
-                android:textSize="10sp"/>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/medium_value_size"
                 android:gravity="center|left"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="1dp"
                 android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/taskName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Creating pull request for profile pageffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:paddingHorizontal="0dp"
+                    android:paddingStart="3sp"
+                    android:gravity="center_vertical|start"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/white"
+                    android:textSize="13.25sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2sp"
+                android:gravity="center_vertical|left"
+                android:paddingHorizontal="@dimen/medium_value_size"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/clock"
+                    android:layout_width="17sp"
+                    android:layout_height="17sp"
+                    android:src="@drawable/time"
+                    app:tint="@color/white"
+                    android:padding="0dp"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/taskTimeRange"
+                    android:layout_marginStart="1sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11:32 PM"
+                    android:maxLines="1"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/white"
+                    android:textSize="8sp"/>
                 <LinearLayout
+                    android:gravity="end"
+                    android:id="@+id/collaborators_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_weight="1">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/collaborator1"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            app:civ_border_color="@color/white"
-                            app:civ_border_width="0.4dp"
-                            android:src="@drawable/profile_2"/>
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/collaborator2"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:translationX="-5dp"
-                            app:civ_border_color="@color/white"
-                            app:civ_border_width="0.4dp"
-                            android:src="@drawable/profile_1"/>
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/collaborator3"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:translationX="-10dp"
-                            app:civ_border_color="@color/white"
-                            app:civ_border_width="0.4dp"
-                            android:src="@drawable/star"/>
-                        <LinearLayout
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:translationX="-10dp"
-                            android:gravity="center">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="+3"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:gravity="center"
-                                android:fontFamily="@font/quicksand_semibold"/>
-                        </LinearLayout>
-                    </LinearLayout>
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/taskTimeRange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/small_value_size"
-                    android:text="11:32 PM"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/quicksand_semibold"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"/>
+
+
             </LinearLayout>
 
 

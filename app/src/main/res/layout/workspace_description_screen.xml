@@ -251,6 +251,7 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
             <!-- This tab bar isn't collapsed-->
             <com.google.android.material.tabs.TabLayout
+                android:visibility="invisible"
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -302,6 +303,7 @@
 
         <!--This is the layout containing the viewpager that contains the scrollable framents-->
         <androidx.viewpager2.widget.ViewPager2
+            android:visibility="invisible"
             android:id="@+id/view_pager"
             android:background="@drawable/top_rounded_large"
             android:backgroundTint="?attr/colorTertiary"

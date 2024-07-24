@@ -32,7 +32,11 @@ import com.bumptech.glide.request.target.Target;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.data.repositories.TasksDataRepository;
+import com.theteam.taskz.data.repositories.WorkspaceDataRepository;
 import com.theteam.taskz.utils.others.ThemeManager;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -58,6 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         settings = getSharedPreferences("Settings", MODE_PRIVATE);
         remindersEnabled = settings.getBoolean("reminders", true);
         notificationsEnabled = settings.getBoolean("notifications", true);
@@ -130,10 +135,16 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.back).setOnClickListener(view -> {
-            finish();
+            onBackPressed();
+        });
+        pomodorro_layout.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(), FocusScreen.class));
         });
 
         logout_layout.setOnClickListener(view -> {
+            TasksDataRepository.getInstance().setTasks(new ArrayList<>());
+            WorkspaceDataRepository.getInstance().setWorkspaces(new ArrayList<>());
+
             getSharedPreferences("GLOBAL",MODE_PRIVATE).edit().clear().apply();
             getSharedPreferences("userData", MODE_PRIVATE).edit().clear().apply();
 

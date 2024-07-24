@@ -44,6 +44,7 @@
         app:hintColor="?attr/colorSecondary"
         app:prefixIcon="@drawable/description"/>
     <TextView
+        android:id="@+id/warning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=" * The Workspace Name and Description should be at least 4 digits in length."

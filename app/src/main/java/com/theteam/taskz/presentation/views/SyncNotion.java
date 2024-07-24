@@ -19,9 +19,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.theteam.taskz.R;
+import com.theteam.taskz.data.models.TaskManager;
 import com.theteam.taskz.data.models.UserData;
 import com.theteam.taskz.data.models.TaskModel;
+import com.theteam.taskz.domain.entities.Task;
 import com.theteam.taskz.domain.repositories.Notion;
+import com.theteam.taskz.domain.repositories.TaskRepository;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +46,8 @@ public class SyncNotion extends AppCompatActivity {
 
     private LoadableButton button;
     private final int NOTION_LOGIN = 2010;
+
+    private TaskRepository taskRepository;
 
 
     @Override
@@ -122,18 +127,17 @@ public class SyncNotion extends AppCompatActivity {
 
         try {
             final JSONArray tasksJson = response.getJSONArray("results");
-            final ArrayList<TaskModel> tasks = new ArrayList<>();
+            final ArrayList<Task> tasks = new ArrayList<>();
 
             for(int i = 0; i < tasksJson.length(); i++){
                 JSONObject taskJson = tasksJson.getJSONObject(i);
                 final HashMap<String,Object> json = new HashMap<>();
 
                 json.put("id",taskJson.getString("id"));
-                json.put("globalId",taskJson.getString("id"));
                 Calendar createdTime = Calendar.getInstance();
                 createdTime.setTime(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(taskJson.getString("created_time")));
 
-                json.put("time", taskJson.getString("created_time"));
+                json.put("startedAt", taskJson.getString("created_time"));
                 final JSONObject properties = taskJson.getJSONObject("properties");
 
                 String endKey = null;
@@ -146,7 +150,7 @@ public class SyncNotion extends AppCompatActivity {
                 }
                 if(endKey != null){
                     final JSONObject endJson = properties.getJSONObject(endKey);
-                    json.put("end", endJson.getJSONObject("date").getString("start"));
+                    json.put("endedAt", endJson.getJSONObject("date").getString("start"));
                 }
 
                 String statusKey = null;
@@ -160,10 +164,10 @@ public class SyncNotion extends AppCompatActivity {
                 }
                 if(statusKey != null){
                     final JSONObject status = properties.getJSONObject(statusKey);
-                    json.put("status", status.getJSONObject("status").getString("name").toLowerCase().contains("done")? "completed":"pending");
+                    json.put("taskStatus", status.getJSONObject("status").getString("name").toLowerCase().contains("done")? "completed":"pending");
                 }
                 else{
-                    json.put("status", "pending");
+                    json.put("taskStatus", "pending");
                 }
 
                 // Task Name
@@ -179,13 +183,13 @@ public class SyncNotion extends AppCompatActivity {
                     final JSONObject titleJson = properties.getJSONObject(titleKey);
                     final JSONArray titleArray = titleJson.getJSONArray("title");
 
-                    json.put("name", titleArray.length()<1? "No Title" : titleArray.getJSONObject(0).getJSONObject("text").getString("content"));
+                    json.put("taskName", titleArray.length()<1? "No Title" : titleArray.getJSONObject(0).getJSONObject("text").getString("content"));
 
                 }else{
-                    json.put("name", "No Title");
+                    json.put("taskName", "No Title");
                 }
 
-                json.put("category","work");
+                json.put("taskCategory","work");
 
                 // Task Description
                 String descriptionKey = null;
@@ -207,9 +211,34 @@ public class SyncNotion extends AppCompatActivity {
                 }
 
 
-                tasks.add(new TaskModel(json));
+                tasks.add(Task.fromJson(json));
             }
-            Log.v("Notion", new Gson().toJson(tasks, new TypeToken<ArrayList<TaskModel>>(){}.getType()));
+
+            taskRepository = new TaskRepository(getApplicationContext());
+
+            for(final Task task: tasks){
+                taskRepository.createTask(
+                        task,
+                        null,
+                        jsonObject -> {
+                            Log.v("API_RESPONSE", jsonObject.toString());
+                            new TaskManager(getApplicationContext()).addTask(Task.fromJson(jsonObject.toString()), true);
+
+                            if (tasks.indexOf(task) == tasks.size()-1){
+                                Toast.makeText(getApplicationContext(), "Synced", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        },
+                        volleyError -> {
+                            Log.v("API_RESPONSE", volleyError.toString());
+
+                        }
+
+                );
+            }
+
+
+            Log.v("Notion", new Gson().toJson(tasks, new TypeToken<ArrayList<Task>>(){}.getType()));
 
         } catch (JSONException | ParseException e) {
             e.printStackTrace();

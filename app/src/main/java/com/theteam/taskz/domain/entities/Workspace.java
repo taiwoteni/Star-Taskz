@@ -17,7 +17,7 @@ import java.util.Locale;
 public class Workspace {
     private String id;
 
-    private String workSpaceImage;
+    private String workspaceImageUrl;
     private String creator;
     private ArrayList<String> teamMembers;
     private String workSpaceTitle;
@@ -55,11 +55,13 @@ public class Workspace {
     }
 
     public String workspacePhoto(){
-        return workSpaceImage;
+
+        final String httpsString = workspaceImageUrl.startsWith("https://")? workspaceImageUrl: workspaceImageUrl.replace("http://", "https://");
+        return httpsString;
     }
 
     public boolean hasPhoto(){
-        return workSpaceImage != null;
+        return workspaceImageUrl != null;
     }
 
     public ArrayList<String> teamMembers(){

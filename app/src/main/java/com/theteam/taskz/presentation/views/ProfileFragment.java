@@ -24,12 +24,15 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.data.repositories.TasksPreferences;
+import com.theteam.taskz.domain.entities.Task;
+import com.theteam.taskz.utils.enums.AccountType;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     private ImageView settings_icon,message_icon, share_icon;
-    private TextView name_text,job_text;
+    private TextView name_text,job_text,openTasks,closedTasks;
     private CircleImageView profile_image;
 
     private UserModel user;
@@ -53,6 +56,9 @@ public class ProfileFragment extends Fragment {
         name_text = (TextView) view.findViewById(R.id.name_text);
         job_text = (TextView) view.findViewById(R.id.job_title_text);
         profile_image = view.findViewById(R.id.profile_icon);
+        closedTasks = (TextView) view.findViewById(R.id.closed_tasks_text);
+        openTasks = (TextView) view.findViewById(R.id.open_tasks_text);
+
 
         if(user.hasProfile()){
             Glide.with(this)
@@ -80,7 +86,7 @@ public class ProfileFragment extends Fragment {
         }
 
         name_text.setText(user.fullName());
-        job_text.setText(user.jobTitle());
+        job_text.setText(user.accountType() == AccountType.Business? user.jobTitle():"Family Account");
 
         // that is, if the profile currently viewed is the user's profile
         if(user.uid().equals(new UserModel(requireActivity()).uid())){
@@ -97,7 +103,19 @@ public class ProfileFragment extends Fragment {
             });
         }
 
+        int closed = 0;
+        int opened = 0;
+        for (final Task task: new TasksPreferences(requireActivity()).getCachedTasks()){
+            if(task.completed()){
+                closed++;
+            }
+            else {
+                opened++;
+            }
+        }
 
+        closedTasks.setText(String.valueOf(closed));
+        openTasks.setText(String.valueOf(opened));
 
         settings_icon.setOnClickListener(view1 -> {
             startActivity(new Intent(view.getContext(), SettingsActivity.class));

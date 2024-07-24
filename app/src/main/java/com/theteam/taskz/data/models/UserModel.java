@@ -55,6 +55,10 @@ public class UserModel {
 //        json = userJson;
     }
 
+    public UserModel(HashMap<String,Object> hashMap){
+        json = hashMap;
+    }
+
     public static void saveUserData(HashMap<String,Object> map, Context context){
         SharedPreferences preferences = context.getSharedPreferences("userData", Context.MODE_PRIVATE);
         Gson gson = new Gson();

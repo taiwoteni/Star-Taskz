@@ -27,6 +27,7 @@ import androidx.core.graphics.drawable.IconCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.theteam.taskz.domain.entities.Task;
 import com.theteam.taskz.presentation.views.HomeActivity;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.StateHolder;
@@ -44,9 +45,9 @@ public class AlarmsReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         HashMap<String,Object> taskJson = new Gson().fromJson(bundle.getString("TASK"), new TypeToken<HashMap<String,Object>>(){}.getType());
 
-        final TaskModel model = new TaskModel(taskJson);
+        final Task model = Task.fromJson(taskJson);
         final SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.getDefault());
-        final String timeString = format.format(model.startTime.getTime()).toUpperCase();
+        final String timeString = format.format(model.startTime().getTime()).toUpperCase();
 
         Bitmap largeIcon = BitmapFactory.decodeResource(context.getApplicationContext().getResources(), R.drawable.taskz_round);
         NotificationManager nm = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
@@ -54,7 +55,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
 
 
 
-        NotificationChannel taskChannel = new NotificationChannel(model.id, "Star Taskz", NotificationManager.IMPORTANCE_HIGH);
+        NotificationChannel taskChannel = new NotificationChannel(String.valueOf(model.taskLocalId()), "Star Taskz", NotificationManager.IMPORTANCE_HIGH);
         taskChannel.setDescription("Task Reminder Channel");
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_NOTIFICATION)
@@ -93,7 +94,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
 
 
         NotificationCompat.MessagingStyle messagingStyle = new NotificationCompat.MessagingStyle(chatPerson)
-                .addMessage("Your task '" + model.name + "' should start now 😊", model.startTime.getTimeInMillis(), chatPerson);
+                .addMessage("Your task '" + model.taskName() + "' should start now 😊", model.startTime().getTimeInMillis(), chatPerson);
 
         NotificationCompat.BubbleMetadata bubbleData = new NotificationCompat.BubbleMetadata.Builder(bubbleIntent,
                 IconCompat.createWithResource(context.getApplicationContext(), R.drawable.star))
@@ -109,13 +110,13 @@ public class AlarmsReceiver extends BroadcastReceiver {
         Intent seenI = new Intent(context, TaskNotifReceiver.class);
         seenI.setAction(TaskNotifReceiver.ACTION_PENDING);
         seenI.putExtras(b);
-        PendingIntent seenPI = PendingIntent.getBroadcast(application_context,model.notifIdExists?model.notifId*100:NOTIF_ID*100,seenI, PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent seenPI = PendingIntent.getBroadcast(application_context,model.taskLocalId()*10,seenI, PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         Intent completedI = new Intent(context, TaskNotifReceiver.class);
         completedI.setAction(TaskNotifReceiver.ACTION_COMPLETED);
         completedI.putExtras(b);
-        PendingIntent completedPI= PendingIntent.getBroadcast(application_context,model.notifIdExists?model.notifId*100:NOTIF_ID*100,completedI, PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent completedPI= PendingIntent.getBroadcast(application_context,model.taskLocalId()*10,completedI, PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri mUri = Uri.parse("android.resource://" + context.getApplicationContext().getPackageName() + "/" + R.raw.energize_your_day);
         StateHolder.mediaPlayer = MediaPlayer.create(application_context, mUri);
@@ -125,7 +126,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
         StateHolder.mediaPlayer.start();
 
 
-        Notification notif = new NotificationCompat.Builder(context.getApplicationContext(), model.id)
+        Notification notif = new NotificationCompat.Builder(context.getApplicationContext(), String.valueOf(model.taskLocalId()))
                 .setSmallIcon(R.drawable.task)
                 .setContentIntent(bubbleIntent)
                 .setShortcutId("STAR_REMINDER")
@@ -134,12 +135,12 @@ public class AlarmsReceiver extends BroadcastReceiver {
                 .setStyle(messagingStyle)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setSound(soundUri)
-                .setChannelId(model.id)
+                .setChannelId(String.valueOf(model.taskLocalId()))
                 .setColor(context.getApplicationContext().getResources().getColor(R.color.themeColor))
                 .addAction(R.drawable.pause, "Seen", seenPI)
                 .addAction(R.drawable.check, "Completed", completedPI)
                 .build();
-        nm.notify(model.notifIdExists? model.notifId: NOTIF_ID, notif);
+        nm.notify(model.taskLocalId(), notif);
 
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
@@ -161,9 +162,6 @@ public class AlarmsReceiver extends BroadcastReceiver {
 //            nm.notify(model.notifIdExists? model.notifId:AlarmManager.NOTIF_ID, notif);
 //        }
 
-        if(!model.notifIdExists){
-           NOTIF_ID++;
-        }
 
 
 
@@ -176,7 +174,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
 //                        AlarmManager.speech.setPitch(0.3f);
                         AlarmManager.speech.setSpeechRate(1.5f);
                         AlarmManager.speech.speak("This is a Reminder From Star Tasks", TextToSpeech.QUEUE_ADD, null, null);
-                        AlarmManager.speech.speak("Your Task '" + model.name + "' should start now.", TextToSpeech.QUEUE_ADD, null, null);
+                        AlarmManager.speech.speak("Your Task '" + model.taskName() + "' should start now.", TextToSpeech.QUEUE_ADD, null, null);
                         AlarmManager.speech.speak("It is " + timeString, TextToSpeech.QUEUE_ADD, null, null);
                         AlarmManager.speech.speak("Please, Do not forget your Task", TextToSpeech.QUEUE_ADD, null, null);
 
@@ -188,7 +186,7 @@ public class AlarmsReceiver extends BroadcastReceiver {
         }
         else{
             AlarmManager.speech.speak("This is a Reminder From Star,", TextToSpeech.QUEUE_ADD, null, null);
-            AlarmManager.speech.speak("Your Task '" + model.name + "' in Star Tasks should start now.", TextToSpeech.QUEUE_ADD, null, null);
+            AlarmManager.speech.speak("Your Task '" + model.taskName() + "' in Star Tasks should start now.", TextToSpeech.QUEUE_ADD, null, null);
             AlarmManager.speech.speak("It is " + timeString, TextToSpeech.QUEUE_ADD, null, null);
             AlarmManager.speech.speak("Please, Do not forget your Task", TextToSpeech.QUEUE_ADD, null, null);
         }

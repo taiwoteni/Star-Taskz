@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,13 +22,24 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.theteam.taskz.R;
+import com.theteam.taskz.data.models.TaskManager;
 import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.data.repositories.TasksPreferences;
+import com.theteam.taskz.domain.entities.Task;
+import com.theteam.taskz.domain.entities.Workspace;
+import com.theteam.taskz.domain.repositories.TaskRepository;
 import com.theteam.taskz.utils.enums.AccountType;
+import com.theteam.taskz.utils.enums.TaskStatus;
+import com.theteam.taskz.utils.others.JsonUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class CreateTask extends AppCompatActivity{
@@ -43,9 +55,23 @@ public class CreateTask extends AppCompatActivity{
     private TextView workText,personalText,uncategorizedText,studyText,collaborators_text;
 
     private String category = "uncategorized";
-    private Calendar calendar = Calendar.getInstance();
+    private EditText collaborator;
+
+    private Calendar startDate = Calendar.getInstance();
+    private Calendar startTime = Calendar.getInstance();
+    private Calendar endCalendar = null;
+    private Calendar endTime = null;
+    private Workspace workspace;
+
+    private TaskRepository taskRepository;
+
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd", Locale.getDefault());
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+
+
 
     private UserModel user;
+    private boolean fromWorkspace;
 
     @Override
     public void onBackPressed() {
@@ -65,6 +91,11 @@ public class CreateTask extends AppCompatActivity{
         });
 
         user = new UserModel(this);
+        fromWorkspace = getIntent().getBooleanExtra("fromWorkspace",false);
+        taskRepository = new TaskRepository(getApplicationContext());
+        if (fromWorkspace){
+            workspace = Workspace.fromJson(getIntent().getStringExtra("taskWorkspace"));
+        }
 
         startDateLayout = findViewById(R.id.start_date_layout);
         startTimeLayout = findViewById(R.id.start_time_layout);
@@ -88,13 +119,23 @@ public class CreateTask extends AppCompatActivity{
         titl_text = findViewById(R.id.title_text);
         collaborators_text = findViewById(R.id.collaborators_text);
         collaborators_list = findViewById(R.id.collaborators_list);
-        refresh_layout = findViewById(R.id.refresh_layout);
+        refresh_layout = findViewById(R.id.splash_layout);
+        collaborator = findViewById(R.id.collaborator);
 
         findViewById(R.id.back).setOnClickListener(view -> {
             onBackPressed();
         });
 
-        final String time = new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Calendar.getInstance().getTime());
+        final Calendar presetTime = Calendar.getInstance();
+        if (presetTime.get(Calendar.MINUTE)<55){
+            presetTime.set(Calendar.MINUTE, presetTime.get(Calendar.MINUTE)+5);
+        } else{
+            presetTime.set(Calendar.MINUTE, (presetTime.get(Calendar.MINUTE)+5)%60);
+            presetTime.set(Calendar.HOUR, presetTime.get(Calendar.HOUR)+1);
+        }
+
+        final String time = new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(presetTime.getTime());
+        startTime.setTime(presetTime.getTime());
         startTimeText.setText(time.toUpperCase());
 
         startDateLayout.setOnClickListener(view -> {
@@ -127,11 +168,13 @@ public class CreateTask extends AppCompatActivity{
             refreshCategories();
         });
 
-        titl_text.setText("Create new " + (user.accountType() == AccountType.Business?"Project":"Task"));
-        if(user.accountType() == AccountType.Personal){
+        titl_text.setText("Create new " + (user.accountType() == AccountType.Business?(fromWorkspace?"Project":"Task"):"Task"));
+        if(user.accountType() == AccountType.Personal || !fromWorkspace){
             collaborators_text.setVisibility(View.GONE);
             collaborators_list.setVisibility(View.GONE);
         }
+
+        button.setOnClickListener(view -> createTask());
 
 
 //        title_text = findViewById(R.id.title_text);
@@ -298,6 +341,8 @@ public class CreateTask extends AppCompatActivity{
 
                 target.setText(picked.get(Calendar.DAY_OF_YEAR)==now.get(Calendar.DAY_OF_YEAR)?"Today":date);
 
+                setDateCal(start, picked);
+
                 if(start){
                     endDateText.setText("---");
                     endTimeText.setText("---");
@@ -324,6 +369,7 @@ public class CreateTask extends AppCompatActivity{
             if(start){
                 return;
             }
+            endCalendar=null;
             target.setText("---");
         });
 
@@ -338,6 +384,10 @@ public class CreateTask extends AppCompatActivity{
 
         final TextView target = start? startTimeText: endTimeText;
 
+        if (!start && endCalendar == null){
+            return;
+        }
+
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(CreateTask.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -349,9 +399,11 @@ public class CreateTask extends AppCompatActivity{
                 final String time = new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(picked.getTime()).toUpperCase();
                 target.setText(time);
 
-                if(startDateText.getText().toString().equalsIgnoreCase(endDateText.getText().toString())){
-                    endTimeText.setText("---");
-                }
+                setTimeCal(start, picked);
+
+//                if(startDateText.getText().toString().equalsIgnoreCase(endDateText.getText().toString())){
+//                    endTimeText.setText("---");
+//                }
             }
 
         },hour,minute, false);
@@ -359,6 +411,8 @@ public class CreateTask extends AppCompatActivity{
             if(start){
                 return;
             }
+
+            endTime=null;
             target.setText("---");
         });
         timePickerDialog.create();
@@ -442,6 +496,138 @@ public class CreateTask extends AppCompatActivity{
     }
 
     private void searchCollaborator(final String email){
+    }
+
+    private void setDateCal(boolean start, Calendar calendar){
+        if(start){
+            startDate.setTime(calendar.getTime());
+            return;
+        }
+        if (endCalendar==null){
+            endCalendar = (Calendar) calendar.clone();
+        } else {
+            endCalendar.setTime(calendar.getTime());
+        }
+
+
+    }
+    private void setTimeCal(boolean start, Calendar calendar){
+        if(start){
+            startTime.setTime(calendar.getTime());
+            return;
+        }
+        if (endTime==null){
+            endTime = (Calendar) calendar.clone();
+        } else {
+            endTime.setTime(calendar.getTime());
+        }
+
+
+    }
+
+    private void createTask(){
+        if (taskName.getText().toString().trim().isEmpty()){
+            showMessage("Enter Task Name");
+            return;
+        }
+
+        final Calendar now = Calendar.getInstance();
+        final Calendar startCalendar = (Calendar) startDate;
+        final Calendar endCalendar = (Calendar) this.endCalendar;
+        final boolean hasDue = !endDateText.getText().toString().trim().equalsIgnoreCase("---");
+        final boolean hasDueTime = !endTimeText.getText().toString().trim().equalsIgnoreCase("---");
+
+        final SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        // Configure Time
+
+        startCalendar.set(Calendar.HOUR, startTime.get(Calendar.HOUR));
+        startCalendar.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
+
+        if (hasDue){
+            if (!hasDueTime){
+                showMessage("Select your due time");
+                return;
+            }
+            endCalendar.set(Calendar.HOUR, endTime.get(Calendar.HOUR));
+            endCalendar.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
+        }
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("startedAt", isoFormat.format(startCalendar.getTime()));
+        if (hasDue){
+            hashMap.put("endedAt", isoFormat.format(endCalendar.getTime()));
+        }
+        hashMap.put("taskName", taskName.getText().toString().trim());
+        hashMap.put("taskCategory", category);
+        hashMap.put("taskStatus", TaskStatus.Pending.name());
+        if(workspace!=null){
+            hashMap.put("assignedTo",collaborator.getText().toString().trim());
+        }
+
+        Task task = Task.fromJson(hashMap);
+
+        button.startLoading();
+        refresh_layout.startAnimating();
+        new Handler().postDelayed(() -> {
+            if(workspace != null){
+                taskRepository.createTask(
+                        workspace,
+                        task,
+                        null,
+                        jsonObject -> {
+                            Log.v("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
+                            try {
+                                jsonObject.put("alarmId", new TasksPreferences(getApplicationContext()).generateOfflineId());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            new TaskManager(getApplicationContext()).addTask(Task.fromJson(jsonObject.toString()), true);
+                            refresh_layout.stopAnimating();
+                            runOnUiThread(() -> new Handler().postDelayed(() -> finish(),2000));
+
+                        },
+                        volleyError -> {
+                            Log.v("API_RESPONSE", volleyError.toString());
+                            refresh_layout.stopAnimating();
+                            button.stopLoading();
+
+                        }
+                );
+            } else {
+                taskRepository.createTask(
+                        task,
+                        null,
+                        jsonObject -> {
+                            Log.v("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
+                            try {
+                                jsonObject.put("alarmId", new TasksPreferences(getApplicationContext()).generateOfflineId());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            new TaskManager(getApplicationContext()).addTask(Task.fromJson(jsonObject.toString()), true);
+                            refresh_layout.stopAnimating();
+                            runOnUiThread(() -> new Handler().postDelayed(() -> finish(),2000));
+
+                        },
+                        volleyError -> {
+                            Log.v("API_RESPONSE", volleyError.toString());
+                            refresh_layout.stopAnimating();
+                            button.stopLoading();
+
+                        }
+                );
+            }
+        }, 2000);
+
+
+
+
+
+
+
+
 
     }
 

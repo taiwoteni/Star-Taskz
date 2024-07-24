@@ -191,17 +191,51 @@ public class WorkspaceRepository {
     }
 
     public void deleteWorkspace(
-            final String workspaceId,
+            final Workspace workspace,
+            final Response.Listener<JSONObject> okListener,
+            final Response.ErrorListener errorListener
+    ){
+        final Response.ErrorListener error = volleyError -> {
+            if(volleyError.toString().contains("ParseError")){
+                okListener.onResponse(new JSONObject());
+                return;
+            }
+            errorListener.onErrorResponse(volleyError);
+
+        };
+
+        apiInterface.deleteRequest(
+                "workSpace/delete/"+workspace.workspaceId(),
+                null,
+                null,
+                okListener,
+                error
+        );
+
+    }
+
+    public void removeMemberFromWorkspace(
+            final Workspace workspace,
+            final String memberId,
             final Response.Listener<JSONObject> okListener,
             final Response.ErrorListener errorListener
     ){
 
-        apiInterface.deleteRequest(
-                "workSpace/single-workspace/"+workspaceId,
+        final Response.ErrorListener error = volleyError -> {
+            if(volleyError.toString().contains("ParseError")){
+                okListener.onResponse(new JSONObject());
+                return;
+            }
+            errorListener.onErrorResponse(volleyError);
+
+        };
+
+        apiInterface.putRequest(
+                "workSpace/remove-member/"+workspace.workspaceId() + "/" + memberId,
                 null,
                 null,
                 okListener,
-                errorListener
+                error
         );
 
     }
@@ -281,6 +315,35 @@ public class WorkspaceRepository {
                 null,
                 data,
                 okListener,
+                errorListener
+        );
+    }
+
+    public void addMemberToWorkspace(
+            final Workspace workspace,
+            final String memberId,
+            final Response.Listener<JSONObject> success,
+            final Response.ErrorListener errorListener
+    ){
+        apiInterface.putRequest(
+                "workSpace/add-member/"+workspace.workspaceId() + "/" + memberId,
+                null,
+                null,
+                success,
+                errorListener
+        );
+    }
+    public void addMemberToGroup(
+            final Group group,
+            final String memberId,
+            final Response.Listener<JSONObject> success,
+            final Response.ErrorListener errorListener
+    ){
+        apiInterface.putRequest(
+                "workSpace/add-member/"+group.workspaceId() + "/" + group.groupId() + "/"+ memberId,
+                null,
+                null,
+                success,
                 errorListener
         );
     }

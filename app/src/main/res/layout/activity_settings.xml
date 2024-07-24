@@ -151,13 +151,13 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     app:cardElevation="0dp"
-                    android:backgroundTint="@color/yellowTransparent"
+                    android:backgroundTint="@color/blueTransparent"
                     app:cardCornerRadius="@dimen/regular_value_size">
                     <ImageView
                         android:layout_width="23sp"
                         android:layout_height="23sp"
                         android:layout_margin="10sp"
-                        app:tint="@color/yellow"
+                        app:tint="@color/blue"
                         android:src="@drawable/sync" />
                 </androidx.cardview.widget.CardView>
 
@@ -168,7 +168,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/sync_icon"
                     android:textSize="@dimen/regular_font_size"
-                    android:textColor="@color/yellow"
+                    android:textColor="@color/blue"
                     android:text="Platform Integration"
                     android:fontFamily="@font/poppins_medium"/>
 
@@ -178,7 +178,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     app:cardElevation="0dp"
-                    android:backgroundTint="@color/yellowTransparent"
+                    android:backgroundTint="@color/blueTransparent"
                     app:cardCornerRadius="55dp">
 
                     <ImageView
@@ -186,7 +186,7 @@
                         android:layout_height="@dimen/regular_icon_size"
                         android:layout_margin="@dimen/regular_value_size"
                         android:src="@drawable/forward_icon"
-                        app:tint="@color/yellow"/>
+                        app:tint="@color/blue"/>
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
             <View
@@ -496,6 +496,7 @@
 
             <!-- Ringtone-->
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/ringtone_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -547,6 +548,7 @@
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
             <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="15dp"

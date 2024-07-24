@@ -169,7 +169,7 @@ public class FocusFragment extends Fragment {
     void showFocusSettings(int initialMinutes, int initialSeconds){
         BottomSheetDialog dialog = new BottomSheetDialog(requireActivity());
 
-        View v = getActivity().getLayoutInflater().inflate(R.layout.focus_settings_layout, null, false);
+        View v = LayoutInflater.from(requireActivity()).inflate(R.layout.focus_settings_layout, null, false);
 
         final NumberPicker minutesPicker = (NumberPicker) v.findViewById(R.id.minutes_picker);
         final NumberPicker secondsPicker = (NumberPicker) v.findViewById(R.id.seconds_picker);

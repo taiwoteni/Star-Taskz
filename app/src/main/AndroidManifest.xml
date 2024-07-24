@@ -31,7 +31,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Taskz"
         tools:targetApi="31">
-
+        <activity
+            android:name=".presentation.views.FocusScreen"
+            android:exported="false" />
         <activity
             android:name=".presentation.views.WorkspaceDescriptionScreen"
             android:exported="false" />
@@ -129,16 +131,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".presentation.views.WeatherScreen"
-            android:exported="true"
-            android:theme="@style/Theme.Taskz">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:theme="@style/Theme.Taskz" />
         <activity
             android:name=".presentation.views.TaskReminder"
             android:exported="true"

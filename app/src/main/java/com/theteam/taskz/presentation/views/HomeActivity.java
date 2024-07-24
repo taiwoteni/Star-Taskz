@@ -21,22 +21,15 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.theteam.taskz.R;
 import com.theteam.taskz.presentation.adapters.ViewPagerAdapter;
-import com.theteam.taskz.data.models.AuthenticationDataHolder;
 import com.theteam.taskz.data.models.StateHolder;
-import com.theteam.taskz.presentation.viewmodels.LoginViewModel;
 import com.theteam.taskz.presentation.viewmodels.SplashViewModel;
 import com.theteam.taskz.presentation.viewmodels.TaskDatesViewModel;
-import com.theteam.taskz.presentation.viewmodels.TasksViewModel;
 import com.theteam.taskz.presentation.viewmodels.WorkspacesViewModel;
 import com.theteam.taskz.utils.enums.AccountType;
 import com.theteam.taskz.data.models.UserModel;
-import com.theteam.taskz.domain.repositories.ApiService;
 import com.theteam.taskz.utils.others.ThemeManager;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 
 public class HomeActivity extends AppCompatActivity {
@@ -50,7 +43,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private UserModel user;
     private final ArrayList<Fragment> views = new ArrayList<>();
-    private TasksViewModel tasksViewModel;
     private TaskDatesViewModel taskDatesViewModel;
     private SplashViewModel splashViewModel;
     private WorkspacesViewModel workspacesViewModel;
@@ -61,7 +53,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // Initialize the respective providers to be used in the sub fragments
         // of this Activity
-        tasksViewModel = new ViewModelProvider(this).get(TasksViewModel.class);
         taskDatesViewModel = new ViewModelProvider(this).get(TaskDatesViewModel.class);
         splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         workspacesViewModel = new ViewModelProvider(this).get(WorkspacesViewModel.class);
@@ -214,11 +205,7 @@ public class HomeActivity extends AppCompatActivity {
 
         }
         else if(getIntent().hasExtra("logged in")){
-            try {
-                loadTasks();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
         }
         else {
             if(getIntent().hasExtra("ai")){
@@ -226,21 +213,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-    }
-
-    private void refreshToken(){
-        final UserModel model = new UserModel(this);
-        AuthenticationDataHolder.email = model.email();
-        AuthenticationDataHolder.password = model.password();
-        new ApiService(this).refreshToken();
-
-
-    }
-
-    private void loadTasks() throws JSONException {
-        if(getIntent().hasExtra("logged in")){
-            new ApiService(this,getLayoutInflater()).saveTasks(true);
-        }
     }
 
 

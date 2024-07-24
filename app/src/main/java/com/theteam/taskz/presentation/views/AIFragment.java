@@ -1,8 +1,11 @@
 package com.theteam.taskz.presentation.views;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
@@ -16,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.ai.client.generativeai.GenerativeModel;
@@ -35,11 +37,17 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.theteam.taskz.presentation.viewmodels.TasksViewModel;
+import com.theteam.taskz.data.repositories.TasksDataRepository;
+import com.theteam.taskz.data.repositories.TasksPreferences;
+import com.theteam.taskz.data.repositories.TasksRepository;
+import com.theteam.taskz.data.repositories.WorkspaceDataRepository;
+import com.theteam.taskz.domain.entities.Task;
+import com.theteam.taskz.domain.repositories.TaskRepository;
 import com.theteam.taskz.utils.others.AlarmManager;
 import com.theteam.taskz.utils.others.DateComparator;
 import com.theteam.taskz.R;
 import com.theteam.taskz.utils.others.EmojiRemover;
+import com.theteam.taskz.utils.others.JsonUtils;
 import com.theteam.taskz.utils.others.ReadAssetsFile;
 import com.theteam.taskz.data.models.TaskManager;
 import com.theteam.taskz.data.models.TaskModel;
@@ -64,6 +72,8 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.content.Intent;
 
+import org.json.JSONException;
+
 public class AIFragment extends Fragment {
 
     private TextToSpeech speech;
@@ -76,8 +86,6 @@ public class AIFragment extends Fragment {
     private Intent speechRecognizerIntent;
     private GenerativeModel star_taskz;
     private GenerativeModelFutures aiModel;
-
-    private TasksViewModel tasksViewModel;
 
     private ListenableFuture<GenerateContentResponse> aiCurrentResponse;
     private ChatFutures chat;
@@ -109,9 +117,6 @@ public class AIFragment extends Fragment {
         ai_text.setTypingInterval(50);
         ai_text.animateText("Hi there! Star here😊");
         recordMp = MediaPlayer.create(requireActivity().getApplicationContext(), R.raw.hangup);
-
-        // Initialize taskViewModel
-        tasksViewModel = new ViewModelProvider(this).get(TasksViewModel.class);
 
 
 
@@ -423,12 +428,15 @@ public class AIFragment extends Fragment {
                 return;
             }
             if(taskJson.get("request-type").equals("logout")){
-                new TaskManager(requireActivity()).clearTasks();
-                UserModel.clearUserData(requireActivity());
+                TasksDataRepository.getInstance().setTasks(new ArrayList<>());
+                WorkspaceDataRepository.getInstance().setWorkspaces(new ArrayList<>());
 
-                Intent i = new Intent(requireActivity().getApplicationContext(), LoginActivity.class);
-                requireActivity().startActivity(i);
-                requireActivity().finish();
+                requireActivity().getSharedPreferences("GLOBAL",MODE_PRIVATE).edit().clear().apply();
+                requireActivity().getSharedPreferences("userData", MODE_PRIVATE).edit().clear().apply();
+
+                Intent intent = new Intent(requireActivity().getApplicationContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                requireActivity().startActivity(intent);
             }
 
         }
@@ -472,67 +480,42 @@ public class AIFragment extends Fragment {
         final String fr = new SimpleDateFormat("EEEE, MMM dd", Locale.getDefault()).format(taskJson.get("date") == null ? Calendar.getInstance().getTime(): getCalendarFromDate(taskJson.get("date").toString()).getTime());
         speechStart("Creating task : "+ "'" +  taskJson.get("name") + "' at " + taskJson.get("time") + " on " + fr);
 
-//            //If the time given is not older or past.
-//            //This is checked due to the AIs current set time
-//            //If the set time is greater than the current time.
-//            if(g.get(Calendar.YEAR)>=time.get(Calendar.YEAR)){
-//                time.set(Calendar.YEAR, g.get(Calendar.YEAR));
-//                //If the set month is greater than or equals to the current month.
-//                if(g.get(Calendar.MONTH)>=time.get(Calendar.MONTH)){
-//                    time.set(Calendar.MONTH, g.get(Calendar.MONTH));
-//                    //If the set day is greater than or equals to the current day.
-//                    if(g.get(Calendar.DAY_OF_MONTH)>=time.get(Calendar.DAY_OF_MONTH)){
-//                        time.set(Calendar.DAY_OF_MONTH, g.get(Calendar.DAY_OF_MONTH));
-//                    }
-//                }
-//            }
 
 
-//            //If the time given is not older or past.
-//            //This is checked due to the AIs current set time
-//            if(g.get(Calendar.DAY_OF_YEAR)>=time.get(Calendar.DAY_OF_YEAR)){
-//                //If the day is the same
-//                if(g.get(Calendar.DAY_OF_YEAR)==time.get(Calendar.DAY_OF_YEAR)){
-//                    //If the hour is equals to or after the current hour
-//                    if(g.get(Calendar.HOUR_OF_DAY) >= time.get(Calendar.HOUR_OF_DAY)){
-//                        time.set(Calendar.HOUR_OF_DAY, g.get(Calendar.HOUR_OF_DAY));
-//                        // if the hour is equal to the current hour
-//                        if(g.get(Calendar.HOUR_OF_DAY) == time.get(Calendar.HOUR_OF_DAY)){
-//                            // if the minute is greater than or equals to the current minute
-//                            if(g.get(Calendar.MINUTE) >= time.get(Calendar.MINUTE)){
-//                                time.set(Calendar.MINUTE, g.get(Calendar.MINUTE));
-//                            }
-//                        }else{
-//                            // We can set the minute since they are in the same day but the hour is after the current hour
-//                            time.set(Calendar.MINUTE, g.get(Calendar.MINUTE));
-//                        }
-//                    }
-//                    //We do nothing since the its the same day but the hour set has been past.
-//                }
-//                //else set the hour and the minute since the days are not the same but the tasks day is higher than the current day.
-//                else{
-//                    time.set(Calendar.HOUR_OF_DAY, g.get(Calendar.HOUR_OF_DAY));
-//                    time.set(Calendar.MINUTE, g.get(Calendar.MINUTE));
-//                }
-//            }
+        _taskJson.put("taskName", taskJson.get("name"));
+        _taskJson.put("startedAt", time.getTimeInMillis());
+        _taskJson.put("taskCategory", taskJson.get("category"));
 
+        Task task = Task.fromJson(_taskJson);
 
+        TaskRepository taskRepository = new TaskRepository(requireActivity().getApplicationContext());
+        taskRepository.createTask(
+                task,
+                null,
+                jsonObject -> {
+                    Log.v("API_RESPONSE", JsonUtils.prettyPrint(jsonObject.toString()));
+                    try {
+                        jsonObject.put("alarmId", new TasksPreferences(requireActivity().getApplicationContext()).generateOfflineId());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-        _taskJson.put("id", "#TASK-" + holder.getTasks().size());
-        _taskJson.put("globalId", "#TASK-" + holder.getTasks().size());
-        _taskJson.put("name", taskJson.get("name"));
-        _taskJson.put("time", time.getTimeInMillis());
-        _taskJson.put("category", taskJson.get("category"));
-        _taskJson.put("notifId", String.valueOf((int) AlarmManager.NOTIF_ID));
+                    new TaskManager(requireActivity().getApplicationContext()).addTask(Task.fromJson(jsonObject.toString()), true);
 
-        TaskModel model = new TaskModel(_taskJson);
+                },
+                volleyError -> {
+                    Log.v("API_RESPONSE", volleyError.toString());
 
-        tasksViewModel.addTask(model);
-        holder.addTask(model, false);
+                }
+        );
+        //
+
+//        tasksViewModel.addTask(model);
+//        holder.addTask(model, false);
     }
     private void listTasks(HashMap<String,Object> criteria){
         TaskManager manager = new TaskManager(requireActivity());
-        List<TaskModel> tasks = manager.getTasks();
+        List<TaskModel> tasks = new ArrayList<>();
         List<TaskModel> filteredTasks = new ArrayList<>();
         // First we filter based on date.
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

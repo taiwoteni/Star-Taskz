@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -14,9 +15,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.Response;
 import com.theteam.taskz.R;
+import com.theteam.taskz.data.models.GithubAccount;
+import com.theteam.taskz.data.models.TaskManager;
 import com.theteam.taskz.data.models.UserData;
+import com.theteam.taskz.domain.entities.Task;
 import com.theteam.taskz.domain.repositories.Github;
+import com.theteam.taskz.domain.repositories.TaskRepository;
+
+import java.util.ArrayList;
 
 public class SyncGithub extends AppCompatActivity {
 
@@ -38,15 +46,6 @@ public class SyncGithub extends AppCompatActivity {
             return insets;
         });
 
-        // for testing purposes
-        if(UserData.githubAccount(getApplicationContext()) != null){
-            Log.v("API_RESPONSE", "Github data is not null");
-            Github.listAllIssues(UserData.githubAccount(getApplicationContext()), getApplicationContext());
-        }
-        else{
-            Log.v("API_RESPONSE", "Github data is null");
-
-        }
 
         token_form = (TextInputFormField) findViewById(R.id.token_form);
         textView = findViewById(R.id.issues);
@@ -68,11 +67,45 @@ public class SyncGithub extends AppCompatActivity {
         });
 
     }
+
+    final Response.Listener<ArrayList<Task>> gotTasks(){
+        return tasks -> {
+            TaskRepository taskRepository = new TaskRepository(getApplicationContext());
+
+            for(final Task task: tasks){
+                taskRepository.createTask(
+                        task,
+                        null,
+                        jsonObject -> {
+                            Log.v("API_RESPONSE", jsonObject.toString());
+                            new TaskManager(getApplicationContext()).addTask(Task.fromJson(jsonObject.toString()), true);
+                            sync.stopLoading();
+                            Toast.makeText(getApplicationContext(), "Welcome " + UserData.githubAccount(getApplicationContext()).name, Toast.LENGTH_SHORT).show();
+                            if (tasks.indexOf(task)==tasks.size()-1){
+                                finish();
+                            }
+                        },
+                        volleyError -> {
+                            Log.v("API_RESPONSE", volleyError.toString());
+
+                        }
+
+                );
+            }
+        };
+    }
     void sync(){
         sync.startLoading();
         new Handler().postDelayed(() -> {
             runOnUiThread(() -> {
-                Github.validateUserToken(token_form.getText().trim(), this,sync);
+                Github.validateUserToken(
+                        token_form.getText().trim(),
+                        this,
+                        sync,
+                        jsonObject -> {
+                            Github.listAllIssues(UserData.githubAccount(getApplicationContext()), getApplicationContext(), gotTasks());
+                        }
+                        );
             });
         }, 2000);
     }

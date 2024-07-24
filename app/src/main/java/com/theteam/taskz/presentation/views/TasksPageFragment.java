@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +18,12 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.CalendarItemModel;
 import com.theteam.taskz.data.models.TaskDateModel;
-import com.theteam.taskz.data.models.TaskModel;
 import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.data.repositories.TasksDataRepository;
+import com.theteam.taskz.data.repositories.TasksPreferences;
+import com.theteam.taskz.domain.entities.Task;
 import com.theteam.taskz.presentation.adapters.TaskListAdapter;
 import com.theteam.taskz.presentation.transformers.NonScrollableLinearLayoutManager;
-import com.theteam.taskz.presentation.viewmodels.TaskDatesViewModel;
-import com.theteam.taskz.presentation.viewmodels.TasksViewModel;
 import com.theteam.taskz.utils.enums.AccountType;
 import com.theteam.taskz.utils.others.ThemeManager;
 
@@ -40,9 +39,7 @@ public class TasksPageFragment extends Fragment {
     private LottieAnimationView noTasksLottie;
     private TextView taskDay,noTasksText;
     private LinearLayoutManager layoutManager;
-    private TaskDatesViewModel taskDatesViewModel;
     private TaskDateModel taskDateModel;
-    private TasksViewModel tasksViewModel;
     private TaskListAdapter adapter = null;
 
     private AccountType accountType;
@@ -99,44 +96,44 @@ public class TasksPageFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setVerticalScrollBarEnabled(false);
 
-        // Configure and consume tasksViewModelProvider
-        tasksViewModel = new ViewModelProvider(this).get(TasksViewModel.class);
-        tasksViewModel.loadCachedTasks(requireActivity().getApplicationContext());
-
         initializeTasks();
+        observeTask();
 
     }
 
     private void initializeTasks(){
-        final ArrayList<CalendarItemModel> sortedCalendars = generateSortedTasks(tasksViewModel.getTasks().getValue());
+        final ArrayList<CalendarItemModel> sortedCalendars = generateSortedTasks(new TasksPreferences(requireActivity()).getCachedTasks());
         adapter = new TaskListAdapter(sortedCalendars);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        Log.v("TASKS_FRAGMENT","Sorted Calendar Size is " + sortedCalendars.size());
 
-        if(!tasksViewModel.getTasks().hasObservers()){
-            observeTask();
-        }
+        Log.v("TASKS_FRAGMENT","Sorted Calendar Size is " + sortedCalendars.size());
     }
 
     private void observeTask(){
-        tasksViewModel.getTasks().observe(getViewLifecycleOwner(), taskModels -> {
+        TasksDataRepository.getInstance().getTasks().observe(getViewLifecycleOwner(), taskModels -> {
             final ArrayList<CalendarItemModel> sortedCalendars = generateSortedTasks(taskModels);
             Log.v("TASKS_FRAGMENT","Sorted Calendar Size in observer is " + sortedCalendars.size());
 
             adapter.setTasksList(sortedCalendars);
-            adapter.notifyDataSetChanged();
 
         });
     }
 
 
-    private ArrayList<CalendarItemModel> generateSortedTasks(final ArrayList<TaskModel> allTasks){
+    private ArrayList<CalendarItemModel> generateSortedTasks(final ArrayList<Task> allTasks){
         /// We first of all sort out tasks that only occur on this particular day.
-        final ArrayList<TaskModel> tasks = new ArrayList<>();
-        for(final TaskModel task:allTasks){
-            if(task.startTime.get(Calendar.DAY_OF_YEAR) == taskDateModel.getCalendar().get(Calendar.DAY_OF_YEAR)){
+        final ArrayList<Task> tasks = new ArrayList<>();
+        final int day = taskDateModel.getCalendar().get(Calendar.DAY_OF_YEAR);
+        for(final Task task:allTasks){
+            //start
+            if(task.startTime().get(Calendar.DAY_OF_YEAR) == day){
                 tasks.add(task);
+            } else if (task.hasDeadline()){
+                if (task.dueTime().get(Calendar.DAY_OF_YEAR) >= day){
+                    tasks.add(task);
+
+                }
             }
         }
 
@@ -145,10 +142,11 @@ public class TasksPageFragment extends Fragment {
         for(int i = 0; i<24; i++){
             final Calendar calendar = (Calendar) taskDateModel.getCalendar().clone();
             calendar.set(Calendar.HOUR_OF_DAY, i);
-            final ArrayList<TaskModel> sortedTasks = new ArrayList<>();
-            for(final TaskModel model: tasks){
-                final boolean sameHour = model.startTime.get(Calendar.HOUR_OF_DAY) == i;
-                final boolean sameDay = model.startTime.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR);
+            final ArrayList<Task> sortedTasks = new ArrayList<>();
+            for(final Task model: tasks){
+                final boolean sameHour = model.startTime().get(Calendar.HOUR_OF_DAY) == i;
+                final boolean sameDay = model.startTime().get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR);
+
 
                 if(sameDay && sameHour){
                     sortedTasks.add(model);

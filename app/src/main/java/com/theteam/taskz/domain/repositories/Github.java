@@ -14,9 +14,11 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.theteam.taskz.data.models.TaskManager;
 import com.theteam.taskz.data.models.UserData;
 import com.theteam.taskz.data.models.GithubAccount;
 import com.theteam.taskz.data.models.GithubIssue;
+import com.theteam.taskz.domain.entities.Task;
 import com.theteam.taskz.utils.others.JsonUtils;
 import com.theteam.taskz.presentation.views.LoadableButton;
 
@@ -24,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -36,27 +39,18 @@ public class Github {
     private static final int MY_MAX_RETRIES = 2;        // Number of retry attempts
     private static final float MY_BACKOFF_MULTIPLIER = 1.0f;
 
-    public static void validateUserToken(String token, Context application_context, LoadableButton button){
+    public static void validateUserToken(String token, Context application_context, LoadableButton button, Response.Listener<JSONObject> success){
         if(queue == null){
             queue = Volley.newRequestQueue(application_context.getApplicationContext());
         }
         final Response.Listener<JSONObject> responseListener = jsonObject -> {
-            if(button!=null){
-                button.stopLoading();
-            }
             Log.v("API_RESPONSE", "Got github profile : "+JsonUtils.prettyPrint(jsonObject.toString()));
-
-            try {
-                Toast.makeText(application_context,"Welcome "+ jsonObject.getString("login").toString(), Toast.LENGTH_SHORT).show();
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-
 
             // When data is gotten, we save the data;
 
             UserData.saveGithubAccessToken(GithubAccount.fromJson(JsonUtils.convertToHashMap(jsonObject)),token, application_context);
-            ((AppCompatActivity)application_context).finish();
+
+            success.onResponse(jsonObject);
 
         };
 
@@ -91,7 +85,7 @@ public class Github {
 
     }
 
-    public static void listAllIssues(GithubAccount account, Context application_context){
+    public static void listAllIssues(GithubAccount account, Context application_context, Response.Listener<ArrayList<Task>> success){
         if(queue == null){
             queue = Volley.newRequestQueue(application_context);
         }
@@ -104,6 +98,7 @@ public class Github {
         final int method = Request.Method.GET;
 
         final Response.Listener<JSONArray> response = jsonArray -> {
+            final ArrayList<Task> tasks = new ArrayList<>();
             Log.v("API_RESPONSE", jsonArray.toString());
             for (int i =0; i<jsonArray.length(); i++){
                 try {
@@ -117,7 +112,10 @@ public class Github {
                     }
                     map.put("id", object.getJSONObject("repository").get("full_name").toString().concat(object.get("id").toString()));
 
-                    final GithubIssue issue = GithubIssue.fromRawJson(map);
+                    final Task issue = GithubIssue.fromRawJson(map);
+                    tasks.add(issue);
+
+                    success.onResponse(tasks);
                     Log.v("API_RESPONSE", JsonUtils.prettyPrintHash(issue.toJson()));
                 } catch (JSONException e) {
                     e.printStackTrace();

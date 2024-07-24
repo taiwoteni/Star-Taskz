@@ -3,7 +3,6 @@ package com.theteam.taskz.presentation.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.AuthenticationDataHolder;
-import com.theteam.taskz.domain.repositories.ApiService;
 import com.theteam.taskz.presentation.viewmodels.LoginViewModel;
 
 public class NameSection extends Fragment {

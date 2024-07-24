@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,13 +23,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.theteam.taskz.R;
 import com.theteam.taskz.data.models.AuthenticationDataHolder;
-import com.theteam.taskz.data.models.UserData;
 import com.theteam.taskz.data.models.UserModel;
-import com.theteam.taskz.domain.repositories.ApiService;
 import com.theteam.taskz.domain.repositories.AuthenticationRepository;
 import com.theteam.taskz.utils.others.JsonUtils;
-
-import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -213,6 +210,7 @@ public class LoginActivity extends AppCompatActivity {
                 AuthenticationDataHolder.password,
                 null,
                 jsonObject -> {
+                    Log.v("API_RESPONSE", jsonObject.toString());
                     refresh_layout.stopAnimating();
                     final HashMap<String,Object> hashMap = JsonUtils.convertToHashMap(jsonObject);
                     hashMap.put("password", AuthenticationDataHolder.password);

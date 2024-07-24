@@ -189,6 +189,7 @@ public class CollaborationFragment extends Fragment {
 
         createWorkspaceButton.setOnClickListener(view -> {
             if(workspaceName.getText().trim().length() < 4 || workspaceDescription.getText().trim().length() < 4){
+                ((TextView) workspaceView.findViewById(R.id.warning)).setTextColor(requireActivity().getResources().getColor(R.color.red));
                 return;
             }
             HashMap<String,Object> hash = new HashMap<>();

@@ -87,6 +87,10 @@ public class GroupsScreen extends AppCompatActivity {
     }
     private void initializeUseCases(){
         workspace = Workspace.fromJson(JsonUtils.convertToHashMap(getIntent().getStringExtra("workspace")));
+
+        if(!workspace.isCreator(getApplicationContext())){
+            fab.setVisibility(View.GONE);
+        }
     }
 
     private void initializeUi(){

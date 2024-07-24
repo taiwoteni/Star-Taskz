@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.theteam.taskz.data.models.StateHolder;
+import com.theteam.taskz.domain.entities.Task;
 import com.theteam.taskz.utils.enums.TaskStatus;
 import com.theteam.taskz.data.models.TaskManager;
 import com.theteam.taskz.data.models.TaskModel;
@@ -25,20 +26,20 @@ public class TaskNotifReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         final HashMap<String,Object> taskJson = new Gson().fromJson(bundle.getString("TASK"), new TypeToken<HashMap<String,Object>>(){}.getType());
-        TaskModel model = new TaskModel(taskJson);
+        final Task task = Task.fromJson(taskJson);
         NotificationManager nm = (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.cancel(model.notifIdExists? model.notifId: AlarmManager.NOTIF_ID);
+        nm.cancel(task.taskLocalId());
 
         if(StateHolder.mediaPlayer != null){
             StateHolder.mediaPlayer.stop();
         }
 
         final TaskManager manager = new TaskManager(context.getApplicationContext());
-        model.updateStatus(intent.getAction().equalsIgnoreCase(ACTION_PENDING)?TaskStatus.Pending:TaskStatus.Completed);
-        manager.updateTask(model);
+//        manager.updateStatus(intent.getAction().equalsIgnoreCase(ACTION_PENDING)?TaskStatus.Pending:TaskStatus.Completed);
+//        manager.updateTask(model);
         AlarmManager alarm = new AlarmManager(context,context.getApplicationContext());
-        alarm.cancelAlarm(model);
-        alarm.cancelAlarm(model);
+        alarm.cancelAlarm(task);
+        alarm.cancelAlarm(task);
 
 
 

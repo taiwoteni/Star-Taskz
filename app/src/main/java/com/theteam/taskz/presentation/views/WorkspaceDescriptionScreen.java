@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.airbnb.lottie.L;
 import com.android.volley.NetworkResponse;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -32,7 +34,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.theteam.taskz.R;
+import com.theteam.taskz.data.models.UserModel;
+import com.theteam.taskz.data.repositories.WorkspaceDataRepository;
 import com.theteam.taskz.domain.entities.Workspace;
+import com.theteam.taskz.domain.repositories.UserRepository;
 import com.theteam.taskz.domain.repositories.WorkspaceRepository;
 import com.theteam.taskz.presentation.adapters.ViewPagerAdapter;
 import com.theteam.taskz.utils.others.JsonUtils;
@@ -89,43 +94,20 @@ public class WorkspaceDescriptionScreen extends AppCompatActivity {
         refresh_layout = findViewById(R.id.main);
         fab = findViewById(R.id.fab);
 
-        edit_icon.setColorFilter(Color.WHITE);
-        edit_icon.setImageResource(workspace.hasPhoto()? R.drawable.edit_icon:R.drawable.add_icon);
-
-
-        workspace_name.setText(workspace.workspaceTitle());
-        workspace_description.setText(workspace.workspaceDescription());
-        groups.setText(String.valueOf(workspace.groups().size()));
-        members.setText(String.valueOf(workspace.teamMembers().size()));
-        tasks.setText("0");
+        showDetails();
 
         tabLayout.getTabAt(0).setText("Projects");
         tabLayout.getTabAt(1).setText("Members");
         tabLayout.getTabAt(2).setText("Groups");
 
-        if(!workspace.isCreator(getApplicationContext())){
-            edit_icon.setVisibility(View.GONE);
-            edit_group.setVisibility(View.GONE);
-        }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), CreateTask.class);
+            intent.putExtra("fromWorkspace", true);
+            intent.putExtra("taskWorkspace", new Gson().toJson(workspace.toJson()));
+            startActivity(intent);
+        });
 
-        if(workspace.hasPhoto()){
-            Glide.with(this)
-                    .load(workspace.workspacePhoto())
-                    .placeholder(R.color.workspacePlaceholder)
-                    .addListener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Drawable> target, boolean b) {
-                            return false;
-                        }
 
-                        @Override
-                        public boolean onResourceReady(Drawable drawable, Object o, Target<Drawable> target, DataSource dataSource, boolean b) {
-                            workspace_icon.setVisibility(View.GONE);
-                            return false;
-                        }
-                    })
-                    .into(workspace_profile);
-        }
 
         back_icon.setOnClickListener(view -> {
             finish();
@@ -172,7 +154,49 @@ public class WorkspaceDescriptionScreen extends AppCompatActivity {
             }
         });
 
+        WorkspaceDataRepository.getInstance().getWorkspaces().observe(this, workspaces -> {
+            for (final Workspace workspace : workspaces){
+                if(workspace.workspaceId().equals(this.workspace.workspaceId())){
+                    this.workspace = workspace;
+                    showDetails();
+                    break;
+                }
+            }
+        });
 
+
+    }
+    private void showDetails(){
+        edit_icon.setColorFilter(Color.WHITE);
+        edit_icon.setImageResource(workspace.hasPhoto()? R.drawable.edit_icon:R.drawable.add_icon);
+        workspace_name.setText(workspace.workspaceTitle());
+        workspace_description.setText(workspace.workspaceDescription());
+        groups.setText(String.valueOf(workspace.groups().size()));
+        members.setText(String.valueOf(workspace.teamMembers().size()));
+        tasks.setText("0");
+        if(!workspace.isCreator(getApplicationContext())){
+            edit_icon.setVisibility(View.GONE);
+            edit_group.setVisibility(View.GONE);
+        }
+
+        if(workspace.hasPhoto()){
+            Glide.with(this)
+                    .load(workspace.workspacePhoto())
+                    .placeholder(R.color.workspacePlaceholder)
+                    .addListener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Drawable> target, boolean b) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable drawable, Object o, Target<Drawable> target, DataSource dataSource, boolean b) {
+                            workspace_icon.setVisibility(View.GONE);
+                            return false;
+                        }
+                    })
+                    .into(workspace_profile);
+        }
     }
 
     private void editProfile(){
@@ -181,6 +205,53 @@ public class WorkspaceDescriptionScreen extends AppCompatActivity {
     }
 
     private void addMember(){
+        final UserRepository userRepository = new UserRepository(getApplicationContext());
+
+        final RoundedBottomSheetDialog dialog = new RoundedBottomSheetDialog(this);
+        final View groupView = getLayoutInflater().inflate(R.layout.add_collaborator_sheet,null);
+        final TextInputFormField memberEmail = groupView.findViewById(R.id.collaborator_name_form);
+        final LoadableButton addMemberButton = groupView.findViewById(R.id.add_collaborator_button);
+        final TextView titleText = groupView.findViewById(R.id.title_text);
+
+        addMemberButton.setOnClickListener(view -> {
+            addMemberButton.startLoading();
+            userRepository.getUserByMail(
+                    memberEmail.getText().trim(),
+                    jsonObject -> {
+                        Log.v("API_RESPONSE", jsonObject.toString());
+                        dialog.dismiss();
+                        refresh_layout.startAnimating();
+                        final String id = jsonObject.optString("id", "");
+
+                        workspaceRepository.addMemberToWorkspace(
+                                workspace,
+                                id,
+                                jsonObject1 -> {
+                                    Log.v("API_RESPONSE", jsonObject1.toString());
+                                    members.setText(String.valueOf(workspace.teamMembers().size()+1));
+                                    refresh_layout.stopAnimating();
+                                },
+                                volleyError -> {
+                                    Log.v("API_RESPONSE", volleyError.toString());
+                                }
+                        );
+                    },
+                    volleyError -> {
+                        ((TextView)groupView.findViewById(R.id.warning)).setTextColor(getColor(R.color.red));
+                        Log.v("API_RESPONSE", volleyError.toString());
+
+                    }
+            );
+        });
+
+        dialog.setContentView(groupView);
+        dialog.setDismissWithAnimation(true);
+        dialog.show();
+
+
+
+
+
 
     }
 
@@ -240,7 +311,35 @@ public class WorkspaceDescriptionScreen extends AppCompatActivity {
 
     }
     private void leaveGroup(){
+        refresh_layout.startAnimating();
+        if(workspace.isCreator(getApplicationContext())){
+            workspaceRepository.deleteWorkspace(
+                    workspace,
+                    jsonObject -> {
+                        refresh_layout.stopAnimating();
+                        Log.v("API_RESPONSE", jsonObject.toString());
+                        new Handler().postDelayed(() -> finish(), 2500);
+                    },
+                    volleyError -> {
+                        refresh_layout.stopAnimating();
+                        Log.e("API_RESPONSE", volleyError.toString());
+                    }
+            );
+        }else {
+            workspaceRepository.removeMemberFromWorkspace(
+                    workspace,
+                    new UserModel(getApplicationContext()).uid(),
+                    jsonObject -> {
+                        refresh_layout.stopAnimating();
+                        Log.v("API_RESPONSE", jsonObject.toString());
 
+                    },
+                    volleyError -> {
+                        refresh_layout.stopAnimating();
+                        Log.e("API_RESPONSE", volleyError.toString());
+                    }
+            );
+        }
     }
 
     private void updatePhoto(){
@@ -251,7 +350,7 @@ public class WorkspaceDescriptionScreen extends AppCompatActivity {
                 string -> {
                     refresh_layout.stopAnimating();
                     Glide.with(this)
-                            .load(string)
+                            .load(string.replace("http://", "https://"))
                             .placeholder(R.color.workspacePlaceholder)
                             .addListener(new RequestListener<Drawable>() {
                                 @Override
@@ -262,6 +361,7 @@ public class WorkspaceDescriptionScreen extends AppCompatActivity {
                                 @Override
                                 public boolean onResourceReady(Drawable drawable, Object o, Target<Drawable> target, DataSource dataSource, boolean b) {
                                     workspace_icon.setVisibility(View.GONE);
+                                    workspace_profile.setImageDrawable(drawable);
                                     return false;
                                 }
                             })
